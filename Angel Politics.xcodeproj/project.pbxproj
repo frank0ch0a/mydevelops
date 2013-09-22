@@ -23,6 +23,11 @@
 		0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */; };
 		0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */; };
 		0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */; };
+		0182D3AF17EF465B001EA3A6 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3AD17EF465B001EA3A6 /* list.png */; };
+		0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3AE17EF465B001EA3A6 /* list@2x.png */; };
+		0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3B117EF487D001EA3A6 /* barPattern.png */; };
+		0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3B317EF4E03001EA3A6 /* MenuCell.xib */; };
+		0182D3B717EF4E3F001EA3A6 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3B617EF4E3F001EA3A6 /* MenuCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +64,12 @@
 		0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSlideMenuController.m; sourceTree = "<group>"; };
 		0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMMenuViewController.h; sourceTree = "<group>"; };
 		0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMMenuViewController.m; sourceTree = "<group>"; };
+		0182D3AD17EF465B001EA3A6 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
+		0182D3AE17EF465B001EA3A6 /* list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list@2x.png"; sourceTree = "<group>"; };
+		0182D3B117EF487D001EA3A6 /* barPattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barPattern.png; sourceTree = "<group>"; };
+		0182D3B317EF4E03001EA3A6 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		0182D3B517EF4E3F001EA3A6 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
+		0182D3B617EF4E3F001EA3A6 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,9 +133,12 @@
 				011D23A017EF31E4003A4204 /* APMAppDelegate.h */,
 				011D23A117EF31E4003A4204 /* APMAppDelegate.m */,
 				0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */,
+				0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */,
 				0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */,
 				0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */,
-				0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */,
+				0182D3B317EF4E03001EA3A6 /* MenuCell.xib */,
+				0182D3B517EF4E3F001EA3A6 /* MenuCell.h */,
+				0182D3B617EF4E3F001EA3A6 /* MenuCell.m */,
 				0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */,
 				011D23A317EF31E4003A4204 /* Images.xcassets */,
 				011D239817EF31E4003A4204 /* Supporting Files */,
@@ -135,6 +149,9 @@
 		011D239817EF31E4003A4204 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0182D3B117EF487D001EA3A6 /* barPattern.png */,
+				0182D3AD17EF465B001EA3A6 /* list.png */,
+				0182D3AE17EF465B001EA3A6 /* list@2x.png */,
 				011D239917EF31E4003A4204 /* Angel Politics-Info.plist */,
 				011D239A17EF31E4003A4204 /* InfoPlist.strings */,
 				011D239D17EF31E4003A4204 /* main.m */,
@@ -247,8 +264,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				011D239C17EF31E4003A4204 /* InfoPlist.strings in Resources */,
+				0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */,
+				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
+				0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */,
 				0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */,
 				011D23A417EF31E4003A4204 /* Images.xcassets in Resources */,
+				0182D3AF17EF465B001EA3A6 /* list.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +290,7 @@
 			files = (
 				0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */,
 				011D239E17EF31E4003A4204 /* main.m in Sources */,
+				0182D3B717EF4E3F001EA3A6 /* MenuCell.m in Sources */,
 				0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */,
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
 				0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */,

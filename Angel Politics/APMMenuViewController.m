@@ -7,6 +7,20 @@
 //
 
 #import "APMMenuViewController.h"
+#import "APMFrontViewController.h"
+#import "NVSlideMenuController.h"
+#import "MenuCell.h"
+
+enum {
+    MenuHomeRow = 0,
+    MenuProfile,
+    MenuFundRaising,
+    MenuMessages,
+    MenuSettings,
+    MenuHelp,
+    MenuRowCount
+};
+
 
 @interface APMMenuViewController ()
 
@@ -23,98 +37,114 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.backgroundColor = [UIColor darkGrayColor];
+    self.tableView.separatorColor = [UIColor lightGrayColor];
+    
+    [self.tableView registerNib:[self menuCellNib] forCellReuseIdentifier:@"MenuCell"];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (UINib *)menuCellNib {
+    return [UINib nibWithNibName:@"MenuCell" bundle:nil];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"Menu";
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return MenuRowCount;
+}
+
+- (void)configureCell:(MenuCell *)cell forIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+        case MenuHomeRow:
+            cell.menuLabel.text = @"Home";
+            break;
+            
+        case MenuProfile:
+            cell.menuLabel.text = @"Edit Profile";
+            break;
+            
+        case MenuMessages:
+            cell.menuLabel.text = @"Messages";
+            break;
+            
+        case MenuSettings:
+            cell.menuLabel.text = @"Settings";
+            break;
+            
+        case MenuHelp:
+            cell.menuLabel.text=@"Help";
+        default:
+            break;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"MenuCell";
+    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    [self configureCell:cell forIndexPath:indexPath];
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+#pragma mark - table view delegate
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)isShowingClass:(Class)class {
+    UIViewController *controller = self.slideMenuController.contentViewController;
+    if ([controller isKindOfClass:class]) {
+        return YES;
+    }
+    
+    if ([controller isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *navController = (UINavigationController *)controller;
+        if ([navController.visibleViewController isKindOfClass:class]) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
- */
+- (void)showControllerClass:(Class)class {
+    if ([self isShowingClass:class]) {
+        [self.slideMenuController toggleMenuAnimated:self];
+    } else {
+        id mainVC = [[class alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainVC];
+        [self.slideMenuController setContentViewController:nav
+                                                  animated:YES
+                                                completion:nil];
+    }
+}
+
+- (void)showMainController {
+    [self showControllerClass:[APMFrontViewController class]];
+}
+
+- (void)showAboutController {
+    //[self showControllerClass:[AboutViewController class]];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+        case MenuHomeRow:
+            [self showMainController];
+            break;
+           /*
+        case MenuAboutRow:
+            [self showAboutController];
+            break;*/
+    }
+}
 
 @end

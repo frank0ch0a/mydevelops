@@ -16,6 +16,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    [self customizeAppearance];
+    
     self.viewController=[[APMFrontViewController alloc]initWithNibName:@"APMFrontViewController" bundle:nil];
     
     UINavigationController *navc=[[UINavigationController alloc]initWithRootViewController:self.viewController];
@@ -25,7 +27,7 @@
     APMMenuViewController *menuViewController=[[APMMenuViewController alloc]init];
     
     
-    NVSlideMenuController *slideMenu=[[NVSlideMenuController alloc]initWithMenuViewController:menuViewController andContentViewController:navc];
+    NVSlideMenuController *slideMenuController=[[NVSlideMenuController alloc]initWithMenuViewController:menuViewController andContentViewController:navc];
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -34,11 +36,30 @@
     [self.window makeKeyAndVisible];
     
     
-    self.window.rootViewController=slideMenu;
+    self.window.rootViewController=slideMenuController;
     
     return YES;
 }
 
+
+-(void)customizeAppearance
+{
+    UIImage *barImage=[UIImage imageNamed:@"barPattern"];
+    
+   // [[UISearchBar appearance]setBackgroundImage:barImage];
+    
+    [[UINavigationBar appearance]setBackgroundImage:barImage forBarMetrics:UIBarMetricsDefault];
+    
+    /*
+    UIColor *tintColor=[UIColor colorWithRed:40/255.0f green:50/255.0f blue:50/255.0f alpha:1.0f];
+    
+    
+    [[UISegmentedControl appearance]setTintColor:tintColor];*/
+    
+    
+    
+    
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
