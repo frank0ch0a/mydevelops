@@ -7,15 +7,35 @@
 //
 
 #import "APMAppDelegate.h"
+#import "NVSlideMenuController.h"
+#include "APMFrontViewController.h"
+#import "APMMenuViewController.h"
 
 @implementation APMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    self.viewController=[[APMFrontViewController alloc]initWithNibName:@"APMFrontViewController" bundle:nil];
+    
+    UINavigationController *navc=[[UINavigationController alloc]initWithRootViewController:self.viewController];
+    
+    
+    
+    APMMenuViewController *menuViewController=[[APMMenuViewController alloc]init];
+    
+    
+    NVSlideMenuController *slideMenu=[[NVSlideMenuController alloc]initWithMenuViewController:menuViewController andContentViewController:navc];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
+    self.window.rootViewController=slideMenu;
+    
     return YES;
 }
 

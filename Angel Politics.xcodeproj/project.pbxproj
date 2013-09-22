@@ -21,6 +21,8 @@
 		011D23B717EF31E4003A4204 /* Angel_PoliticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 011D23B617EF31E4003A4204 /* Angel_PoliticsTests.m */; };
 		0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */; };
 		0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */; };
+		0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */; };
+		0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,10 @@
 		0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMFrontViewController.h; sourceTree = "<group>"; };
 		0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMFrontViewController.m; sourceTree = "<group>"; };
 		0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMFrontViewController.xib; sourceTree = "<group>"; };
+		0182D3A717EF37A8001EA3A6 /* NVSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSlideMenuController.h; sourceTree = "<group>"; };
+		0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSlideMenuController.m; sourceTree = "<group>"; };
+		0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMMenuViewController.h; sourceTree = "<group>"; };
+		0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMMenuViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,11 +118,14 @@
 		011D239717EF31E4003A4204 /* Angel Politics */ = {
 			isa = PBXGroup;
 			children = (
+				0182D3A617EF37A8001EA3A6 /* NVSlideMenuController */,
 				011D23A017EF31E4003A4204 /* APMAppDelegate.h */,
+				011D23A117EF31E4003A4204 /* APMAppDelegate.m */,
 				0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */,
+				0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */,
+				0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */,
 				0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */,
 				0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */,
-				011D23A117EF31E4003A4204 /* APMAppDelegate.m */,
 				011D23A317EF31E4003A4204 /* Images.xcassets */,
 				011D239817EF31E4003A4204 /* Supporting Files */,
 			);
@@ -150,6 +159,15 @@
 				011D23B317EF31E4003A4204 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0182D3A617EF37A8001EA3A6 /* NVSlideMenuController */ = {
+			isa = PBXGroup;
+			children = (
+				0182D3A717EF37A8001EA3A6 /* NVSlideMenuController.h */,
+				0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */,
+			);
+			path = NVSlideMenuController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,7 +267,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */,
 				011D239E17EF31E4003A4204 /* main.m in Sources */,
+				0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */,
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
 				0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */,
 			);

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class APMFrontViewController;
 
 @interface APMAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property(strong,nonatomic) APMFrontViewController *viewController;
 
 @end
