@@ -19,6 +19,8 @@
 		011D23AD17EF31E4003A4204 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D239517EF31E4003A4204 /* UIKit.framework */; };
 		011D23B517EF31E4003A4204 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 011D23B317EF31E4003A4204 /* InfoPlist.strings */; };
 		011D23B717EF31E4003A4204 /* Angel_PoliticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 011D23B617EF31E4003A4204 /* Angel_PoliticsTests.m */; };
+		0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */; };
+		0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,9 @@
 		011D23B217EF31E4003A4204 /* Angel PoliticsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Angel PoliticsTests-Info.plist"; sourceTree = "<group>"; };
 		011D23B417EF31E4003A4204 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		011D23B617EF31E4003A4204 /* Angel_PoliticsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Angel_PoliticsTests.m; sourceTree = "<group>"; };
+		0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMFrontViewController.h; sourceTree = "<group>"; };
+		0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMFrontViewController.m; sourceTree = "<group>"; };
+		0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMFrontViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				011D23A017EF31E4003A4204 /* APMAppDelegate.h */,
+				0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */,
+				0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */,
+				0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */,
 				011D23A117EF31E4003A4204 /* APMAppDelegate.m */,
 				011D23A317EF31E4003A4204 /* Images.xcassets */,
 				011D239817EF31E4003A4204 /* Supporting Files */,
@@ -221,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				011D239C17EF31E4003A4204 /* InfoPlist.strings in Resources */,
+				0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */,
 				011D23A417EF31E4003A4204 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,6 +251,7 @@
 			files = (
 				011D239E17EF31E4003A4204 /* main.m in Sources */,
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
+				0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,12 +368,16 @@
 		011D23BB17EF31E4003A4204 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				INFOPLIST_FILE = "Angel Politics/Angel Politics-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -371,12 +385,16 @@
 		011D23BC17EF31E4003A4204 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				INFOPLIST_FILE = "Angel Politics/Angel Politics-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -442,6 +460,7 @@
 				011D23BC17EF31E4003A4204 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		011D23BD17EF31E4003A4204 /* Build configuration list for PBXNativeTarget "Angel PoliticsTests" */ = {
 			isa = XCConfigurationList;
@@ -450,6 +469,7 @@
 				011D23BF17EF31E4003A4204 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
