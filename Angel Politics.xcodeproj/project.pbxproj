@@ -19,6 +19,10 @@
 		011D23AD17EF31E4003A4204 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D239517EF31E4003A4204 /* UIKit.framework */; };
 		011D23B517EF31E4003A4204 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 011D23B317EF31E4003A4204 /* InfoPlist.strings */; };
 		011D23B717EF31E4003A4204 /* Angel_PoliticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 011D23B617EF31E4003A4204 /* Angel_PoliticsTests.m */; };
+		014690F517F734B5002C0318 /* APMCandidateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690F317F734B5002C0318 /* APMCandidateViewController.m */; };
+		014690F617F734B5002C0318 /* APMCandidateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F417F734B5002C0318 /* APMCandidateViewController.xib */; };
+		014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F817F73664002C0318 /* APMCandidateCell.xib */; };
+		014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690FB17F73774002C0318 /* APMCandidateCell.m */; };
 		0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */; };
 		0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */; };
 		0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */; };
@@ -57,6 +61,12 @@
 		011D23B217EF31E4003A4204 /* Angel PoliticsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Angel PoliticsTests-Info.plist"; sourceTree = "<group>"; };
 		011D23B417EF31E4003A4204 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		011D23B617EF31E4003A4204 /* Angel_PoliticsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Angel_PoliticsTests.m; sourceTree = "<group>"; };
+		014690F217F734B5002C0318 /* APMCandidateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCandidateViewController.h; sourceTree = "<group>"; };
+		014690F317F734B5002C0318 /* APMCandidateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCandidateViewController.m; sourceTree = "<group>"; };
+		014690F417F734B5002C0318 /* APMCandidateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APMCandidateViewController.xib; path = ../APMCandidateViewController.xib; sourceTree = "<group>"; };
+		014690F817F73664002C0318 /* APMCandidateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCandidateCell.xib; sourceTree = "<group>"; };
+		014690FA17F73774002C0318 /* APMCandidateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCandidateCell.h; sourceTree = "<group>"; };
+		014690FB17F73774002C0318 /* APMCandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCandidateCell.m; sourceTree = "<group>"; };
 		0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMFrontViewController.h; sourceTree = "<group>"; };
 		0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMFrontViewController.m; sourceTree = "<group>"; };
 		0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMFrontViewController.xib; sourceTree = "<group>"; };
@@ -99,6 +109,8 @@
 		011D238517EF31E4003A4204 = {
 			isa = PBXGroup;
 			children = (
+				014690F217F734B5002C0318 /* APMCandidateViewController.h */,
+				014690F317F734B5002C0318 /* APMCandidateViewController.m */,
 				011D239717EF31E4003A4204 /* Angel Politics */,
 				011D23B017EF31E4003A4204 /* Angel PoliticsTests */,
 				011D239017EF31E4003A4204 /* Frameworks */,
@@ -136,10 +148,11 @@
 				0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */,
 				0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */,
 				0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */,
-				0182D3B317EF4E03001EA3A6 /* MenuCell.xib */,
+				014690FA17F73774002C0318 /* APMCandidateCell.h */,
+				014690FB17F73774002C0318 /* APMCandidateCell.m */,
+				014690F717F734D8002C0318 /* Views */,
 				0182D3B517EF4E3F001EA3A6 /* MenuCell.h */,
 				0182D3B617EF4E3F001EA3A6 /* MenuCell.m */,
-				0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */,
 				011D23A317EF31E4003A4204 /* Images.xcassets */,
 				011D239817EF31E4003A4204 /* Supporting Files */,
 			);
@@ -176,6 +189,17 @@
 				011D23B317EF31E4003A4204 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		014690F717F734D8002C0318 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				014690F417F734B5002C0318 /* APMCandidateViewController.xib */,
+				014690F817F73664002C0318 /* APMCandidateCell.xib */,
+				0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */,
+				0182D3B317EF4E03001EA3A6 /* MenuCell.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		0182D3A617EF37A8001EA3A6 /* NVSlideMenuController */ = {
@@ -264,7 +288,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				011D239C17EF31E4003A4204 /* InfoPlist.strings in Resources */,
+				014690F617F734B5002C0318 /* APMCandidateViewController.xib in Resources */,
 				0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */,
+				014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */,
 				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
 				0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */,
 				0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */,
@@ -288,11 +314,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */,
 				0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */,
 				011D239E17EF31E4003A4204 /* main.m in Sources */,
 				0182D3B717EF4E3F001EA3A6 /* MenuCell.m in Sources */,
 				0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */,
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
+				014690F517F734B5002C0318 /* APMCandidateViewController.m in Sources */,
 				0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
