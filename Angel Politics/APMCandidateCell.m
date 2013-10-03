@@ -26,4 +26,19 @@
     // Configure the view for the selected state
 }
 
+-(void)awakeFromNib
+{
+    
+    //Circle View
+    CGPoint saveCenter = self.candidatePhoto.center;
+    CGRect newFrame = CGRectMake(self.candidatePhoto.frame.origin.x, self.candidatePhoto.frame.origin.y, 70, 70);
+    self.candidatePhoto.frame = newFrame;
+    self.candidatePhoto.layer.cornerRadius = 70 / 2.0;
+    self.candidatePhoto.center = saveCenter;
+
+    
+    
+    
+}
+
 @end

@@ -10,9 +10,14 @@
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
 #import "MenuCell.h"
+#import "APMCandidateCell.h"
+
+static NSString *const CandidateCellIdentifier=@"NothingFoundCell";
+static NSString *const MenuCellIdentifier=@"MenuCell";
 
 enum {
-    MenuHomeRow = 0,
+    MenuCandidate=0,
+    MenuHomeRow ,
     MenuProfile,
     MenuFundRaising,
     MenuMessages,
@@ -42,11 +47,19 @@ enum {
     self.tableView.backgroundColor = [UIColor darkGrayColor];
     self.tableView.separatorColor = [UIColor lightGrayColor];
     
-    [self.tableView registerNib:[self menuCellNib] forCellReuseIdentifier:@"MenuCell"];
+    [self.tableView registerNib:[self menuCellNib] forCellReuseIdentifier:MenuCellIdentifier];
+    [self.tableView registerNib:[self candidateCellNib] forCellReuseIdentifier:CandidateCellIdentifier];
 }
 
 - (UINib *)menuCellNib {
     return [UINib nibWithNibName:@"MenuCell" bundle:nil];
+}
+
+-(UINib *)candidateCellNib
+{
+    return [UINib nibWithNibName:CandidateCellIdentifier bundle:nil];
+    
+    
 }
 
 #pragma mark - Table view data source
@@ -64,7 +77,11 @@ enum {
 }
 
 - (void)configureCell:(MenuCell *)cell forIndexPath:(NSIndexPath *)indexPath {
+   
     switch (indexPath.row) {
+            
+        
+    
         case MenuHomeRow:
             cell.menuLabel.text = @"Home";
             break;
@@ -88,9 +105,22 @@ enum {
     }
 }
 
+
+-(void)configureCandidateCell:(APMCandidateCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (indexPath.row==MenuCandidate) {
+        //cell.candidateNameLabel.text
+    }
+    
+    
+    
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"MenuCell";
-    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuCellIdentifier];
     
     [self configureCell:cell forIndexPath:indexPath];
     
