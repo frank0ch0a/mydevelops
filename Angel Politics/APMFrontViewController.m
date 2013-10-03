@@ -8,6 +8,7 @@
 
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
+#import "AFJSONRequestOperation.h"
 
 @interface APMFrontViewController ()
 
@@ -17,7 +18,20 @@
 
 @end
 
-@implementation APMFrontViewController
+@implementation APMFrontViewController{
+    
+      NSOperationQueue *queue;
+    
+}
+
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    
+    if ((self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        queue=[[NSOperationQueue alloc]init];
+    }
+    
+    return self;
+}
 
 
 - (void)viewDidLoad
@@ -34,6 +48,7 @@
     self.donors=@[@"Pascal Dupree",@"Adan Nichelson",@"John Forrester",@"Sander Kleinenberg",@"Michelle Stuart"];
                     
     
+    [self loadData];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -53,6 +68,64 @@
     
     
 }
+
+-(void)showNetworkError
+{
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Whoops.."
+                                                     message:@"There was sn error reading from itunes Store. please try again." delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil ];
+    
+    [alertView show];
+    
+    
+    
+}
+
+-(void)parseDictionary:(NSDictionary *)dictionary{
+    
+    
+    NSMutableArray *array=[[NSMutableArray alloc]init];
+    
+    [array addObject:dictionary];
+    
+    NSLog(@"array %@",array);
+    
+    
+    
+}
+
+-(void)loadData{
+    
+   
+    
+    NSURL *url=[NSURL URLWithString:@"https://www.angelpolitics.com/mobile/first.php?id=1351"];
+    
+   
+    
+    NSURLRequest *request=[NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation=[AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+         NSLog(@"Success!");
+        [self parseDictionary:JSON];
+        
+       
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [self showNetworkError];
+        
+        NSLog(@"error  %@",error);
+       
+        //[self.donorTableView reloadData];
+    }];
+    
+    operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+    
+    [queue addOperation:operation];
+    
+    
+}
+
 #pragma mark - Lazy buttons
 
 - (UIImage *)listImage {
