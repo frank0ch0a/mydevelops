@@ -24,6 +24,8 @@
 		014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690FB17F73774002C0318 /* APMCandidateCell.m */; };
 		0152722E180386CB00D79E1C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0152722D180386CB00D79E1C /* Images.xcassets */; };
 		0152723018038B6500D79E1C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0152722F18038B6500D79E1C /* Default-568h@2x.png */; };
+		015272321803A3BB00D79E1C /* APMFrontCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015272311803A3BB00D79E1C /* APMFrontCell.xib */; };
+		015272351803A4FC00D79E1C /* APMFrontCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 015272341803A4FC00D79E1C /* APMFrontCell.m */; };
 		0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */; };
 		0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */; };
 		0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */; };
@@ -83,6 +85,9 @@
 		014690FB17F73774002C0318 /* APMCandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCandidateCell.m; sourceTree = "<group>"; };
 		0152722D180386CB00D79E1C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0152722F18038B6500D79E1C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		015272311803A3BB00D79E1C /* APMFrontCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMFrontCell.xib; sourceTree = "<group>"; };
+		015272331803A4FC00D79E1C /* APMFrontCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMFrontCell.h; sourceTree = "<group>"; };
+		015272341803A4FC00D79E1C /* APMFrontCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMFrontCell.m; sourceTree = "<group>"; };
 		0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMFrontViewController.h; sourceTree = "<group>"; };
 		0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMFrontViewController.m; sourceTree = "<group>"; };
 		0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMFrontViewController.xib; sourceTree = "<group>"; };
@@ -233,6 +238,7 @@
 		014690F717F734D8002C0318 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				015272311803A3BB00D79E1C /* APMFrontCell.xib */,
 				014690F417F734B5002C0318 /* APMCandidateViewController.xib */,
 				014690F817F73664002C0318 /* APMCandidateCell.xib */,
 				0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */,
@@ -272,6 +278,8 @@
 				0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */,
 				0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */,
 				0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */,
+				015272331803A4FC00D79E1C /* APMFrontCell.h */,
+				015272341803A4FC00D79E1C /* APMFrontCell.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -398,6 +406,7 @@
 				014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */,
 				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
 				01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */,
+				015272321803A3BB00D79E1C /* APMFrontCell.xib in Resources */,
 				0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */,
 				0152723018038B6500D79E1C /* Default-568h@2x.png in Resources */,
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
@@ -433,6 +442,7 @@
 				011D239E17EF31E4003A4204 /* main.m in Sources */,
 				0182D3B717EF4E3F001EA3A6 /* MenuCell.m in Sources */,
 				01BB961E17FCFF650040DE19 /* AFPropertyListRequestOperation.m in Sources */,
+				015272351803A4FC00D79E1C /* APMFrontCell.m in Sources */,
 				0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */,
 				01BB961A17FCFF650040DE19 /* AFImageCache.m in Sources */,
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
