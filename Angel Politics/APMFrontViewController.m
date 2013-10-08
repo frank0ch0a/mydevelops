@@ -9,11 +9,16 @@
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
 #import "AFJSONRequestOperation.h"
+#import "APMCandidateModel.h"
+#import "APMCandidateViewController.h"
+
 
 @interface APMFrontViewController ()
 
 // Lazy buttons
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
+
 @property(strong,nonatomic)NSArray *donors;
 
 @end
@@ -72,7 +77,7 @@
 -(void)showNetworkError
 {
     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Whoops.."
-                                                     message:@"There was sn error reading from itunes Store. please try again." delegate:nil
+                                                     message:@"There was sn error reading from Server. please try again." delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil ];
     
@@ -85,11 +90,34 @@
 -(void)parseDictionary:(NSDictionary *)dictionary{
     
     
-    NSMutableArray *array=[[NSMutableArray alloc]init];
+    NSMutableArray *arrayDic=[[NSMutableArray alloc]init];
     
-    [array addObject:dictionary];
+    [arrayDic addObject:dictionary];
+    
+    
+
+    
+    APMCandidateModel *candidateModel=[[APMCandidateModel alloc]init];
+    
+     NSMutableArray *array=[[NSMutableArray alloc]init];
+    
+    for (int i=0; i<[arrayDic count]; i++) {
+        
+   
+        candidateModel.candidateName=[[arrayDic objectAtIndex:i]objectForKey:@"a"];
+        candidateModel.city=[[arrayDic objectAtIndex:i]objectForKey:@"b"];
+        candidateModel.supportes=[[arrayDic objectAtIndex:i]objectForKey:@"c"];
+        candidateModel.funraised=[[arrayDic objectAtIndex:i]objectForKey:@"d"];
+        candidateModel.dayToElection=[[arrayDic objectAtIndex:i]objectForKey:@"e"];
+        
+        
+        [array addObject:candidateModel];
+    }
+    
     
     NSLog(@"array %@",array);
+    
+    [self.delegate frontViewController:self didCandidateData:array];
     
     
     
@@ -129,8 +157,12 @@
 #pragma mark - Lazy buttons
 
 - (UIImage *)listImage {
-    return [UIImage imageNamed:@"list"];
+    return [UIImage imageNamed:@"ic_menu"];
 }
+- (UIImage *)searchImage {
+    return [UIImage imageNamed:@"ic_Search"];
+}
+
 
 - (UIBarButtonItem *)leftBarButtonItem
 {
@@ -151,11 +183,42 @@
 	return _leftBarButtonItem;
 }
 
+-(UIBarButtonItem *)rightBarButtonItem;
+{
+    
+    
+	if (!_rightBarButtonItem)
+	{
+        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self searchImage]
+                                                              style:UIBarButtonItemStyleBordered
+                                                             target:self
+                                                             action:@selector(mainSearch:)];
+        
+        
+        [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    
+    }
+    
+    
+    return _rightBarButtonItem;
+    
+    
+}
+
+
+-(void)mainSearch:(id)sender {
+    
+    NSLog(@" Search Button");
+    
+}
+
 - (void)updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:(BOOL)animated
 {
     if (self.slideMenuController.slideDirection == NVSlideMenuControllerSlideFromLeftToRight)
 	{
 		[self.navigationItem setLeftBarButtonItem:self.leftBarButtonItem animated:animated];
+        [self.navigationItem setRightBarButtonItem:self.rightBarButtonItem animated:animated];
 	
 	}
     
@@ -192,8 +255,22 @@
     
     cell.textLabel.text=[self.donors objectAtIndex:indexPath.row];
     
+      
     return cell;
 }
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    APMCandidateViewController *candidateVC=[[APMCandidateViewController alloc]init];
+    
+    [self.navigationController pushViewController:candidateVC animated:YES];
+    
+    
+    
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -50,6 +50,11 @@
     
     [[UINavigationBar appearance]setBackgroundImage:barImage forBarMetrics:UIBarMetricsDefault];
     
+    
+    [[UIBarButtonItem appearance]setBackButtonBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance]setBackButtonBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    
     /*
     UIColor *tintColor=[UIColor colorWithRed:40/255.0f green:50/255.0f blue:50/255.0f alpha:1.0f];
     

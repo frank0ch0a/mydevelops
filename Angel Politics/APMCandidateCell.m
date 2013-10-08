@@ -29,12 +29,20 @@
 -(void)awakeFromNib
 {
     
+    [super awakeFromNib];
+    
     //Circle View
-    CGPoint saveCenter = self.candidatePhoto.center;
-    CGRect newFrame = CGRectMake(self.candidatePhoto.frame.origin.x, self.candidatePhoto.frame.origin.y, 70, 70);
-    self.candidatePhoto.frame = newFrame;
-    self.candidatePhoto.layer.cornerRadius = 70 / 2.0;
-    self.candidatePhoto.center = saveCenter;
+    CGPoint saveCenter = self.CandUIView.center;
+    CGRect newFrame = CGRectMake(self.CandUIView.frame.origin.x, self.CandUIView.frame.origin.y, 50, 50);
+    self.CandUIView.frame = newFrame;
+    self.CandUIView.layer.cornerRadius = 50 / 2.0;
+    self.CandUIView.center = saveCenter;
+    
+    CGPoint saveCenter2 = self.candImageView.center;
+    CGRect newFrame2 = CGRectMake(self.candImageView.frame.origin.x, self.candImageView.frame.origin.y, 50, 50);
+    self.candImageView.frame = newFrame2;
+    self.candImageView.layer.cornerRadius = 50 / 2.0;
+    self.candImageView.center = saveCenter2;
 
     
     

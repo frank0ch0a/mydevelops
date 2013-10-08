@@ -13,7 +13,6 @@
 		011D239C17EF31E4003A4204 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 011D239A17EF31E4003A4204 /* InfoPlist.strings */; };
 		011D239E17EF31E4003A4204 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 011D239D17EF31E4003A4204 /* main.m */; };
 		011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 011D23A117EF31E4003A4204 /* APMAppDelegate.m */; };
-		011D23A417EF31E4003A4204 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 011D23A317EF31E4003A4204 /* Images.xcassets */; };
 		011D23AB17EF31E4003A4204 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D23AA17EF31E4003A4204 /* XCTest.framework */; };
 		011D23AC17EF31E4003A4204 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D239117EF31E4003A4204 /* Foundation.framework */; };
 		011D23AD17EF31E4003A4204 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D239517EF31E4003A4204 /* UIKit.framework */; };
@@ -23,6 +22,8 @@
 		014690F617F734B5002C0318 /* APMCandidateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F417F734B5002C0318 /* APMCandidateViewController.xib */; };
 		014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F817F73664002C0318 /* APMCandidateCell.xib */; };
 		014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690FB17F73774002C0318 /* APMCandidateCell.m */; };
+		0152722E180386CB00D79E1C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0152722D180386CB00D79E1C /* Images.xcassets */; };
+		0152723018038B6500D79E1C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0152722F18038B6500D79E1C /* Default-568h@2x.png */; };
 		0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */; };
 		0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */; };
 		0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */; };
@@ -43,6 +44,9 @@
 		01BB962017FCFF650040DE19 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB961517FCFF650040DE19 /* AFXMLRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -Wno-unused"; }; };
 		01BB962117FCFF650040DE19 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB961717FCFF650040DE19 /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		01BB962417FD01870040DE19 /* APMCandidateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB962317FD01870040DE19 /* APMCandidateModel.m */; };
+		01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01D2930717FE5DF3008F3F5C /* men@2x.png */; };
+		01E557A918024D0B0081AB21 /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E557A818024D0B0081AB21 /* phone.png */; };
+		01E557AD18024DFA0081AB21 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E557AC18024DFA0081AB21 /* mail.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +70,6 @@
 		011D239F17EF31E4003A4204 /* Angel Politics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Angel Politics-Prefix.pch"; sourceTree = "<group>"; };
 		011D23A017EF31E4003A4204 /* APMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APMAppDelegate.h; sourceTree = "<group>"; };
 		011D23A117EF31E4003A4204 /* APMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APMAppDelegate.m; sourceTree = "<group>"; };
-		011D23A317EF31E4003A4204 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		011D23A917EF31E4003A4204 /* Angel PoliticsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Angel PoliticsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		011D23AA17EF31E4003A4204 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		011D23B217EF31E4003A4204 /* Angel PoliticsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Angel PoliticsTests-Info.plist"; sourceTree = "<group>"; };
@@ -78,6 +81,8 @@
 		014690F817F73664002C0318 /* APMCandidateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCandidateCell.xib; sourceTree = "<group>"; };
 		014690FA17F73774002C0318 /* APMCandidateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCandidateCell.h; sourceTree = "<group>"; };
 		014690FB17F73774002C0318 /* APMCandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCandidateCell.m; sourceTree = "<group>"; };
+		0152722D180386CB00D79E1C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0152722F18038B6500D79E1C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMFrontViewController.h; sourceTree = "<group>"; };
 		0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMFrontViewController.m; sourceTree = "<group>"; };
 		0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMFrontViewController.xib; sourceTree = "<group>"; };
@@ -115,6 +120,9 @@
 		01BB961717FCFF650040DE19 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		01BB962217FD01870040DE19 /* APMCandidateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCandidateModel.h; sourceTree = "<group>"; };
 		01BB962317FD01870040DE19 /* APMCandidateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCandidateModel.m; sourceTree = "<group>"; };
+		01D2930717FE5DF3008F3F5C /* men@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "men@2x.png"; sourceTree = "<group>"; };
+		01E557A818024D0B0081AB21 /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
+		01E557AC18024DFA0081AB21 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +152,7 @@
 		011D238517EF31E4003A4204 = {
 			isa = PBXGroup;
 			children = (
+				0152722F18038B6500D79E1C /* Default-568h@2x.png */,
 				011D239717EF31E4003A4204 /* Angel Politics */,
 				011D23B017EF31E4003A4204 /* Angel PoliticsTests */,
 				011D239017EF31E4003A4204 /* Frameworks */,
@@ -174,13 +183,13 @@
 		011D239717EF31E4003A4204 /* Angel Politics */ = {
 			isa = PBXGroup;
 			children = (
+				0152722D180386CB00D79E1C /* Images.xcassets */,
 				01BB962517FD01960040DE19 /* Model */,
 				01BB960117FCFF650040DE19 /* AFNetworking */,
 				0182D3A617EF37A8001EA3A6 /* NVSlideMenuController */,
 				01BB95FE17FCFE6C0040DE19 /* Delegate */,
 				01BB95FF17FCFE7F0040DE19 /* Controllers */,
 				014690F717F734D8002C0318 /* Views */,
-				011D23A317EF31E4003A4204 /* Images.xcassets */,
 				011D239817EF31E4003A4204 /* Supporting Files */,
 			);
 			path = "Angel Politics";
@@ -190,6 +199,9 @@
 			isa = PBXGroup;
 			children = (
 				0182D3B117EF487D001EA3A6 /* barPattern.png */,
+				01E557AC18024DFA0081AB21 /* mail.png */,
+				01E557A818024D0B0081AB21 /* phone.png */,
+				01D2930717FE5DF3008F3F5C /* men@2x.png */,
 				0182D3AD17EF465B001EA3A6 /* list.png */,
 				0182D3AE17EF465B001EA3A6 /* list@2x.png */,
 				011D239917EF31E4003A4204 /* Angel Politics-Info.plist */,
@@ -379,13 +391,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				011D239C17EF31E4003A4204 /* InfoPlist.strings in Resources */,
+				01E557A918024D0B0081AB21 /* phone.png in Resources */,
+				01E557AD18024DFA0081AB21 /* mail.png in Resources */,
 				014690F617F734B5002C0318 /* APMCandidateViewController.xib in Resources */,
 				0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */,
 				014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */,
 				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
+				01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */,
 				0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */,
+				0152723018038B6500D79E1C /* Default-568h@2x.png in Resources */,
+				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
 				0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */,
-				011D23A417EF31E4003A4204 /* Images.xcassets in Resources */,
 				0182D3AF17EF465B001EA3A6 /* list.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -541,8 +557,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				INFOPLIST_FILE = "Angel Politics/Angel Politics-Info.plist";
@@ -558,8 +572,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				INFOPLIST_FILE = "Angel Politics/Angel Politics-Info.plist";

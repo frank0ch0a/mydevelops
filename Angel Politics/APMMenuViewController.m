@@ -12,12 +12,12 @@
 #import "MenuCell.h"
 #import "APMCandidateCell.h"
 
-static NSString *const CandidateCellIdentifier=@"NothingFoundCell";
+static NSString *const CandidateCellIdentifier=@"CandidateCell";
 static NSString *const MenuCellIdentifier=@"MenuCell";
 
 enum {
     MenuCandidate=0,
-    MenuHomeRow ,
+   // MenuHomeRow ,
     MenuProfile,
     MenuFundRaising,
     MenuMessages,
@@ -28,6 +28,8 @@ enum {
 
 
 @interface APMMenuViewController ()
+
+@property(nonatomic,strong)NSMutableArray *candidateArray;
 
 @end
 
@@ -45,10 +47,32 @@ enum {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor darkGrayColor];
-    self.tableView.separatorColor = [UIColor lightGrayColor];
+    //self.tableView.separatorColor = [UIColor lightGrayColor];
+    self.tableView.separatorStyle=NO;
     
     [self.tableView registerNib:[self menuCellNib] forCellReuseIdentifier:MenuCellIdentifier];
     [self.tableView registerNib:[self candidateCellNib] forCellReuseIdentifier:CandidateCellIdentifier];
+    
+    APMFrontViewController *fronVC=[[APMFrontViewController alloc]init];
+    
+    
+    
+    fronVC.delegate=self;
+}
+
+#pragma mark FrontViewDelegate
+-(void)frontViewController:(APMFrontViewController *)frontViewController didCandidateData:(NSMutableArray *)array{
+    
+    
+    self.candidateArray=[[NSMutableArray alloc]init];
+    
+    self.candidateArray=array;
+    
+    [self viewDidLoad];
+    
+    NSLog(@" candidateArray %@",self.candidateArray);
+    
+    
 }
 
 - (UINib *)menuCellNib {
@@ -57,7 +81,7 @@ enum {
 
 -(UINib *)candidateCellNib
 {
-    return [UINib nibWithNibName:CandidateCellIdentifier bundle:nil];
+    return [UINib nibWithNibName:@"APMCandidateCell" bundle:nil];
     
     
 }
@@ -80,26 +104,36 @@ enum {
    
     switch (indexPath.row) {
             
-        
+        /*
     
         case MenuHomeRow:
             cell.menuLabel.text = @"Home";
-            break;
+            
+            break;*/
             
         case MenuProfile:
             cell.menuLabel.text = @"Edit Profile";
+            cell.menuImageView.image=[UIImage imageNamed:@"ic_profile"];
+            break;
+            
+        case MenuFundRaising:
+            cell.menuLabel.text = @"Fundraise";
+            cell.menuImageView.image=[UIImage imageNamed:@"ic_fundraise"];
             break;
             
         case MenuMessages:
             cell.menuLabel.text = @"Messages";
+            cell.menuImageView.image=[UIImage imageNamed:@"ic_msg"];
             break;
             
         case MenuSettings:
             cell.menuLabel.text = @"Settings";
+            cell.menuImageView.image=[UIImage imageNamed:@"ic_settings"];
             break;
             
         case MenuHelp:
             cell.menuLabel.text=@"Help";
+            cell.menuImageView.image=[UIImage imageNamed:@"ic_help"];
         default:
             break;
     }
@@ -110,7 +144,12 @@ enum {
 {
     
     if (indexPath.row==MenuCandidate) {
-        //cell.candidateNameLabel.text
+        cell.candidateNameLabel.text=@"Frederick Norman";
+        cell.candImageView.image=[UIImage imageNamed:@"men"];
+        
+       
+        
+    
     }
     
     
@@ -120,11 +159,37 @@ enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (indexPath.row==MenuCandidate) {
+        
+        APMCandidateCell *cell=[tableView dequeueReusableCellWithIdentifier:CandidateCellIdentifier];
+        
+        [self configureCandidateCell:cell forIndexPath:indexPath];
+        
+       
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 115,320, 1)];
+        lineView.backgroundColor = [UIColor whiteColor];
+        [cell.contentView addSubview:lineView];
+        
+         return cell;
+        
+    }else{
+    
     MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuCellIdentifier];
     
     [self configureCell:cell forIndexPath:indexPath];
+        
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 45,320, 1)];
+        lineView.backgroundColor = [UIColor whiteColor];
+        [cell.contentView addSubview:lineView];
+        
+        return cell;
+
+    }
     
-    return cell;
+    
+    
 }
 
 #pragma mark - table view delegate
@@ -167,14 +232,27 @@ enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
+            
+            /*
         case MenuHomeRow:
             [self showMainController];
             break;
-           /*
+           
         case MenuAboutRow:
             [self showAboutController];
             break;*/
+}
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==MenuCandidate) {
+         return 120.0f;
     }
+   
+    return 45.0f;
+    
 }
 
 @end

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface APMCandidateViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *donorLabel;
 
 @end

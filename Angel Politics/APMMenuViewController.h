@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APMFrontViewController.h"
 
-@interface APMMenuViewController : UITableViewController
+@interface APMMenuViewController : UITableViewController<FrontViewDelegate>
 
 @end

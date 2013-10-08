@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+@class APMFrontViewController;
+@class APMCandidateModel;
+@protocol FrontViewDelegate <NSObject>
+
+-(void)frontViewController:(APMFrontViewController *)frontViewController didCandidateData:(NSMutableArray *)array;
+
+@end
+
+
 
 @interface APMFrontViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
+@property (weak,nonatomic) id<FrontViewDelegate>delegate;
 
 @property (weak, nonatomic) IBOutlet UITableView *donorTableView;
 @property (weak, nonatomic) IBOutlet UIButton *donorButton;

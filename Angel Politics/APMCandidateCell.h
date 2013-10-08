@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface APMCandidateCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *candidatePhoto;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *candidateNameLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *CandUIView;
+@property (weak, nonatomic) IBOutlet UIImageView *candImageView;
 
 @end
