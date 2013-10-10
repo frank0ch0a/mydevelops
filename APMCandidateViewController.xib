@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="APMCandidateViewController">
             <connections>
+                <outlet property="candTableView" destination="qN7-zq-bRB" id="Rth-PD-NEk"/>
                 <outlet property="donorLabel" destination="qpV-8s-R6L" id="vAd-G8-Kno"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -124,6 +125,9 @@
                             <state key="normal" backgroundImage="phone.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="callOutcome:" destination="-1" eventType="touchUpInside" id="BFm-Np-MUh"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -132,6 +136,10 @@
                     <rect key="frame" x="0.0" y="281" width="320" height="267"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Wma-X6-cOC"/>
+                        <outlet property="delegate" destination="-1" id="Dbt-du-Hq3"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

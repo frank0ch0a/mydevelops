@@ -23,7 +23,23 @@
 {
     [super setSelected:selected animated:animated];
 
+    
     // Configure the view for the selected state
+}
+
+-(void)awakeFromNib{
+    
+    
+    [super awakeFromNib];
+    
+    UIImage *selectedImage=[UIImage imageNamed:@"bg_menu_row_down"];
+    UIImageView *selectBackgroundImageView=[[UIImageView alloc] initWithImage:selectedImage];
+    self.selectedBackgroundView=selectBackgroundImageView;
+    
+    self.menuLabel.highlightedTextColor=[UIColor darkGrayColor];
+    
+    
+    
 }
 
 @end

@@ -11,6 +11,7 @@
 #import "AFJSONRequestOperation.h"
 #import "APMCandidateModel.h"
 #import "APMCandidateViewController.h"
+#import "APMFrontCell.h"
 
 
 @interface APMFrontViewController ()
@@ -20,8 +21,11 @@
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
 
 @property(strong,nonatomic)NSArray *donors;
+@property(strong,nonatomic)NSArray *amounts;
 
 @end
+
+static NSString *const FrontCell=@"FrontCell";
 
 @implementation APMFrontViewController{
     
@@ -44,16 +48,29 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [self.donorTableView registerNib:[self FrontCellNib] forCellReuseIdentifier:FrontCell];
+
+    
+    
     [self updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:NO];
     
-    self.title=@"Angel Politics";
+   // self.title=@"Angel Politics";
     
     //Hardcoding donorsinfo
     
     self.donors=@[@"Pascal Dupree",@"Adan Nichelson",@"John Forrester",@"Sander Kleinenberg",@"Michelle Stuart"];
+    
+    self.amounts=@[@"1200",@"800",@"600",@"500",@"600"];
                     
     
     [self loadData];
+}
+
+-(UINib *)FrontCellNib
+{
+    return [UINib nibWithNibName:@"APMFrontCell" bundle:nil];
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -68,6 +85,12 @@
     
     self.otherButton.layer.borderWidth=1.0f;
     self.otherButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
+    
+    UIImage* myImage = [UIImage imageNamed:@"nav_logo"];
+    UIImageView* myImageView = [[UIImageView alloc] initWithImage:myImage];
+    myImageView.frame=CGRectMake(80, 8, 145, 26);
+    [self.navigationController.navigationBar addSubview:myImageView];
+    
     
     
     
@@ -243,21 +266,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    APMFrontCell *cell = [tableView dequeueReusableCellWithIdentifier:FrontCell];
     
     if (cell==nil) {
         
-        
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        
+        cell=[[APMFrontCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FrontCell];
     }
     
-    cell.textLabel.text=[self.donors objectAtIndex:indexPath.row];
+    
+    
+    cell.indexPath = indexPath;
+    cell.delegate = self;
+    cell.donorLabel.text=[self.donors objectAtIndex:indexPath.row];
+    cell.amountLabel.text=[self.amounts objectAtIndex:indexPath.row];
+    cell.cityLabel.text=@"New York";
+    
     
       
     return cell;
 }
+
+
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -271,10 +301,56 @@
     
 }
 
+#pragma mark -
+#pragma mark SwipeCellDelegate methods
+
+-(void)didSwipeRightInCellWithIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([_swipedCell compare:indexPath] != NSOrderedSame) {
+        
+        // Unswipe the currently swiped cell
+        APMFrontCell *currentlySwipedCell = (APMFrontCell *)[self.donorTableView cellForRowAtIndexPath:_swipedCell];
+        [currentlySwipedCell didSwipeLeftInCell:self];
+        
+    }
+    
+    // Set the _swipedCell property
+    _swipedCell = indexPath;
+    
+}
+
+-(void)didSwipeLeftInCellWithIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([_swipedCell compare:indexPath] == NSOrderedSame) {
+        
+        _swipedCell = nil;
+        
+    }
+    
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (_swipedCell) {
+        
+        APMFrontCell *currentlySwipedCell = (APMFrontCell *)[self.donorTableView cellForRowAtIndexPath:_swipedCell];
+        [currentlySwipedCell didSwipeLeftInCell:self];
+        
+    }
+    
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 65.0;
+    
 }
 
 @end

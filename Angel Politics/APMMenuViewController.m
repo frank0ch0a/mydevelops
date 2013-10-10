@@ -167,7 +167,7 @@ enum {
         
        
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 115,320, 1)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 120,320, 1)];
         lineView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:lineView];
         
@@ -184,6 +184,8 @@ enum {
         lineView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:lineView];
         
+      
+
         return cell;
 
     }

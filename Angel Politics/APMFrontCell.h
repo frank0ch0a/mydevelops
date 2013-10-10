@@ -7,7 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APMFrontCellProtocol.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface APMFrontCell : UITableViewCell
+
+@property (nonatomic, weak) id <APMFrontCellProtocol> delegate;
+
+@property (nonatomic, strong) NSIndexPath *indexPath;
+@property (weak, nonatomic) IBOutlet UIView *swipeView;
+
+@property (weak, nonatomic) IBOutlet UIView *topView;
+
+@property (weak, nonatomic) IBOutlet UIView *circleView;
+@property (weak, nonatomic) IBOutlet UILabel *donorLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
+
+-(IBAction)didSwipeRightInCell:(id)sender;
+-(IBAction)didSwipeLeftInCell:(id)sender;
+
+
 
 @end

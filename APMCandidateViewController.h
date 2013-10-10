@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface APMCandidateViewController : UIViewController
+@interface APMCandidateViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *donorLabel;
+@property (weak, nonatomic) IBOutlet UITableView *candTableView;
+- (IBAction)callOutcome:(id)sender;
 
 @end
