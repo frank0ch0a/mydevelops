@@ -55,7 +55,7 @@ enum {
     
     APMFrontViewController *fronVC=[[APMFrontViewController alloc]init];
     
-    
+    NSLog(@"Menu!");
     
     fronVC.delegate=self;
 }
@@ -70,7 +70,7 @@ enum {
     
     [self viewDidLoad];
     
-    NSLog(@" candidateArray %@",self.candidateArray);
+    NSLog(@" candidateArray %@",array);
     
     
 }

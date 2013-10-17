@@ -22,6 +22,7 @@
 
 @property(strong,nonatomic)NSArray *donors;
 @property(strong,nonatomic)NSArray *amounts;
+@property(strong,nonatomic)UIImageView* myImageView;
 
 @end
 
@@ -61,6 +62,8 @@ static NSString *const FrontCell=@"FrontCell";
     self.donors=@[@"Pascal Dupree",@"Adan Nichelson",@"John Forrester",@"Sander Kleinenberg",@"Michelle Stuart"];
     
     self.amounts=@[@"1200",@"800",@"600",@"500",@"600"];
+    
+    
                     
     
     [self loadData];
@@ -87,9 +90,9 @@ static NSString *const FrontCell=@"FrontCell";
     self.otherButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
     
     UIImage* myImage = [UIImage imageNamed:@"nav_logo"];
-    UIImageView* myImageView = [[UIImageView alloc] initWithImage:myImage];
-    myImageView.frame=CGRectMake(80, 8, 145, 26);
-    [self.navigationController.navigationBar addSubview:myImageView];
+    self.myImageView = [[UIImageView alloc] initWithImage:myImage];
+    self.myImageView.frame=CGRectMake(80, 8, 145, 26);
+    [self.navigationController.navigationBar addSubview:self.myImageView];
     
     
     
@@ -112,6 +115,8 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(void)parseDictionary:(NSDictionary *)dictionary{
     
+    
+   // NSLog(@"dictionary %@",dictionary);
     
     NSMutableArray *arrayDic=[[NSMutableArray alloc]init];
     
@@ -138,7 +143,7 @@ static NSString *const FrontCell=@"FrontCell";
     }
     
     
-    NSLog(@"array %@",array);
+   // NSLog(@"array %@",array);
     
     [self.delegate frontViewController:self didCandidateData:array];
     
@@ -294,8 +299,14 @@ static NSString *const FrontCell=@"FrontCell";
 {
     APMCandidateViewController *candidateVC=[[APMCandidateViewController alloc]init];
     
+    
+
+    
     [self.navigationController pushViewController:candidateVC animated:YES];
     
+    self.myImageView.hidden=YES;
+   
+
     
     
     

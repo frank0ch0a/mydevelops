@@ -21,7 +21,7 @@
     if (self) {
         
         
-        self.swipeView.hidden=YES;
+      
         
         // Create the gesture recognizers
         UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeRightInCell:)];
@@ -30,10 +30,8 @@
         UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeftInCell:)];
         [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
         
-       
         [self addGestureRecognizer:swipeRight];
         [self addGestureRecognizer:swipeLeft];
-        
         
         
         

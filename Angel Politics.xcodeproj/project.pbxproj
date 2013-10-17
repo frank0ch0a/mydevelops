@@ -37,6 +37,10 @@
 		0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3B117EF487D001EA3A6 /* barPattern.png */; };
 		0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3B317EF4E03001EA3A6 /* MenuCell.xib */; };
 		0182D3B717EF4E3F001EA3A6 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3B617EF4E3F001EA3A6 /* MenuCell.m */; };
+		019B7D63180C441D006202B5 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 019B7D5D180C441D006202B5 /* libTestFlight.a */; };
+		019B7D64180C441D006202B5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 019B7D5E180C441D006202B5 /* README.md */; };
+		019B7D65180C441D006202B5 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 019B7D5F180C441D006202B5 /* release_notes.md */; };
+		019B7D67180C44C3006202B5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 019B7D66180C44C3006202B5 /* libz.dylib */; };
 		01BB961817FCFF650040DE19 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960317FCFF650040DE19 /* AFHTTPClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -Wno-unused"; }; };
 		01BB961917FCFF650040DE19 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960517FCFF650040DE19 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		01BB961A17FCFF650040DE19 /* AFImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960717FCFF650040DE19 /* AFImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -121,6 +125,13 @@
 		0182D3B317EF4E03001EA3A6 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		0182D3B517EF4E3F001EA3A6 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		0182D3B617EF4E3F001EA3A6 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
+		019B7D5D180C441D006202B5 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		019B7D5E180C441D006202B5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		019B7D5F180C441D006202B5 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		019B7D60180C441D006202B5 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		019B7D61180C441D006202B5 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		019B7D62180C441D006202B5 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		019B7D66180C44C3006202B5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		01BB960217FCFF650040DE19 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		01BB960317FCFF650040DE19 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		01BB960417FCFF650040DE19 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -169,6 +180,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				019B7D67180C44C3006202B5 /* libz.dylib in Frameworks */,
+				019B7D63180C441D006202B5 /* libTestFlight.a in Frameworks */,
 				01D4F72F180640630054613C /* QuartzCore.framework in Frameworks */,
 				011D239417EF31E4003A4204 /* CoreGraphics.framework in Frameworks */,
 				011D239617EF31E4003A4204 /* UIKit.framework in Frameworks */,
@@ -193,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				0152722F18038B6500D79E1C /* Default-568h@2x.png */,
+				019B7D5C180C441D006202B5 /* TestFlightSDK2.0.2 */,
 				011D239717EF31E4003A4204 /* Angel Politics */,
 				011D23B017EF31E4003A4204 /* Angel PoliticsTests */,
 				011D239017EF31E4003A4204 /* Frameworks */,
@@ -212,6 +226,7 @@
 		011D239017EF31E4003A4204 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				019B7D66180C44C3006202B5 /* libz.dylib */,
 				01D4F72E180640630054613C /* QuartzCore.framework */,
 				011D239117EF31E4003A4204 /* Foundation.framework */,
 				011D239317EF31E4003A4204 /* CoreGraphics.framework */,
@@ -293,6 +308,19 @@
 				0182D3A817EF37A8001EA3A6 /* NVSlideMenuController.m */,
 			);
 			path = NVSlideMenuController;
+			sourceTree = "<group>";
+		};
+		019B7D5C180C441D006202B5 /* TestFlightSDK2.0.2 */ = {
+			isa = PBXGroup;
+			children = (
+				019B7D5D180C441D006202B5 /* libTestFlight.a */,
+				019B7D5E180C441D006202B5 /* README.md */,
+				019B7D5F180C441D006202B5 /* release_notes.md */,
+				019B7D60180C441D006202B5 /* TestFlight+AsyncLogging.h */,
+				019B7D61180C441D006202B5 /* TestFlight+ManualSessions.h */,
+				019B7D62180C441D006202B5 /* TestFlight.h */,
+			);
+			path = TestFlightSDK2.0.2;
 			sourceTree = "<group>";
 		};
 		01BB95FE17FCFE6C0040DE19 /* Delegate */ = {
@@ -480,6 +508,7 @@
 				01D4F72518063C650054613C /* HelveticaNeueBoldItalic.ttf in Resources */,
 				014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */,
 				01D4F72A18063C650054613C /* HelveticaNeueLightItalic.ttf in Resources */,
+				019B7D64180C441D006202B5 /* README.md in Resources */,
 				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
 				01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */,
 				015272321803A3BB00D79E1C /* APMFrontCell.xib in Resources */,
@@ -490,6 +519,7 @@
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
 				01D4F72B18063C650054613C /* HelveticaNeueMedium.ttf in Resources */,
 				01D4F72C18063C650054613C /* HelveticaNeueUltraLight.ttf in Resources */,
+				019B7D65180C441D006202B5 /* release_notes.md in Resources */,
 				015EA1BD1803D64700960438 /* APMCallOutComeViewController.xib in Resources */,
 				0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */,
 				01D4F72618063C650054613C /* HelveticaNeueCondensedBlack.ttf in Resources */,
@@ -655,6 +685,10 @@
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				INFOPLIST_FILE = "Angel Politics/Angel Politics-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Frank/Documents/IOS\\ develop/My\\ Develops/Angel\\ Politics/TestFlightSDK2.0.2",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -670,6 +704,10 @@
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				INFOPLIST_FILE = "Angel Politics/Angel Politics-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Frank/Documents/IOS\\ develop/My\\ Develops/Angel\\ Politics/TestFlightSDK2.0.2",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;

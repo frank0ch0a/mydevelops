@@ -10,11 +10,14 @@
 #import "NVSlideMenuController.h"
 #import "APMFrontViewController.h"
 #import "APMMenuViewController.h"
+#import "TestFlight.h"
 
 @implementation APMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+        
+    [TestFlight takeOff:@"460a73af-a82f-45ba-90f3-9678ef28f3d9"];
     
     [self customizeAppearance];
     
@@ -52,6 +55,7 @@
     
     
     [[UIBarButtonItem appearance]setBackButtonBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
     [[UIBarButtonItem appearance]setBackButtonBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     
