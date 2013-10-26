@@ -23,6 +23,8 @@
         
       
         
+        
+        
         // Create the gesture recognizers
         UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeRightInCell:)];
         [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];

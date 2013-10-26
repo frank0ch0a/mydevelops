@@ -57,6 +57,8 @@ enum {
     
     NSLog(@"Menu!");
     
+    
+    
     fronVC.delegate=self;
 }
 
