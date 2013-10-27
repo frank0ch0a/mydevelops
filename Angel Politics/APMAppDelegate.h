@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property(strong,nonatomic) APMFrontViewController *viewController;
+@property (nonatomic, retain) NSMutableDictionary *keychainItemData;
 
 @end

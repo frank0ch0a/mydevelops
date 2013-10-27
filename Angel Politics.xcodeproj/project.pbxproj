@@ -54,8 +54,8 @@
 		01BB962417FD01870040DE19 /* APMCandidateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB962317FD01870040DE19 /* APMCandidateModel.m */; };
 		01C98350181C297A0043C8EA /* APMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C9834E181C297A0043C8EA /* APMLoginViewController.m */; };
 		01C98351181C297A0043C8EA /* APMLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C9834F181C297A0043C8EA /* APMLoginViewController.xib */; };
-		01C98354181C5FA50043C8EA /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C98353181C5FA50043C8EA /* KeychainItemWrapper.m */; };
 		01C98356181C5FB80043C8EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C98355181C5FB80043C8EA /* Security.framework */; };
+		01C98359181C740D0043C8EA /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C98358181C740D0043C8EA /* KeychainItemWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01D2930717FE5DF3008F3F5C /* men@2x.png */; };
 		01D4F72118063C650054613C /* HelveticaBd___-.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4F71318063C650054613C /* HelveticaBd___-.ttf */; };
 		01D4F72218063C650054613C /* HelveticaCdBd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4F71418063C650054613C /* HelveticaCdBd.ttf */; };
@@ -163,9 +163,9 @@
 		01C9834D181C297A0043C8EA /* APMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMLoginViewController.h; sourceTree = "<group>"; };
 		01C9834E181C297A0043C8EA /* APMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMLoginViewController.m; sourceTree = "<group>"; };
 		01C9834F181C297A0043C8EA /* APMLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMLoginViewController.xib; sourceTree = "<group>"; };
-		01C98352181C5FA50043C8EA /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
-		01C98353181C5FA50043C8EA /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		01C98355181C5FB80043C8EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		01C98357181C740D0043C8EA /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		01C98358181C740D0043C8EA /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		01D2930717FE5DF3008F3F5C /* men@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "men@2x.png"; sourceTree = "<group>"; };
 		01D4F71318063C650054613C /* HelveticaBd___-.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HelveticaBd___-.ttf"; sourceTree = "<group>"; };
 		01D4F71418063C650054613C /* HelveticaCdBd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HelveticaCdBd.ttf; sourceTree = "<group>"; };
@@ -401,9 +401,9 @@
 		01BB962517FD01960040DE19 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				01C98352181C5FA50043C8EA /* KeychainItemWrapper.h */,
-				01C98353181C5FA50043C8EA /* KeychainItemWrapper.m */,
 				01BB962217FD01870040DE19 /* APMCandidateModel.h */,
+				01C98357181C740D0043C8EA /* KeychainItemWrapper.h */,
+				01C98358181C740D0043C8EA /* KeychainItemWrapper.m */,
 				01BB962317FD01870040DE19 /* APMCandidateModel.m */,
 			);
 			name = Model;
@@ -577,7 +577,7 @@
 				015272351803A4FC00D79E1C /* APMFrontCell.m in Sources */,
 				0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */,
 				01BB961A17FCFF650040DE19 /* AFImageCache.m in Sources */,
-				01C98354181C5FA50043C8EA /* KeychainItemWrapper.m in Sources */,
+				01C98359181C740D0043C8EA /* KeychainItemWrapper.m in Sources */,
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
 				014690F517F734B5002C0318 /* APMCandidateViewController.m in Sources */,
 				01BB961D17FCFF650040DE19 /* AFNetworkActivityIndicatorManager.m in Sources */,

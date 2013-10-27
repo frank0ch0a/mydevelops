@@ -11,12 +11,18 @@
 #import "APMFrontViewController.h"
 #import "APMMenuViewController.h"
 #import "TestFlight.h"
+#import "KeychainItemWrapper.h"
 
 @implementation APMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-        
+    
+    /*
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    [keychainItem resetKeychainItem];*/
+    
     [TestFlight takeOff:@"460a73af-a82f-45ba-90f3-9678ef28f3d9"];
     
     [self customizeAppearance];
@@ -43,6 +49,7 @@
     
     return YES;
 }
+
 
 
 -(void)customizeAppearance

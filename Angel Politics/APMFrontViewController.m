@@ -12,6 +12,8 @@
 #import "APMCandidateModel.h"
 #import "APMCandidateViewController.h"
 #import "APMFrontCell.h"
+#import "KeychainItemWrapper.h"
+#import "APMLoginViewController.h"
 
 
 @interface APMFrontViewController ()
@@ -23,6 +25,8 @@
 @property(strong,nonatomic)NSArray *donors;
 @property(strong,nonatomic)NSArray *amounts;
 @property(strong,nonatomic)UIImageView* myImageView;
+@property(strong,nonatomic)KeychainItemWrapper *keychain;
+@property(nonatomic,strong)KeychainItemWrapper *passwordItem;
 
 @end
 
@@ -44,9 +48,42 @@ static NSString *const FrontCell=@"FrontCell";
 }
 
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    
+    //self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    
+    
+    //NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+/*
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] &&
+        [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil&& [_keychain objectForKey:(__bridge id)kSecValueData]!=nil)*/
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] )
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else
+    {
+        // This is the first launch ever
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasPassLogin"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+            APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
+            
+            [self presentViewController:loginVC animated:YES completion:nil];
+
+            
+        
+        
+        
+    }
+    
     // Do any additional setup after loading the view from its nib.
     
     [self.donorTableView registerNib:[self FrontCellNib] forCellReuseIdentifier:FrontCell];
@@ -69,6 +106,7 @@ static NSString *const FrontCell=@"FrontCell";
     [self loadData];
 }
 
+
 -(UINib *)FrontCellNib
 {
     return [UINib nibWithNibName:@"APMFrontCell" bundle:nil];
@@ -79,6 +117,8 @@ static NSString *const FrontCell=@"FrontCell";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+   
     
     self.donorButton.layer.borderWidth=1.0f;
     self.donorButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
