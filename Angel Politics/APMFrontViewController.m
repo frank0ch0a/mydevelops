@@ -18,14 +18,15 @@
 #import "APMLeadsModel.h"
 
 
-@interface APMFrontViewController ()
+@interface APMFrontViewController (){
+    
+    BOOL isLoading;
+}
 
 // Lazy buttons
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
 
-@property(strong,nonatomic)NSArray *donors;
-@property(strong,nonatomic)NSArray *amounts;
 @property(strong,nonatomic)UIImageView* myImageView;
 @property(strong,nonatomic)KeychainItemWrapper *keychain;
 //@property(nonatomic,strong)KeychainItemWrapper *passwordItem;
@@ -34,7 +35,7 @@
 @property(nonatomic,strong)NSMutableArray *leadsResults;
 
 @end
-
+static NSString *const LoadingCellIdentifier=@"LoadingCell";
 static NSString *const FrontCell=@"FrontCell";
 
 @implementation APMFrontViewController{
@@ -92,7 +93,12 @@ static NSString *const FrontCell=@"FrontCell";
     // Do any additional setup after loading the view from its nib.
     
     [self.donorTableView registerNib:[self FrontCellNib] forCellReuseIdentifier:FrontCell];
+    
+    UINib *cellNib=[UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
 
+    cellNib=[UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
+    
+    [self.donorTableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
     
     
     [self updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:NO];
@@ -101,15 +107,16 @@ static NSString *const FrontCell=@"FrontCell";
     
     //Hardcoding donorsinfo
     
-    self.donors=@[@"Pascal Dupree",@"Adan Nichelson",@"John Forrester",@"Sander Kleinenberg",@"Michelle Stuart"];
-    
-    self.amounts=@[@"1200",@"800",@"600",@"500",@"600"];
+   
     
     self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
     self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
                     
     
     [self loadData];
+    
+    
+    isLoading=YES;
 }
 
 
@@ -198,7 +205,6 @@ static NSString *const FrontCell=@"FrontCell";
             
             [self.leadsResults addObject:leadsModel];
             
-            NSLog(@"leadresults %@",self.leadsResults);
             
         }
         
@@ -232,13 +238,14 @@ static NSString *const FrontCell=@"FrontCell";
            // NSLog(@"Resulta JSON MenuVC %@",JSON);
             
            [self parseArray:JSON];
+            isLoading=NO;
             
             [self.donorTableView reloadData];
             
             
         }else{
             
-            
+            isLoading=NO;
             
             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Usuario no registrado" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             
@@ -348,13 +355,20 @@ static NSString *const FrontCell=@"FrontCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
-    // Return the number of rows in the section.
-    return self.donors.count;
+    if (isLoading) {
+        return 1;
+    }else{
+        
+        return self.leadsResults.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (isLoading) {
+        return  [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
+    }else{
     
     APMFrontCell *cell = [tableView dequeueReusableCellWithIdentifier:FrontCell];
     
@@ -377,6 +391,20 @@ static NSString *const FrontCell=@"FrontCell";
     
       
     return cell;
+        
+    }
+}
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([self.leadsResults count]==0 || isLoading) {
+        return nil;
+    }else{
+        
+        return indexPath;
+        
+    }
+    
 }
 
 

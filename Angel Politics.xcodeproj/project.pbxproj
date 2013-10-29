@@ -99,6 +99,9 @@
 		01E557A918024D0B0081AB21 /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E557A818024D0B0081AB21 /* phone.png */; };
 		01E557AD18024DFA0081AB21 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E557AC18024DFA0081AB21 /* mail.png */; };
 		01F95E73181F4392006CCF83 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F95E72181F4392006CCF83 /* CoreFoundation.framework */; };
+		01F95E75181F5935006CCF83 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F95E74181F5935006CCF83 /* LoadingCell.xib */; };
+		01F95E79181F5ED4006CCF83 /* APMCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F95E77181F5ED4006CCF83 /* APMCallViewController.m */; };
+		01F95E7A181F5ED4006CCF83 /* APMCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -239,6 +242,10 @@
 		01E557AC18024DFA0081AB21 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
 		01F95E71181F4229006CCF83 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		01F95E72181F4392006CCF83 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		01F95E74181F5935006CCF83 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		01F95E76181F5ED4006CCF83 /* APMCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCallViewController.h; sourceTree = "<group>"; };
+		01F95E77181F5ED4006CCF83 /* APMCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCallViewController.m; sourceTree = "<group>"; };
+		01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCallViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +392,7 @@
 				014690F817F73664002C0318 /* APMCandidateCell.xib */,
 				0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */,
 				0182D3B317EF4E03001EA3A6 /* MenuCell.xib */,
+				01F95E74181F5935006CCF83 /* LoadingCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -466,6 +474,9 @@
 				0182D3B617EF4E3F001EA3A6 /* MenuCell.m */,
 				0182D3A117EF35FA001EA3A6 /* APMFrontViewController.h */,
 				0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */,
+				01F95E76181F5ED4006CCF83 /* APMCallViewController.h */,
+				01F95E77181F5ED4006CCF83 /* APMCallViewController.m */,
+				01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */,
 				0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */,
 				0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */,
 				01C9834D181C297A0043C8EA /* APMLoginViewController.h */,
@@ -636,6 +647,7 @@
 				01D4F72D18063C650054613C /* HelveticaNeueUltraLightItalic.ttf in Resources */,
 				01D4F72118063C650054613C /* HelveticaBd___-.ttf in Resources */,
 				0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */,
+				01F95E75181F5935006CCF83 /* LoadingCell.xib in Resources */,
 				01732A91181DDE8E0044EF8E /* outgoing.wav in Resources */,
 				01732A88181DDE8E0044EF8E /* dtmf_4.wav in Resources */,
 				01D4F72518063C650054613C /* HelveticaNeueBoldItalic.ttf in Resources */,
@@ -643,6 +655,7 @@
 				014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */,
 				01D4F72A18063C650054613C /* HelveticaNeueLightItalic.ttf in Resources */,
 				019B7D64180C441D006202B5 /* README.md in Resources */,
+				01F95E7A181F5ED4006CCF83 /* APMCallViewController.xib in Resources */,
 				01732A8E181DDE8E0044EF8E /* dtmf_hash.wav in Resources */,
 				01732A84181DDE8E0044EF8E /* dtmf_0.wav in Resources */,
 				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
@@ -688,6 +701,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01BB961F17FCFF650040DE19 /* AFURLConnectionOperation.m in Sources */,
+				01F95E79181F5ED4006CCF83 /* APMCallViewController.m in Sources */,
 				01BB961B17FCFF650040DE19 /* AFImageRequestOperation.m in Sources */,
 				01BB962417FD01870040DE19 /* APMCandidateModel.m in Sources */,
 				014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */,
