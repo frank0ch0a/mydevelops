@@ -102,6 +102,12 @@
 		01F95E75181F5935006CCF83 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F95E74181F5935006CCF83 /* LoadingCell.xib */; };
 		01F95E79181F5ED4006CCF83 /* APMCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F95E77181F5ED4006CCF83 /* APMCallViewController.m */; };
 		01F95E7A181F5ED4006CCF83 /* APMCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */; };
+		01F95E7D181F6254006CCF83 /* APMPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F95E7C181F6254006CCF83 /* APMPhone.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		01F95E80181F65D8006CCF83 /* CloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 01F95E7E181F65D8006CCF83 /* CloseButton.png */; };
+		01F95E81181F65D8006CCF83 /* CloseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01F95E7F181F65D8006CCF83 /* CloseButton@2x.png */; };
+		01F95E84181F69F2006CCF83 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F95E83181F69F2006CCF83 /* GradientView.m */; };
+		01F95E87181F6C26006CCF83 /* dial.png in Resources */ = {isa = PBXBuildFile; fileRef = 01F95E85181F6C26006CCF83 /* dial.png */; };
+		01F95E88181F6C26006CCF83 /* hangup.png in Resources */ = {isa = PBXBuildFile; fileRef = 01F95E86181F6C26006CCF83 /* hangup.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,6 +252,14 @@
 		01F95E76181F5ED4006CCF83 /* APMCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCallViewController.h; sourceTree = "<group>"; };
 		01F95E77181F5ED4006CCF83 /* APMCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCallViewController.m; sourceTree = "<group>"; };
 		01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCallViewController.xib; sourceTree = "<group>"; };
+		01F95E7B181F6254006CCF83 /* APMPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMPhone.h; sourceTree = "<group>"; };
+		01F95E7C181F6254006CCF83 /* APMPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMPhone.m; sourceTree = "<group>"; };
+		01F95E7E181F65D8006CCF83 /* CloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseButton.png; sourceTree = "<group>"; };
+		01F95E7F181F65D8006CCF83 /* CloseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloseButton@2x.png"; sourceTree = "<group>"; };
+		01F95E82181F69F2006CCF83 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		01F95E83181F69F2006CCF83 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		01F95E85181F6C26006CCF83 /* dial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dial.png; sourceTree = "<group>"; };
+		01F95E86181F6C26006CCF83 /* hangup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hangup.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,7 +364,11 @@
 				01D4F71218063C650054613C /* Helvetica */,
 				01D4F71518063C650054613C /* Helvetica Neue Font */,
 				0182D3B117EF487D001EA3A6 /* barPattern.png */,
+				01F95E85181F6C26006CCF83 /* dial.png */,
+				01F95E86181F6C26006CCF83 /* hangup.png */,
 				01E557AC18024DFA0081AB21 /* mail.png */,
+				01F95E7E181F65D8006CCF83 /* CloseButton.png */,
+				01F95E7F181F65D8006CCF83 /* CloseButton@2x.png */,
 				01E557A818024D0B0081AB21 /* phone.png */,
 				01D2930717FE5DF3008F3F5C /* men@2x.png */,
 				0182D3AD17EF465B001EA3A6 /* list.png */,
@@ -386,6 +404,7 @@
 			isa = PBXGroup;
 			children = (
 				015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */,
+				01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */,
 				01C9834F181C297A0043C8EA /* APMLoginViewController.xib */,
 				015272311803A3BB00D79E1C /* APMFrontCell.xib */,
 				014690F417F734B5002C0318 /* APMCandidateViewController.xib */,
@@ -476,7 +495,6 @@
 				0182D3A217EF35FA001EA3A6 /* APMFrontViewController.m */,
 				01F95E76181F5ED4006CCF83 /* APMCallViewController.h */,
 				01F95E77181F5ED4006CCF83 /* APMCallViewController.m */,
-				01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */,
 				0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */,
 				0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */,
 				01C9834D181C297A0043C8EA /* APMLoginViewController.h */,
@@ -484,6 +502,8 @@
 				015272331803A4FC00D79E1C /* APMFrontCell.h */,
 				015272341803A4FC00D79E1C /* APMFrontCell.m */,
 				015272361803AEED00D79E1C /* APMFrontCellProtocol.h */,
+				01F95E82181F69F2006CCF83 /* GradientView.h */,
+				01F95E83181F69F2006CCF83 /* GradientView.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -526,6 +546,8 @@
 				01C98358181C740D0043C8EA /* KeychainItemWrapper.m */,
 				01732A62181DD30C0044EF8E /* APMLeadsModel.h */,
 				01732A63181DD30C0044EF8E /* APMLeadsModel.m */,
+				01F95E7B181F6254006CCF83 /* APMPhone.h */,
+				01F95E7C181F6254006CCF83 /* APMPhone.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -634,6 +656,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01732A87181DDE8E0044EF8E /* dtmf_3.wav in Resources */,
+				01F95E87181F6C26006CCF83 /* dial.png in Resources */,
 				011D239C17EF31E4003A4204 /* InfoPlist.strings in Resources */,
 				01C98351181C297A0043C8EA /* APMLoginViewController.xib in Resources */,
 				01D4F72218063C650054613C /* HelveticaCdBd.ttf in Resources */,
@@ -658,6 +681,7 @@
 				01F95E7A181F5ED4006CCF83 /* APMCallViewController.xib in Resources */,
 				01732A8E181DDE8E0044EF8E /* dtmf_hash.wav in Resources */,
 				01732A84181DDE8E0044EF8E /* dtmf_0.wav in Resources */,
+				01F95E88181F6C26006CCF83 /* hangup.png in Resources */,
 				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
 				01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */,
 				01732A8A181DDE8E0044EF8E /* dtmf_6.wav in Resources */,
@@ -667,9 +691,11 @@
 				0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */,
 				01732A86181DDE8E0044EF8E /* dtmf_2.wav in Resources */,
 				01732A8C181DDE8E0044EF8E /* dtmf_8.wav in Resources */,
+				01F95E80181F65D8006CCF83 /* CloseButton.png in Resources */,
 				01D4F72418063C650054613C /* HelveticaNeueBold.ttf in Resources */,
 				0152723018038B6500D79E1C /* Default-568h@2x.png in Resources */,
 				01D4F72718063C650054613C /* HelveticaNeueCondensedBold.ttf in Resources */,
+				01F95E81181F65D8006CCF83 /* CloseButton@2x.png in Resources */,
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
 				01732A8D181DDE8E0044EF8E /* dtmf_9.wav in Resources */,
 				01732A90181DDE8E0044EF8E /* incoming.wav in Resources */,
@@ -706,6 +732,7 @@
 				01BB962417FD01870040DE19 /* APMCandidateModel.m in Sources */,
 				014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */,
 				0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */,
+				01F95E7D181F6254006CCF83 /* APMPhone.m in Sources */,
 				01C98350181C297A0043C8EA /* APMLoginViewController.m in Sources */,
 				01BB961917FCFF650040DE19 /* AFHTTPRequestOperation.m in Sources */,
 				01BB961C17FCFF650040DE19 /* AFJSONRequestOperation.m in Sources */,
@@ -725,6 +752,7 @@
 				01BB961D17FCFF650040DE19 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				015EA1BC1803D64700960438 /* APMCallOutComeViewController.m in Sources */,
 				0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */,
+				01F95E84181F69F2006CCF83 /* GradientView.m in Sources */,
 				01BB962017FCFF650040DE19 /* AFXMLRequestOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

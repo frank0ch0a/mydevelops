@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface APMCallViewController : UIViewController
+@interface APMCallViewController : UIViewController<UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UITextField *numberTextField;
+
+- (IBAction)DialButton:(id)sender;
+
+- (IBAction)hangUpButton:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIView *callingUIView;
+- (IBAction)closeCallVC:(id)sender;
 
 @end

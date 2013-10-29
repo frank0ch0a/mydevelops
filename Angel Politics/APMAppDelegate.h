@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class APMFrontViewController;
+@class APMPhone;
 
 @interface APMAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property(strong,nonatomic) APMFrontViewController *viewController;
 @property (nonatomic, retain) NSMutableDictionary *keychainItemData;
+@property(nonatomic,strong)APMPhone *phone;
+
 
 @end

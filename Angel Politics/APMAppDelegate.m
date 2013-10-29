@@ -12,12 +12,14 @@
 #import "APMMenuViewController.h"
 #import "TestFlight.h"
 #import "KeychainItemWrapper.h"
+#import "APMPhone.h"
 
 @implementation APMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    self.phone = [[APMPhone alloc] init];
     /*
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"APUser" accessGroup:nil];
     

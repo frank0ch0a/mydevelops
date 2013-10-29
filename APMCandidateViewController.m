@@ -8,6 +8,7 @@
 
 #import "APMCandidateViewController.h"
 #import "APMCallOutComeViewController.h"
+#import "APMCallViewController.h"
 
 @interface APMCandidateViewController ()
 
@@ -126,8 +127,17 @@
 
 - (IBAction)callOutcome:(id)sender {
     
+    
+    /*
     APMCallOutComeViewController *callOut=[[APMCallOutComeViewController alloc]init];
     
-    [self.navigationController pushViewController:callOut animated:YES];
+    [self.navigationController pushViewController:callOut animated:YES];*/
+    
+    APMCallViewController *apmCallVC=[[APMCallViewController alloc]init];
+    
+    [self.view addSubview:apmCallVC.view];
+    [self addChildViewController:apmCallVC];
+    [apmCallVC didMoveToParentViewController:self];
+
 }
 @end
