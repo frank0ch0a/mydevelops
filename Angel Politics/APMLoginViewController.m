@@ -10,6 +10,7 @@
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
+#import "SVProgressHUD.h"
 
 @interface APMLoginViewController (){
     CGFloat loginy;
@@ -47,9 +48,8 @@
    self.keyChain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
     
-    
-    [self.passwordTextField setText:[self.keyChain objectForKey:(__bridge id)kSecValueData]];
-    NSLog(@"password: %@", [self.passwordTextField text]);
+    /*    [self.passwordTextField setText:[self.keyChain objectForKey:(__bridge id)kSecValueData]];
+    NSLog(@"password: %@", [self.passwordTextField text]);*/
     
     self.emailTextField.delegate=self;
     self.passwordTextField.delegate=self;
@@ -75,7 +75,7 @@
     
     if (textField==self.emailTextField || textField==self.passwordTextField) {
         
-        [UIView animateWithDuration:0.5 delay:0
+        [UIView animateWithDuration:0.25 delay:0
                             options:UIViewAnimationOptionCurveEaseOut animations:^{
                                 
                                 
@@ -126,18 +126,17 @@
     NSLog(@"Login Success");
     
     
-    /*
+    
      // Store username to keychain
      if ([self.emailTextField text]){
      [self.keyChain setObject:[self.emailTextField text] forKey:(__bridge id)kSecAttrAccount];}
      
      // Store password to keychain
      if ([self.passwordTextField text]){
-     [self.keyChain setObject:[self.passwordTextField text] forKey:(__bridge id)(kSecValueData)];}*/
+     [self.keyChain setObject:[self.passwordTextField text] forKey:(__bridge id)(kSecValueData)];}
     
     
-    
-    
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (IBAction)loginButton:(id)sender {
@@ -162,7 +161,7 @@
                 
                
                 
-                
+                [SVProgressHUD show];
 
                 
                 
@@ -183,13 +182,23 @@
                     
                     if (JSON !=nil) {
                         
-                        NSLog(@"Result %@",JSON);
-                    
+                        //NSLog(@"Result %@",JSON);
+                        
+                        [SVProgressHUD dismiss];
+                        
                         [self loginSuccess];
+                        
                         
                     }else{
                         
-                        NSLog(@"Usuario no registrado");
+                        [SVProgressHUD dismiss];
+                        
+                        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Usuario no registrado" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        
+                        [alertView show];
+
+                        
+                       // NSLog(@"Usuario no registrado");
                         
                     }
                     
@@ -211,50 +220,7 @@
                 
             }
             
-                   /*
-                    
-                    NSString *prueba=[[json objectAtIndex:0]valueForKey:@"respuesta"];
-                    
-                    NSLog(@" valor respuesta %@",prueba);
-                    
-                    //Parsing string
-                    
-                    if ([[[json objectAtIndex:0]valueForKey:@"respuesta"]integerValue]==1) {
-                        
-                        
-                        self.alertViewLogin = [[UIAlertView alloc] initWithTitle:@"Recordar usuario"
-                                                                         message:@"¿Desea guardar su usuario y contraseña?"
-                                                                        delegate:self
-                                                               cancelButtonTitle:@"SI"
-                                                               otherButtonTitles:@"NO",nil];
-                        self.alertViewLogin.delegate=self;
-                        
-                        
-                        [self.alertViewLogin show];
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    }else{
-                        
-                        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Usuario o Contraseña Errada" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                        [alertView show];
-                        
-                        self.emailTextField.text=@"";
-                        self.passwordTextField.text=@"";
-                    }
-                    
-                    
-                    
-                    
-                }
-            }
-            
-        }*/
-    
+                      
     
 
         }

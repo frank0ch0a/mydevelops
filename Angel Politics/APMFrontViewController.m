@@ -14,6 +14,8 @@
 #import "APMFrontCell.h"
 #import "KeychainItemWrapper.h"
 #import "APMLoginViewController.h"
+#import "AFHTTPClient.h"
+#import "APMLeadsModel.h"
 
 
 @interface APMFrontViewController ()
@@ -26,7 +28,10 @@
 @property(strong,nonatomic)NSArray *amounts;
 @property(strong,nonatomic)UIImageView* myImageView;
 @property(strong,nonatomic)KeychainItemWrapper *keychain;
-@property(nonatomic,strong)KeychainItemWrapper *passwordItem;
+//@property(nonatomic,strong)KeychainItemWrapper *passwordItem;
+@property(copy,nonatomic)NSString *email;
+@property(nonatomic,copy)NSString *password;
+@property(nonatomic,strong)NSMutableArray *leadsResults;
 
 @end
 
@@ -55,7 +60,7 @@ static NSString *const FrontCell=@"FrontCell";
     
     
     
-    //self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
     
     
@@ -100,7 +105,8 @@ static NSString *const FrontCell=@"FrontCell";
     
     self.amounts=@[@"1200",@"800",@"600",@"500",@"600"];
     
-    
+    self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+    self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
                     
     
     [self loadData];
@@ -153,39 +159,51 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
--(void)parseDictionary:(NSDictionary *)dictionary{
+-(APMLeadsModel *)parseData:(NSDictionary *)dictionary{
+    
+    APMLeadsModel *leadsModel=[[APMLeadsModel alloc]init];
+    
+    leadsModel.ask=[dictionary objectForKey:@"a"];
+    leadsModel.donorName=[dictionary objectForKey:@"b"];
+    leadsModel.donorLastName=[dictionary objectForKey:@"c"];
+    leadsModel.donorCity=[dictionary objectForKey:@"d"];
+    leadsModel.donorState=[dictionary objectForKey:@"e"];
+    leadsModel.donorPhoneNumber=[dictionary objectForKey:@"f"];
+    leadsModel.donorEmail=[dictionary objectForKey:@"g"];
     
     
-   // NSLog(@"dictionary %@",dictionary);
-    
-    NSMutableArray *arrayDic=[[NSMutableArray alloc]init];
-    
-    [arrayDic addObject:dictionary];
+    return leadsModel;
     
     
+}
 
+
+-(void)parseArray:(NSArray *)array
+{
     
-    APMCandidateModel *candidateModel=[[APMCandidateModel alloc]init];
-    
-     NSMutableArray *array=[[NSMutableArray alloc]init];
-    
-    for (int i=0; i<[arrayDic count]; i++) {
+    if (array==nil) {
+        NSLog(@"Expected 'results' array");
         
-   
-        candidateModel.candidateName=[[arrayDic objectAtIndex:i]objectForKey:@"a"];
-        candidateModel.city=[[arrayDic objectAtIndex:i]objectForKey:@"b"];
-        candidateModel.supportes=[[arrayDic objectAtIndex:i]objectForKey:@"c"];
-        candidateModel.funraised=[[arrayDic objectAtIndex:i]objectForKey:@"d"];
-        candidateModel.dayToElection=[[arrayDic objectAtIndex:i]objectForKey:@"e"];
-        
-        
-        [array addObject:candidateModel];
+        return;
     }
+    self.leadsResults=[[NSMutableArray alloc]init];
     
-    
-   // NSLog(@"array %@",array);
-    
-    [self.delegate frontViewController:self didCandidateData:array];
+    for (NSDictionary *resultDict in array) {
+        
+        APMLeadsModel *leadsModel;
+        
+        leadsModel=[self parseData:resultDict];
+        
+        if(leadsModel !=nil){
+            
+            [self.leadsResults addObject:leadsModel];
+            
+            NSLog(@"leadresults %@",self.leadsResults);
+            
+        }
+        
+        
+    }
     
     
     
@@ -194,28 +212,54 @@ static NSString *const FrontCell=@"FrontCell";
 -(void)loadData{
     
    
+    NSDictionary *dict=@{@"email":self.email ,@"pass":self.password};
     
-    NSURL *url=[NSURL URLWithString:@"https://www.angelpolitics.com/mobile/first.php?id=1351"];
+    // NSLog(@"Parameters %@",dict);
     
-   
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
     
-    NSURLRequest *request=[NSURLRequest requestWithURL:url];
+    [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+    [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                            path:@"/mobile/leads.php"
+                                                      parameters:dict
+                                    ];
     
-    AFJSONRequestOperation *operation=[AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-         NSLog(@"Success!");
-        [self parseDictionary:JSON];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
-       
+        if (JSON !=nil) {
+            
+           // NSLog(@"Resulta JSON MenuVC %@",JSON);
+            
+           [self parseArray:JSON];
+            
+            [self.donorTableView reloadData];
+            
+            
+        }else{
+            
+            
+            
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Usuario no registrado" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alertView show];
+            
+            
+            NSLog(@"Usuario no registrado");
+            
+        }
+        
+        
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [self showNetworkError];
+        NSLog(@"error %@", [error description]);
         
-        NSLog(@"error  %@",error);
-       
-        //[self.donorTableView reloadData];
     }];
     
     operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+    
+  
+
     
     [queue addOperation:operation];
     
@@ -323,9 +367,12 @@ static NSString *const FrontCell=@"FrontCell";
     
     cell.indexPath = indexPath;
     cell.delegate = self;
-    cell.donorLabel.text=[self.donors objectAtIndex:indexPath.row];
-    cell.amountLabel.text=[self.amounts objectAtIndex:indexPath.row];
-    cell.cityLabel.text=@"New York";
+    
+    APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
+    
+    cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
+    cell.amountLabel.text=leadsModel.ask;
+    cell.cityLabel.text=leadsModel.donorCity;
     
     
       

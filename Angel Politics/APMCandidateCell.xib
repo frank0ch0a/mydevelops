@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
@@ -108,7 +108,11 @@
             <connections>
                 <outlet property="CandUIView" destination="Y5E-fI-jqP" id="cRs-e5-cj7"/>
                 <outlet property="candImageView" destination="2Et-Z7-ME0" id="isN-gs-C20"/>
+                <outlet property="candidateDayToElectLabel" destination="rzr-d6-0hU" id="ca5-fl-yUu"/>
+                <outlet property="candidateFundRaisedLabel" destination="uTr-BC-Wmr" id="NiL-CT-6IO"/>
                 <outlet property="candidateNameLabel" destination="zZM-2d-sOK" id="PZm-xB-SAn"/>
+                <outlet property="candidateOficceAndCityLabel" destination="3YK-Ie-pST" id="52c-Qe-LBI"/>
+                <outlet property="candidateSupportersLabel" destination="sHB-qc-UfL" id="N0N-TR-eGH"/>
             </connections>
         </tableViewCell>
     </objects>

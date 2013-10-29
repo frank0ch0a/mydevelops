@@ -11,6 +11,10 @@
 #import "NVSlideMenuController.h"
 #import "MenuCell.h"
 #import "APMCandidateCell.h"
+#import "KeychainItemWrapper.h"
+#import "AFHTTPClient.h"
+#import "AFJSONRequestOperation.h"
+#import "APMCandidateModel.h"
 
 static NSString *const CandidateCellIdentifier=@"CandidateCell";
 static NSString *const MenuCellIdentifier=@"MenuCell";
@@ -30,6 +34,10 @@ enum {
 @interface APMMenuViewController ()
 
 @property(nonatomic,strong)NSMutableArray *candidateArray;
+@property(strong,nonatomic)KeychainItemWrapper *keychain;
+@property(copy,nonatomic)NSString *email;
+@property(nonatomic,copy)NSString *password;
+@property(nonatomic,strong)NSMutableArray *menuResults;
 
 @end
 
@@ -57,6 +65,16 @@ enum {
     
     NSLog(@"Menu!");
     
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    
+    NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
+    NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+    
+    self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+    self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+
+    [self downloadCandidateData];
     
     
     fronVC.delegate=self;
@@ -77,6 +95,114 @@ enum {
     
 }
 
+-(APMCandidateModel *)parseDataResult:(NSDictionary *)dictionary{
+    
+    APMCandidateModel *candidateModel=[[APMCandidateModel alloc]init];
+    
+    candidateModel.candidateName=[dictionary valueForKey:@"a"];
+    candidateModel.candidateLastName=[dictionary valueForKey:@"b"];
+    candidateModel.officeCandidate=[dictionary valueForKey:@"c"];
+    candidateModel.candidateImage=[dictionary valueForKey:@"d"];
+    candidateModel.city=[dictionary valueForKey:@"e"];
+    candidateModel.supportes=[dictionary valueForKey:@"f"];
+    candidateModel.funraised=[dictionary valueForKey:@"g"];
+    candidateModel.dayToElection=[dictionary valueForKey:@"h"];
+    
+    
+    return candidateModel;
+    
+}
+
+-(void)parseData:(NSDictionary *)dictionary{
+    
+    
+    NSMutableArray *array=[[NSMutableArray alloc]init];
+    
+    [array addObject:dictionary];
+    
+    
+    
+    self.menuResults=[[NSMutableArray alloc]init];
+    
+    for (NSDictionary *resultDict in array) {
+        
+        APMCandidateModel *candidatoModel;
+        
+        candidatoModel=[self parseDataResult:resultDict];
+        
+        if(candidatoModel!=nil){
+            
+            [self.menuResults addObject:candidatoModel];
+            
+            NSLog(@"results %@",self.menuResults);
+            
+        }
+        
+        
+    }
+
+    
+    
+    
+    
+    
+    
+}
+
+-(void)downloadCandidateData{
+    
+    
+    NSDictionary *dict=@{@"email":self.email ,@"pass":self.password};
+    
+   // NSLog(@"Parameters %@",dict);
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+    
+    [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+    [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                            path:@"/mobile/login.php"
+                                                      parameters:dict
+                                    ];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        if (JSON !=nil) {
+            
+            NSLog(@"Resulta JSON MenuVC %@",JSON);
+            
+            [self parseData:JSON];
+            
+           
+            
+            
+        }else{
+            
+            
+            
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Usuario no registrado" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alertView show];
+            
+            
+            NSLog(@"Usuario no registrado");
+            
+        }
+        
+        
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error %@", [error description]);
+        
+    }];
+    
+    operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+    
+    [operation start];
+    
+    
+    
+}
 - (UINib *)menuCellNib {
     return [UINib nibWithNibName:@"MenuCell" bundle:nil];
 }
@@ -146,7 +272,14 @@ enum {
 {
     
     if (indexPath.row==MenuCandidate) {
-        cell.candidateNameLabel.text=@"Frederick Norman";
+        
+        APMCandidateModel *candidateModel=[self.menuResults objectAtIndex:indexPath.row];
+        
+        cell.candidateNameLabel.text=[NSString stringWithFormat:@"%@,%@",candidateModel.candidateName,candidateModel.candidateLastName];
+        cell.candidateOficceAndCityLabel.text=[NSString stringWithFormat:@"%@,%@",candidateModel.officeCandidate,candidateModel.city];
+        cell.candidateSupportersLabel.text=candidateModel.supportes;
+        cell.candidateFundRaisedLabel.text=candidateModel.funraised;
+        cell.candidateDayToElectLabel.text=candidateModel.dayToElection;
         cell.candImageView.image=[UIImage imageNamed:@"men"];
         
        

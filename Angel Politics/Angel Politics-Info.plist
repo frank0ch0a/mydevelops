@@ -38,7 +38,7 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string></string>
+		<string>HelveticaNeue.ttf</string>
 	</array>
 </dict>
 </plist>

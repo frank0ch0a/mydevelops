@@ -14,6 +14,13 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *candidateNameLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *candidateOficceAndCityLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *candidateSupportersLabel;
+@property (weak, nonatomic) IBOutlet UILabel *candidateFundRaisedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *candidateDayToElectLabel;
+
+
 @property (weak, nonatomic) IBOutlet UIView *CandUIView;
 @property (weak, nonatomic) IBOutlet UIImageView *candImageView;
 

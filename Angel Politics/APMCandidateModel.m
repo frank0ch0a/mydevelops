@@ -10,6 +10,9 @@
 
 @implementation APMCandidateModel
 @synthesize candidateName;
+@synthesize candidateLastName;
+@synthesize officeCandidate;
+@synthesize candidateImage;
 @synthesize city;
 @synthesize supportes;
 @synthesize funraised;
