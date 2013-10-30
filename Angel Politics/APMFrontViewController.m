@@ -60,8 +60,7 @@ static NSString *const FrontCell=@"FrontCell";
     [super viewDidLoad];
     
     
-    
-    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+   
     
     
     
@@ -70,21 +69,27 @@ static NSString *const FrontCell=@"FrontCell";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] &&
         [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil&& [_keychain objectForKey:(__bridge id)kSecValueData]!=nil)*/
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] )
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"]&&[_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [_keychain objectForKey:(__bridge id)kSecValueData]!=nil )
     {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
     }
     else
     {
+        if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]==nil && [_keychain objectForKey:(__bridge id)kSecValueData]==nil){
+            
+            
+        self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+        
         // This is the first launch ever
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasPassLogin"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
             APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
             
-            [self presentViewController:loginVC animated:YES completion:nil];
+            [self presentViewController:loginVC animated:NO completion:nil];
 
             
+        }
         
         
         
@@ -109,11 +114,18 @@ static NSString *const FrontCell=@"FrontCell";
     
    
     
-    self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
-    self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+   
                     
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+          [self loadData];
+    }
+
     
-    [self loadData];
+  
     
     
     isLoading=YES;
@@ -414,7 +426,7 @@ static NSString *const FrontCell=@"FrontCell";
 {
     APMCandidateViewController *candidateVC=[[APMCandidateViewController alloc]init];
     
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     
     [self.navigationController pushViewController:candidateVC animated:YES];

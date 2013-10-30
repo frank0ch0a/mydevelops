@@ -60,24 +60,32 @@ enum {
     
     [self.tableView registerNib:[self menuCellNib] forCellReuseIdentifier:MenuCellIdentifier];
     [self.tableView registerNib:[self candidateCellNib] forCellReuseIdentifier:CandidateCellIdentifier];
-    
-    APMFrontViewController *fronVC=[[APMFrontViewController alloc]init];
+
     
     NSLog(@"Menu!");
     
     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
     
+    
+    
     NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
     NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
     
-    self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
-    self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+    
+    
+    
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+        [self downloadCandidateData];
 
-    [self downloadCandidateData];
+    }
+
     
-    
-    fronVC.delegate=self;
+   
 }
 
 #pragma mark FrontViewDelegate
