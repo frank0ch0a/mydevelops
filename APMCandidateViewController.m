@@ -14,6 +14,7 @@
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 #import "APMDetailModel.h"
+#import "SVProgressHUD.h"
 
 @interface APMCandidateViewController (){
     
@@ -66,6 +67,8 @@
         self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
         [self loadData];
+        
+        [SVProgressHUD show];
     }
     
 }
@@ -172,6 +175,8 @@
             
            [self parseData:JSON];
             isLoading=NO;
+            
+            [SVProgressHUD dismiss];
             
             [self.candTableView reloadData];
             
@@ -331,5 +336,54 @@
 }
 
 - (IBAction)emailButton:(id)sender {
+    
+    if ([MFMailComposeViewController canSendMail]) {
+        
+         NSUserDefaults *candName= [NSUserDefaults standardUserDefaults];
+        
+        NSString *sign=[candName objectForKey:@"nombreCandidato"];
+        
+        
+        MFMailComposeViewController *mailComposer =[[MFMailComposeViewController alloc] init];
+        
+        mailComposer.mailComposeDelegate = self ;
+        
+        NSString *destinatario=[[NSString alloc]init];
+        
+        
+        destinatario=@"ricardo@angelpolitics.com";
+        
+        NSArray *destinatarios=[NSArray arrayWithObject:destinatario];
+        
+        
+        NSMutableString *cuerpoDelMensaje = [[NSMutableString alloc] init];
+        
+        [mailComposer setToRecipients:destinatarios];
+        
+        [mailComposer setSubject:@"Pledge Reminder"];
+        
+        [cuerpoDelMensaje appendString:[ NSString stringWithFormat:@"Hello %@ ,\n\n I want to express my appreciation and thank you again for your pledge of $1 that you made to my campaign on October 31st.\n\n You can make your contribution online by clicking here.\n\n %@",self.detailModel.name,sign]];
+        
+        [mailComposer setMessageBody:cuerpoDelMensaje isHTML:NO];
+        
+        [self presentViewController:mailComposer animated:YES completion:^{
+            nil;
+        }];
+        
+        
+    }
+    
+
+}
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    
+    if (result == MFMailComposeResultSent) {
+        NSLog(@"It's away!");
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        nil;
+    }];
+    
 }
 @end

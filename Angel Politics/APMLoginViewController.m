@@ -154,19 +154,19 @@
     
     if(self.emailTextField.text.length==0 || [self.emailTextField.text isEqualToString:@""]){
         
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"El campo de email no puede ser vacio" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"The email field can not be empty" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
         
     }else{
         
         if(self.passwordTextField.text.length==0 ||[self.passwordTextField.text isEqualToString:@""]){
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"El campo de contraseña no puede ser vacio" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"The password field can not be empty" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
             
             
         }else{
             if(![self validateEmail:[self.emailTextField text]]) {
-                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Correo incorrecto" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"incorrect email" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alertView show];
             }else{
                 
@@ -204,7 +204,7 @@
                         
                         [SVProgressHUD dismiss];
                         
-                        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Usuario no registrado" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Unregistered User" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         
                         [alertView show];
 

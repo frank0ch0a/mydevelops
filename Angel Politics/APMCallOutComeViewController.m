@@ -35,6 +35,15 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:animated];
+    
+    self.title=@"Call Outcome";
+    
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

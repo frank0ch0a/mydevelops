@@ -101,6 +101,7 @@
 		01D4F72F180640630054613C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4F72E180640630054613C /* QuartzCore.framework */; };
 		01E360E61828161B0091B84D /* APMDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E360E51828161B0091B84D /* APMDetailModel.m */; };
 		01E360E81828420E0091B84D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E360E71828420E0091B84D /* MessageUI.framework */; };
+		01E360EB182851730091B84D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E360EA182851730091B84D /* Reachability.m */; };
 		01E557A918024D0B0081AB21 /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E557A818024D0B0081AB21 /* phone.png */; };
 		01E557AD18024DFA0081AB21 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E557AC18024DFA0081AB21 /* mail.png */; };
 		01F95E73181F4392006CCF83 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F95E72181F4392006CCF83 /* CoreFoundation.framework */; };
@@ -256,6 +257,8 @@
 		01E360E41828161B0091B84D /* APMDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMDetailModel.h; sourceTree = "<group>"; };
 		01E360E51828161B0091B84D /* APMDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMDetailModel.m; sourceTree = "<group>"; };
 		01E360E71828420E0091B84D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		01E360E9182851730091B84D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		01E360EA182851730091B84D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		01E557A818024D0B0081AB21 /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
 		01E557AC18024DFA0081AB21 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
 		01F95E71181F4229006CCF83 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -316,6 +319,8 @@
 			children = (
 				01F95E71181F4229006CCF83 /* Default@2x.png */,
 				0152722F18038B6500D79E1C /* Default-568h@2x.png */,
+				01E360E9182851730091B84D /* Reachability.h */,
+				01E360EA182851730091B84D /* Reachability.m */,
 				01508B331821F78F0043C2A9 /* ModalPickerView */,
 				01732A5B181DAA350044EF8E /* SVProgressHUD */,
 				019B7D5C180C441D006202B5 /* TestFlightSDK2.0.2 */,
@@ -767,6 +772,7 @@
 				01C98350181C297A0043C8EA /* APMLoginViewController.m in Sources */,
 				01BB961917FCFF650040DE19 /* AFHTTPRequestOperation.m in Sources */,
 				01BB961C17FCFF650040DE19 /* AFJSONRequestOperation.m in Sources */,
+				01E360EB182851730091B84D /* Reachability.m in Sources */,
 				01BB961817FCFF650040DE19 /* AFHTTPClient.m in Sources */,
 				01BB962117FCFF650040DE19 /* UIImageView+AFNetworking.m in Sources */,
 				011D239E17EF31E4003A4204 /* main.m in Sources */,

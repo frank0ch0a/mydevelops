@@ -323,8 +323,12 @@ enum {
         cell.candidateDayToElectLabel.text=candidateModel.dayToElection;
         cell.candImageView.image=[UIImage imageNamed:@"men"];
         
+        NSString *signCandidate=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
        
-        
+        NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
+        [registro setObject:signCandidate forKey:@"nombreCandidato"];
+        [registro synchronize];
+
     
     }
     
@@ -413,6 +417,10 @@ enum {
    
     
     [_keychain resetKeychainItem];
+    
+    NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
+    [registro removeObjectForKey:@"nombreCandidato"];
+    [registro synchronize];
     
     
     loginVC.delegate=self;
