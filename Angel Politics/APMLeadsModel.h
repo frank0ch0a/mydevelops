@@ -17,5 +17,6 @@
 @property(nonatomic,copy)NSString *donorState;
 @property(nonatomic,copy)NSString *donorPhoneNumber;
 @property(nonatomic,copy)NSString *donorEmail;
+@property(nonatomic,copy)NSString *donor_id;
 
 @end

@@ -16,5 +16,6 @@
 @synthesize donorState;
 @synthesize donorPhoneNumber;
 @synthesize donorEmail;
+@synthesize donor_id;
 
 @end

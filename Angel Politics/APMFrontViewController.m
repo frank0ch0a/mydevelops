@@ -34,6 +34,7 @@
 @property(nonatomic,copy)NSString *password;
 @property(nonatomic,strong)NSMutableArray *leadsResults;
 @property(nonatomic,strong)NSString *fundRaiseType;
+@property(nonatomic,strong)NSString *donorType;
 
 @end
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
@@ -136,7 +137,7 @@ static NSString *const FrontCell=@"FrontCell";
     isLoading=YES;
     
     
-    
+     self.donorType=@"Pitch    Lead";
     
 }
 
@@ -208,6 +209,7 @@ static NSString *const FrontCell=@"FrontCell";
     leadsModel.donorState=[dictionary objectForKey:@"e"];
     leadsModel.donorPhoneNumber=[dictionary objectForKey:@"f"];
     leadsModel.donorEmail=[dictionary objectForKey:@"g"];
+    leadsModel.donor_id=[dictionary objectForKey:@"h"];
     
     
     return leadsModel;
@@ -418,6 +420,7 @@ static NSString *const FrontCell=@"FrontCell";
     cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
     cell.amountLabel.text=[NSString stringWithFormat:@"$ %@",leadsModel.ask];
     cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];
+    cell.donorTypeLabel.text=self.donorType;
     
     
       
@@ -446,7 +449,11 @@ static NSString *const FrontCell=@"FrontCell";
     APMCandidateViewController *candidateVC=[[APMCandidateViewController alloc]init];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+     APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
 
+    candidateVC.leadsModel=leadsModel;
+    candidateVC.title=self.donorType;
     
     [self.navigationController pushViewController:candidateVC animated:YES];
     
@@ -495,6 +502,7 @@ static NSString *const FrontCell=@"FrontCell";
     self.donorUIView.hidden=YES;
     self.pitchUIView.hidden=YES;
     self.pledgeUIView.hidden=NO;
+    self.donorType=@"Pledge Collection";
     
     
         [self loadData];
@@ -512,6 +520,8 @@ static NSString *const FrontCell=@"FrontCell";
     self.pitchUIView.hidden=YES;
     self.pledgeUIView.hidden=YES;
     self.donorUIView.hidden=NO;
+    self.donorType=@"Donor Match";
+    
     
     [self loadData];
     
@@ -530,6 +540,7 @@ static NSString *const FrontCell=@"FrontCell";
     self.pledgeUIView.hidden=YES;
     self.donorUIView.hidden=YES;
     self.pitchUIView.hidden=NO;
+    self.donorType=@"Pitch    Lead";
     
     [self loadData];
     

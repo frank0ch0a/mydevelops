@@ -28,6 +28,7 @@
 -(IBAction)didSwipeRightInCell:(id)sender;
 -(IBAction)didSwipeLeftInCell:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *donorTypeLabel;
 
 
 @end
