@@ -33,6 +33,7 @@
 @property(copy,nonatomic)NSString *email;
 @property(nonatomic,copy)NSString *password;
 @property(nonatomic,strong)NSMutableArray *leadsResults;
+@property(nonatomic,strong)NSString *fundRaiseType;
 
 @end
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
@@ -48,6 +49,9 @@ static NSString *const FrontCell=@"FrontCell";
     
     if ((self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         queue=[[NSOperationQueue alloc]init];
+        
+        
+
     }
     
     return self;
@@ -60,9 +64,9 @@ static NSString *const FrontCell=@"FrontCell";
     [super viewDidLoad];
     
     
-   
+   self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
-    
+     NSLog(@"Front!");
     
     //NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
 /*
@@ -72,24 +76,23 @@ static NSString *const FrontCell=@"FrontCell";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"]&&[_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [_keychain objectForKey:(__bridge id)kSecValueData]!=nil )
     {
         [self dismissViewControllerAnimated:NO completion:nil];
-    }
-    else
-    {
-        if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]==nil && [_keychain objectForKey:(__bridge id)kSecValueData]==nil){
-            
-            
-        self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    }else{
         
         // This is the first launch ever
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasPassLogin"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        
+      
+        
+        
             APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
-            
+        
+            loginVC.delegate=self;
+        
             [self presentViewController:loginVC animated:NO completion:nil];
 
-            
-        }
+        
         
         
         
@@ -121,6 +124,8 @@ static NSString *const FrontCell=@"FrontCell";
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
+        self.fundRaiseType=@"/mobile/leads.php";
+        
           [self loadData];
     }
 
@@ -129,8 +134,21 @@ static NSString *const FrontCell=@"FrontCell";
     
     
     isLoading=YES;
+    
+    
+    
+    
 }
 
+
+-(void)dissmissLoginController:(APMLoginViewController *)controller{
+    
+    NSLog(@"delegado login");
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
+}
 
 -(UINib *)FrontCellNib
 {
@@ -159,7 +177,8 @@ static NSString *const FrontCell=@"FrontCell";
     self.myImageView.frame=CGRectMake(80, 8, 145, 26);
     [self.navigationController.navigationBar addSubview:self.myImageView];
     
-    
+    self.donorUIView.hidden=YES;
+    self.pledgeUIView.hidden=YES;
     
     
     
@@ -239,7 +258,7 @@ static NSString *const FrontCell=@"FrontCell";
     [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
     [httpClient setParameterEncoding:AFFormURLParameterEncoding];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
-                                                            path:@"/mobile/leads.php"
+                                                            path:self.fundRaiseType
                                                       parameters:dict
                                     ];
     
@@ -397,8 +416,8 @@ static NSString *const FrontCell=@"FrontCell";
     APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
     
     cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
-    cell.amountLabel.text=leadsModel.ask;
-    cell.cityLabel.text=leadsModel.donorCity;
+    cell.amountLabel.text=[NSString stringWithFormat:@"$ %@",leadsModel.ask];
+    cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];
     
     
       
@@ -465,6 +484,58 @@ static NSString *const FrontCell=@"FrontCell";
         
     }
     
+}
+
+- (IBAction)pledgeButton:(id)sender {
+    
+     isLoading=YES;
+    
+    NSLog(@"pledge press");
+    self.fundRaiseType=@"/mobile/pledges.php";
+    self.donorUIView.hidden=YES;
+    self.pitchUIView.hidden=YES;
+    self.pledgeUIView.hidden=NO;
+    
+    
+        [self loadData];
+    
+    
+   
+
+}
+
+- (IBAction)donorMatchButton:(id)sender {
+    
+    isLoading=YES;
+    NSLog(@"DonorMatch Press");
+    self.fundRaiseType=@"/mobile/donormatch.php";
+    self.pitchUIView.hidden=YES;
+    self.pledgeUIView.hidden=YES;
+    self.donorUIView.hidden=NO;
+    
+    [self loadData];
+    
+    
+
+    
+    
+}
+
+- (IBAction)PitchLeadsButton:(id)sender {
+    
+    isLoading=YES;
+    
+    NSLog(@"Pitch Press");
+   self.fundRaiseType=@"/mobile/leads.php";
+    self.pledgeUIView.hidden=YES;
+    self.donorUIView.hidden=YES;
+    self.pitchUIView.hidden=NO;
+    
+    [self loadData];
+    
+    
+
+
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {

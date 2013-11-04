@@ -10,4 +10,17 @@
 
 @interface APMCallOutComeViewController : UIViewController
 
+- (IBAction)callStatusButton:(id)sender;
+
+- (IBAction)pledgeButton:(id)sender;
+
+- (IBAction)dialButton:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UITextField *callStatusTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *pledgeTextField;
+
+
+
+
 @end

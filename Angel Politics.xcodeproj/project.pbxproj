@@ -22,6 +22,9 @@
 		014690F617F734B5002C0318 /* APMCandidateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F417F734B5002C0318 /* APMCandidateViewController.xib */; };
 		014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F817F73664002C0318 /* APMCandidateCell.xib */; };
 		014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690FB17F73774002C0318 /* APMCandidateCell.m */; };
+		01508B2D1821DA8D0043C2A9 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 01508B2C1821DA8D0043C2A9 /* logout.png */; };
+		01508B2F1821F5B50043C2A9 /* downArrowBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 01508B2E1821F5B50043C2A9 /* downArrowBlack.png */; };
+		01508B321821F7890043C2A9 /* ModalPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01508B311821F7880043C2A9 /* ModalPickerView.m */; };
 		0152722E180386CB00D79E1C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0152722D180386CB00D79E1C /* Images.xcassets */; };
 		0152723018038B6500D79E1C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0152722F18038B6500D79E1C /* Default-568h@2x.png */; };
 		015272321803A3BB00D79E1C /* APMFrontCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015272311803A3BB00D79E1C /* APMFrontCell.xib */; };
@@ -142,6 +145,10 @@
 		014690F817F73664002C0318 /* APMCandidateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCandidateCell.xib; sourceTree = "<group>"; };
 		014690FA17F73774002C0318 /* APMCandidateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCandidateCell.h; sourceTree = "<group>"; };
 		014690FB17F73774002C0318 /* APMCandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCandidateCell.m; sourceTree = "<group>"; };
+		01508B2C1821DA8D0043C2A9 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		01508B2E1821F5B50043C2A9 /* downArrowBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrowBlack.png; sourceTree = "<group>"; };
+		01508B301821F7880043C2A9 /* ModalPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalPickerView.h; sourceTree = "<group>"; };
+		01508B311821F7880043C2A9 /* ModalPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalPickerView.m; sourceTree = "<group>"; };
 		0152722D180386CB00D79E1C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0152722F18038B6500D79E1C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		015272311803A3BB00D79E1C /* APMFrontCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMFrontCell.xib; sourceTree = "<group>"; };
@@ -303,6 +310,7 @@
 			children = (
 				01F95E71181F4229006CCF83 /* Default@2x.png */,
 				0152722F18038B6500D79E1C /* Default-568h@2x.png */,
+				01508B331821F78F0043C2A9 /* ModalPickerView */,
 				01732A5B181DAA350044EF8E /* SVProgressHUD */,
 				019B7D5C180C441D006202B5 /* TestFlightSDK2.0.2 */,
 				011D239717EF31E4003A4204 /* Angel Politics */,
@@ -367,9 +375,11 @@
 				01F95E85181F6C26006CCF83 /* dial.png */,
 				01F95E86181F6C26006CCF83 /* hangup.png */,
 				01E557AC18024DFA0081AB21 /* mail.png */,
+				01508B2E1821F5B50043C2A9 /* downArrowBlack.png */,
 				01F95E7E181F65D8006CCF83 /* CloseButton.png */,
 				01F95E7F181F65D8006CCF83 /* CloseButton@2x.png */,
 				01E557A818024D0B0081AB21 /* phone.png */,
+				01508B2C1821DA8D0043C2A9 /* logout.png */,
 				01D2930717FE5DF3008F3F5C /* men@2x.png */,
 				0182D3AD17EF465B001EA3A6 /* list.png */,
 				0182D3AE17EF465B001EA3A6 /* list@2x.png */,
@@ -414,6 +424,15 @@
 				01F95E74181F5935006CCF83 /* LoadingCell.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		01508B331821F78F0043C2A9 /* ModalPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				01508B301821F7880043C2A9 /* ModalPickerView.h */,
+				01508B311821F7880043C2A9 /* ModalPickerView.m */,
+			);
+			name = ModalPickerView;
 			sourceTree = "<group>";
 		};
 		01732A5B181DAA350044EF8E /* SVProgressHUD */ = {
@@ -672,6 +691,7 @@
 				0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */,
 				01F95E75181F5935006CCF83 /* LoadingCell.xib in Resources */,
 				01732A91181DDE8E0044EF8E /* outgoing.wav in Resources */,
+				01508B2D1821DA8D0043C2A9 /* logout.png in Resources */,
 				01732A88181DDE8E0044EF8E /* dtmf_4.wav in Resources */,
 				01D4F72518063C650054613C /* HelveticaNeueBoldItalic.ttf in Resources */,
 				01732A8F181DDE8E0044EF8E /* dtmf_star.wav in Resources */,
@@ -695,6 +715,7 @@
 				01D4F72418063C650054613C /* HelveticaNeueBold.ttf in Resources */,
 				0152723018038B6500D79E1C /* Default-568h@2x.png in Resources */,
 				01D4F72718063C650054613C /* HelveticaNeueCondensedBold.ttf in Resources */,
+				01508B2F1821F5B50043C2A9 /* downArrowBlack.png in Resources */,
 				01F95E81181F65D8006CCF83 /* CloseButton@2x.png in Resources */,
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
 				01732A8D181DDE8E0044EF8E /* dtmf_9.wav in Resources */,
@@ -729,6 +750,7 @@
 				01BB961F17FCFF650040DE19 /* AFURLConnectionOperation.m in Sources */,
 				01F95E79181F5ED4006CCF83 /* APMCallViewController.m in Sources */,
 				01BB961B17FCFF650040DE19 /* AFImageRequestOperation.m in Sources */,
+				01508B321821F7890043C2A9 /* ModalPickerView.m in Sources */,
 				01BB962417FD01870040DE19 /* APMCandidateModel.m in Sources */,
 				014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */,
 				0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */,

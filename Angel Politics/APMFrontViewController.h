@@ -9,19 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "APMFrontCellProtocol.h"
+#import "APMLoginViewController.h"
 @class APMFrontViewController;
 @class APMCandidateModel;
-@protocol FrontViewDelegate <NSObject>
-
--(void)frontViewController:(APMFrontViewController *)frontViewController didCandidateData:(NSMutableArray *)array;
-
-@end
 
 
 
-@interface APMFrontViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,APMFrontCellProtocol>
+@interface APMFrontViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,APMFrontCellProtocol,LoginDelegate>
 
-@property (weak,nonatomic) id<FrontViewDelegate>delegate;
+
 
 
 
@@ -38,5 +34,19 @@
 
 -(void)didSwipeRightInCellWithIndexPath:(NSIndexPath *)indexPath;
 -(void)didSwipeLeftInCellWithIndexPath:(NSIndexPath *)indexPath;
+
+- (IBAction)pledgeButton:(id)sender;
+
+
+- (IBAction)donorMatchButton:(id)sender;
+
+- (IBAction)PitchLeadsButton:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UIView *pitchUIView;
+
+@property (weak, nonatomic) IBOutlet UIView *donorUIView;
+@property (weak, nonatomic) IBOutlet UIView *pledgeUIView;
+
 
 @end

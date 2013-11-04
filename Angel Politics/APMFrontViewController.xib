@@ -9,8 +9,11 @@
             <connections>
                 <outlet property="donorButton" destination="9MS-Zu-7EO" id="Yxp-AE-jt0"/>
                 <outlet property="donorTableView" destination="pwS-Gs-FZP" id="Sgi-kK-3Yr"/>
+                <outlet property="donorUIView" destination="gbE-pT-pYl" id="qZs-4h-O0W"/>
                 <outlet property="otherButton" destination="BX2-xn-AQG" id="TES-EN-kJD"/>
+                <outlet property="pitchUIView" destination="lQC-bu-tUC" id="WM1-ho-QoH"/>
                 <outlet property="pledgeButton" destination="XSg-K0-OTm" id="SNd-Ux-ekr"/>
+                <outlet property="pledgeUIView" destination="cTN-cq-7To" id="8jt-4j-EdV"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -79,19 +82,25 @@
                     <rect key="frame" x="105" y="182" width="107" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                    <state key="normal" title="Pledge-Collection">
+                    <state key="normal" title="Donor Match">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="donorMatchButton:" destination="-1" eventType="touchUpInside" id="OBd-fW-geh"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BX2-xn-AQG">
                     <rect key="frame" x="212" y="182" width="108" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                    <state key="normal" title="Other">
+                    <state key="normal" title="Pledge-Collection">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="pledgeButton:" destination="-1" eventType="touchUpInside" id="Db6-qh-JYS"/>
+                    </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pwS-Gs-FZP">
                     <rect key="frame" x="0.0" y="251" width="320" height="297"/>
@@ -106,11 +115,29 @@
                     <rect key="frame" x="0.0" y="182" width="106" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                    <state key="normal" title="Donor Match">
+                    <state key="normal" title="Pitch Leads">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="PitchLeadsButton:" destination="-1" eventType="touchUpInside" id="RfL-1K-TtQ"/>
+                    </connections>
                 </button>
+                <view contentMode="scaleToFill" id="lQC-bu-tUC">
+                    <rect key="frame" x="2" y="222" width="105" height="4"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.18612365310000001" green="0.78679049739999996" blue="0.1171079218" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" id="gbE-pT-pYl">
+                    <rect key="frame" x="107" y="222" width="105" height="4"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.18612365310000001" green="0.78679049739999996" blue="0.1171079218" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" id="cTN-cq-7To">
+                    <rect key="frame" x="212" y="222" width="105" height="4"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.18612365310000001" green="0.78679049739999996" blue="0.1171079218" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

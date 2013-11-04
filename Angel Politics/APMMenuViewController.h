@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "APMFrontViewController.h"
+#import "APMLoginViewController.h"
 
-@interface APMMenuViewController : UITableViewController<FrontViewDelegate>
+@interface APMMenuViewController : UITableViewController<LoginDelegate>
 
 @end

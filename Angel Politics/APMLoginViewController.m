@@ -128,15 +128,26 @@
     
     
      // Store username to keychain
-     if ([self.emailTextField text]){
-     [self.keyChain setObject:[self.emailTextField text] forKey:(__bridge id)kSecAttrAccount];}
+     if (self.emailTextField.text){
+         NSLog(@"email text %@",self.emailTextField.text);
+         
+     [self.keyChain setObject:self.emailTextField.text forKey:(__bridge id)kSecAttrAccount];}
      
      // Store password to keychain
-     if ([self.passwordTextField text]){
-     [self.keyChain setObject:[self.passwordTextField text] forKey:(__bridge id)(kSecValueData)];}
+     if (self.passwordTextField.text){
+         
+           NSLog(@"pass text %@",self.passwordTextField.text);
+     [self.keyChain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];}
     
     
-    [self dismissViewControllerAnimated:NO completion:nil];
+    
+    [self.delegate dissmissLoginController:self];
+    
+    
+    
+    
+    
+    
 }
 
 - (IBAction)loginButton:(id)sender {
@@ -167,7 +178,7 @@
                 
                 NSDictionary *dict=@{@"email":self.emailTextField.text ,@"pass":self.passwordTextField.text};
                 
-                NSLog(@"Parameters %@",dict);
+                NSLog(@"Parameters login %@",dict);
                   
                 AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
                 

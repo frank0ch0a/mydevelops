@@ -15,6 +15,7 @@
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 #import "APMCandidateModel.h"
+#import "APMLoginViewController.h"
 
 static NSString *const CandidateCellIdentifier=@"CandidateCell";
 static NSString *const MenuCellIdentifier=@"MenuCell";
@@ -27,6 +28,7 @@ enum {
     MenuMessages,
     MenuSettings,
     MenuHelp,
+    MenuLogout,
     MenuRowCount
 };
 
@@ -52,6 +54,36 @@ enum {
     return self;
 }
 
+
+#pragma mark LoginDelegate
+-(void)dissmissLoginController:(APMLoginViewController *)controller
+{
+    NSLog(@"Login menu Controller");
+    
+    
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+    
+        NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
+         NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+        
+        [self downloadCandidateData];
+        
+    }
+    
+    
+   
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor darkGrayColor];
@@ -60,17 +92,21 @@ enum {
     
     [self.tableView registerNib:[self menuCellNib] forCellReuseIdentifier:MenuCellIdentifier];
     [self.tableView registerNib:[self candidateCellNib] forCellReuseIdentifier:CandidateCellIdentifier];
+    
+   // self.tableView.frame=CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, 300);
+    
+    
+  
 
     
     NSLog(@"Menu!");
     
     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
+        
     
-    
-    
-    NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
-    NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+    //NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
+   // NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
     
     
     
@@ -79,6 +115,7 @@ enum {
         
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+    
         
         [self downloadCandidateData];
 
@@ -88,20 +125,7 @@ enum {
    
 }
 
-#pragma mark FrontViewDelegate
--(void)frontViewController:(APMFrontViewController *)frontViewController didCandidateData:(NSMutableArray *)array{
-    
-    
-    self.candidateArray=[[NSMutableArray alloc]init];
-    
-    self.candidateArray=array;
-    
-    [self viewDidLoad];
-    
-    NSLog(@" candidateArray %@",array);
-    
-    
-}
+
 
 -(APMCandidateModel *)parseDataResult:(NSDictionary *)dictionary{
     
@@ -180,6 +204,8 @@ enum {
             NSLog(@"Resulta JSON MenuVC %@",JSON);
             
             [self parseData:JSON];
+            
+            [self.tableView reloadData];
             
            
             
@@ -270,6 +296,13 @@ enum {
         case MenuHelp:
             cell.menuLabel.text=@"Help";
             cell.menuImageView.image=[UIImage imageNamed:@"ic_help"];
+            break;
+            
+        case MenuLogout:
+            cell.menuLabel.text=@"Logout";
+            cell.menuImageView.image=[UIImage imageNamed:@"logout"];
+            break;
+            
         default:
             break;
     }
@@ -371,18 +404,37 @@ enum {
     [self showControllerClass:[APMFrontViewController class]];
 }
 
-- (void)showAboutController {
+- (void)showLogoutController {
     //[self showControllerClass:[AboutViewController class]];
+    
+    APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
+    
+      [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HasPassLogin"];
+   
+    
+    [_keychain resetKeychainItem];
+    
+    
+    loginVC.delegate=self;
+    
+    [self presentViewController:loginVC animated:NO completion:nil];
+    
+    
+    APMFrontViewController *vc=[[APMFrontViewController alloc]init];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
             
-            /*
-        case MenuHomeRow:
-            [self showMainController];
+            
+        case MenuLogout:
+            [self showLogoutController];
             break;
-           
+            
+           /*
         case MenuAboutRow:
             [self showAboutController];
             break;*/
@@ -399,5 +451,6 @@ enum {
     return 45.0f;
     
 }
+
 
 @end
