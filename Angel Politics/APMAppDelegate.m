@@ -25,7 +25,7 @@
     
     [keychainItem resetKeychainItem];*/
     
-    [TestFlight takeOff:@"18d43f3d-d914-4cd7-ba5e-a5a1abc000f2"];
+    [TestFlight takeOff:@"c7da1f26-d375-4758-b8ee-e6a58d64f9b9"];
     
     [self customizeAppearance];
     
