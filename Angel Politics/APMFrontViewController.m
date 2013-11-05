@@ -16,6 +16,7 @@
 #import "APMLoginViewController.h"
 #import "AFHTTPClient.h"
 #import "APMLeadsModel.h"
+#import "Reachability.h"
 
 
 
@@ -59,6 +60,15 @@ static NSString *const FrontCell=@"FrontCell";
     return self;
 }
 
+#pragma mark Reachability
+
+
+- (BOOL)connected
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return !(networkStatus == NotReachable);
+}
 
 
 - (void)viewDidLoad
@@ -117,19 +127,33 @@ static NSString *const FrontCell=@"FrontCell";
     
     //Hardcoding donorsinfo
     
-   
+    //Test Network
+    
+    if (![self connected]) {
+        // not connected
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Oopss..It seems you have no internet connection" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        
+        [alertView show];
+        
+    } else {
+        // connected, do some internet stuff
+        
+        if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+            
+            self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+            self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+            
+            self.fundRaiseType=@"/mobile/leads.php";
+            
+            [self loadData];
+        }
+        
+    }
+
     
    
-                    
-    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
-        
-        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
-        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
-        
-        self.fundRaiseType=@"/mobile/leads.php";
-        
-          [self loadData];
-    }
+    
+    
 
     
   
