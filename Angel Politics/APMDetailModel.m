@@ -23,6 +23,7 @@
 @synthesize  highlights2;
 @synthesize  supportName;
 @synthesize  supportAmount;
+@synthesize detalles;
 
 
 @end

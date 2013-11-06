@@ -15,6 +15,8 @@
 #import "AFJSONRequestOperation.h"
 #import "APMDetailModel.h"
 #import "SVProgressHUD.h"
+#import "APMContributionsModel.h"
+#import "DonorDetailCell.h"
 
 @interface APMCandidateViewController (){
     
@@ -30,9 +32,11 @@
 @property(nonatomic,strong)NSString *email;
 @property(nonatomic,strong)NSString *pass;
 @property(nonatomic,strong)NSMutableArray *detailsResults;
+@property(nonatomic,strong)NSMutableArray *contributionsResults;
 
 @end
-
+static NSString *const LoadingCellIdentifier=@"LoadingCell";
+static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
 @implementation APMCandidateViewController
 
 
@@ -55,10 +59,10 @@
     [super viewDidLoad];
   
     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
-    
+    /*
     
     self.lastDonations=@[@"Michele Stuart",@"Charles Stanton",@"Megan Surrell"];
-    self.amounts=@[@"$ 1,600",@"$ 800",@"$ 500"];
+    self.amounts=@[@"$ 1,600",@"$ 800",@"$ 500"];*/
     
     if (self.leadsModel.donor_id !=nil &&[_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [self.keychain objectForKey:(__bridge id)kSecValueData]!=nil) {
         
@@ -67,13 +71,95 @@
         self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
         [self loadData];
-        
-        [SVProgressHUD show];
+     
     }
+    
+    
+    [self.candTableView registerNib:[self DonorDetailCellNib] forCellReuseIdentifier:DonorDetailCellIdentifier];
+    
+    UINib *cellNib=[UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
+    
+    cellNib=[UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
+    
+    [self.candTableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
+    
+    self.candTableView.rowHeight=50.f;
+    
+    isLoading=YES;
     
 }
 
--(APMDetailModel *)parseDataResult:(NSDictionary *)dictionary{
+
+-(UINib *)DonorDetailCellNib
+{
+    return [UINib nibWithNibName:@"DonorDetailCell" bundle:nil];
+    
+    
+}
+
+-(APMContributionsModel *)parseContributions:(NSDictionary *)dictionary{
+    
+    APMContributionsModel *contributionsModel=[[APMContributionsModel alloc]init];
+    
+    contributionsModel.contributorName=[dictionary objectForKey:@"a"];
+    contributionsModel.contributionDate=[dictionary objectForKey:@"b"];
+    contributionsModel.contributionAmount=[dictionary objectForKey:@"c"];
+    
+    
+    return contributionsModel;
+    
+}
+
+-(void)parseDictionaryContributions:(NSDictionary *)dictionary{
+    
+   
+    NSArray *array=[dictionary objectForKey:@"contribuciones"];
+    
+    
+    if (array==nil) {
+        NSLog(@"Expected 'results' array");
+        
+        return;
+        
+    }
+    
+    self.contributionsResults=[[NSMutableArray alloc]init];
+    
+    for(NSDictionary *resultDict in array){
+        
+        APMContributionsModel *contributionsModel;
+        
+        
+        contributionsModel=[self parseContributions:resultDict];
+        
+        
+        
+        
+        if(contributionsModel !=nil){
+            
+            
+            [self.contributionsResults addObject:contributionsModel];
+            
+            NSLog(@"contributions array %@",self.contributionsResults);
+        }
+        
+        
+    }
+
+    
+    
+    
+}
+
+    
+    
+    
+    
+    
+    
+
+-(APMDetailModel *)parseDetails:(NSDictionary *)dictionary
+{
     
     self.detailModel=[[APMDetailModel alloc]init];
     
@@ -94,25 +180,31 @@
     
     return self.detailModel;
     
+    
 }
--(void)parseData:(NSDictionary *)dictionary{
-    
-    
-    NSMutableArray *array=[[NSMutableArray alloc]init];
-    
-    [array addObject:dictionary];
+
+-(void)parseDictionary:(NSDictionary *)dictionary{
     
     
     
-    self.detailsResults=[[NSMutableArray alloc]init];
+    NSArray *array=[dictionary objectForKey:@"detalles"];
+  
     
-    for (NSDictionary *resultDict in array) {
+    if (array==nil) {
+        NSLog(@"Expected 'results' array");
         
-        self.detailModel=[[APMDetailModel alloc]init];
+        return;
         
-        self.detailModel=[self parseDataResult:resultDict];
+    }
+    
+    for(NSDictionary *resultDict in array){
         
         
+        
+            self.detailModel=[self parseDetails:resultDict];
+        
+            
+       
         
         if(self.detailModel!=nil){
             
@@ -127,17 +219,12 @@
             if (self.detailModel.supportAmount !=(id)[NSNull null]) {
                 self.supportAmount.text=[NSString stringWithFormat:@"Supported with %@ $",self.detailModel.supportAmount];
             }
-          if (self.detailModel.supportName !=(id)[NSNull null]) {
-             self.nameSupport.text=self.detailModel.supportName;
+            if (self.detailModel.supportName !=(id)[NSNull null]) {
+                self.nameSupport.text=self.detailModel.supportName;
             }
-            
-        
 
             
             [self.detailsResults addObject:self.detailModel];
-            
-            NSLog(@"results %@",self.detailsResults);
-            
         }
         
         
@@ -145,7 +232,23 @@
     
     
     
+    
+    
+    
+}
 
+
+-(void)parseData:(NSArray *)array{
+    
+    
+    for (NSDictionary *resultDict in array) {
+       
+        
+            [self parseDictionary:resultDict];
+            
+            [self parseDictionaryContributions:resultDict];
+        
+    }
     
     
     
@@ -173,10 +276,10 @@
             
             NSLog(@"Resulta JSON MenuVC %@",JSON);
             
-           [self parseData:JSON];
+          [self parseData:JSON];
             isLoading=NO;
             
-            [SVProgressHUD dismiss];
+           
             
             [self.candTableView reloadData];
             
@@ -240,33 +343,48 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    // Return the number of rows in the section.
-    return self.lastDonations.count;
+    if (isLoading) {
+        return 1;
+    }else{
+        
+        return self.contributionsResults.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    static NSString *CellIdent=@"Cell";
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdent];
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (cell==nil) {
+    if (isLoading) {
+        return  [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
+    }else{
         
+        DonorDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:DonorDetailCellIdentifier];
         
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdent];
+        if (cell==nil) {
             
-            
+            cell=[[DonorDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DonorDetailCellIdentifier];
         }
     
+    
+        APMContributionsModel *contributionsModel=[self.contributionsResults objectAtIndex:indexPath.row];
+        
+        cell.donorDetailNameLabel.text=contributionsModel.contributorName;
+        cell.donorDetailDateLabel.text=contributionsModel.contributionDate;
+        cell.donorDetailAmountLabel.text=[NSString stringWithFormat:@"$ %@",contributionsModel.contributionAmount];
+        cell.donorDetailImage.image=[UIImage imageNamed:@"men"];
+        
+        /*
     cell.textLabel.text=[self.lastDonations objectAtIndex:indexPath.row];
     cell.detailTextLabel.text=[self.amounts objectAtIndex:indexPath.row];
     
-    cell.imageView.image=[UIImage imageNamed:@"men"];
+    cell.imageView.image=[UIImage imageNamed:@"men"];*/
     
     
     return cell;
+        
+    }
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

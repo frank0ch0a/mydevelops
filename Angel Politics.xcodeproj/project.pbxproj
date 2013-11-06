@@ -18,6 +18,9 @@
 		011D23AD17EF31E4003A4204 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D239517EF31E4003A4204 /* UIKit.framework */; };
 		011D23B517EF31E4003A4204 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 011D23B317EF31E4003A4204 /* InfoPlist.strings */; };
 		011D23B717EF31E4003A4204 /* Angel_PoliticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 011D23B617EF31E4003A4204 /* Angel_PoliticsTests.m */; };
+		012A684B1829D91600CA05CB /* DonorDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 012A684A1829D91500CA05CB /* DonorDetailCell.xib */; };
+		012A684E1829D96000CA05CB /* DonorDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 012A684D1829D96000CA05CB /* DonorDetailCell.m */; };
+		012A6851182A0E4500CA05CB /* APMContributionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 012A6850182A0E4500CA05CB /* APMContributionsModel.m */; };
 		014690F517F734B5002C0318 /* APMCandidateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690F317F734B5002C0318 /* APMCandidateViewController.m */; };
 		014690F617F734B5002C0318 /* APMCandidateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F417F734B5002C0318 /* APMCandidateViewController.xib */; };
 		014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F817F73664002C0318 /* APMCandidateCell.xib */; };
@@ -142,6 +145,11 @@
 		011D23B217EF31E4003A4204 /* Angel PoliticsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Angel PoliticsTests-Info.plist"; sourceTree = "<group>"; };
 		011D23B417EF31E4003A4204 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		011D23B617EF31E4003A4204 /* Angel_PoliticsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Angel_PoliticsTests.m; sourceTree = "<group>"; };
+		012A684A1829D91500CA05CB /* DonorDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DonorDetailCell.xib; sourceTree = "<group>"; };
+		012A684C1829D96000CA05CB /* DonorDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DonorDetailCell.h; sourceTree = "<group>"; };
+		012A684D1829D96000CA05CB /* DonorDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DonorDetailCell.m; sourceTree = "<group>"; };
+		012A684F182A0E4500CA05CB /* APMContributionsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMContributionsModel.h; sourceTree = "<group>"; };
+		012A6850182A0E4500CA05CB /* APMContributionsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMContributionsModel.m; sourceTree = "<group>"; };
 		014690F217F734B5002C0318 /* APMCandidateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APMCandidateViewController.h; path = ../APMCandidateViewController.h; sourceTree = "<group>"; };
 		014690F317F734B5002C0318 /* APMCandidateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMCandidateViewController.m; path = ../APMCandidateViewController.m; sourceTree = "<group>"; };
 		014690F417F734B5002C0318 /* APMCandidateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APMCandidateViewController.xib; path = ../APMCandidateViewController.xib; sourceTree = "<group>"; };
@@ -426,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */,
+				012A684A1829D91500CA05CB /* DonorDetailCell.xib */,
 				01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */,
 				01C9834F181C297A0043C8EA /* APMLoginViewController.xib */,
 				015272311803A3BB00D79E1C /* APMFrontCell.xib */,
@@ -535,6 +544,8 @@
 				015272361803AEED00D79E1C /* APMFrontCellProtocol.h */,
 				01F95E82181F69F2006CCF83 /* GradientView.h */,
 				01F95E83181F69F2006CCF83 /* GradientView.m */,
+				012A684C1829D96000CA05CB /* DonorDetailCell.h */,
+				012A684D1829D96000CA05CB /* DonorDetailCell.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -581,6 +592,8 @@
 				01F95E7C181F6254006CCF83 /* APMPhone.m */,
 				01E360E41828161B0091B84D /* APMDetailModel.h */,
 				01E360E51828161B0091B84D /* APMDetailModel.m */,
+				012A684F182A0E4500CA05CB /* APMContributionsModel.h */,
+				012A6850182A0E4500CA05CB /* APMContributionsModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -705,6 +718,7 @@
 				0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */,
 				01F95E75181F5935006CCF83 /* LoadingCell.xib in Resources */,
 				01732A91181DDE8E0044EF8E /* outgoing.wav in Resources */,
+				012A684B1829D91600CA05CB /* DonorDetailCell.xib in Resources */,
 				01508B2D1821DA8D0043C2A9 /* logout.png in Resources */,
 				01732A88181DDE8E0044EF8E /* dtmf_4.wav in Resources */,
 				01D4F72518063C650054613C /* HelveticaNeueBoldItalic.ttf in Resources */,
@@ -762,6 +776,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01BB961F17FCFF650040DE19 /* AFURLConnectionOperation.m in Sources */,
+				012A684E1829D96000CA05CB /* DonorDetailCell.m in Sources */,
 				01F95E79181F5ED4006CCF83 /* APMCallViewController.m in Sources */,
 				01BB961B17FCFF650040DE19 /* AFImageRequestOperation.m in Sources */,
 				01508B321821F7890043C2A9 /* ModalPickerView.m in Sources */,
@@ -783,6 +798,7 @@
 				0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */,
 				01BB961A17FCFF650040DE19 /* AFImageCache.m in Sources */,
 				01C98359181C740D0043C8EA /* KeychainItemWrapper.m in Sources */,
+				012A6851182A0E4500CA05CB /* APMContributionsModel.m in Sources */,
 				01732A61181DAA360044EF8E /* SVProgressHUD.m in Sources */,
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
 				014690F517F734B5002C0318 /* APMCandidateViewController.m in Sources */,

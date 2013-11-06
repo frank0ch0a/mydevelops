@@ -23,5 +23,6 @@
 @property(nonatomic,copy)NSString *highlights2;
 @property(nonatomic,copy)NSString *supportName;
 @property(nonatomic,copy)NSString *supportAmount;
+@property(nonatomic,strong)NSArray *detalles;
 
 @end

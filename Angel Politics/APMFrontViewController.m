@@ -230,8 +230,14 @@ static NSString *const FrontCell=@"FrontCell";
     leadsModel.ask=[dictionary objectForKey:@"a"];
     leadsModel.donorName=[dictionary objectForKey:@"b"];
     leadsModel.donorLastName=[dictionary objectForKey:@"c"];
-    leadsModel.donorCity=[dictionary objectForKey:@"d"];
-    leadsModel.donorState=[dictionary objectForKey:@"e"];
+    if ([dictionary objectForKey:@"d"]!=(id)[NSNull null]) {
+      leadsModel.donorCity=[dictionary objectForKey:@"d"];
+    }
+    if ([dictionary objectForKey:@"e"]!=(id)[NSNull null]) {
+        leadsModel.donorState=[dictionary objectForKey:@"e"];
+    }
+    
+    
     leadsModel.donorPhoneNumber=[dictionary objectForKey:@"f"];
     leadsModel.donorEmail=[dictionary objectForKey:@"g"];
     leadsModel.donor_id=[dictionary objectForKey:@"h"];
@@ -305,12 +311,9 @@ static NSString *const FrontCell=@"FrontCell";
             
             isLoading=NO;
             
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Usuario no registrado" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            
-            [alertView show];
             
             
-            NSLog(@"Usuario no registrado");
+         
             
         }
         
@@ -444,7 +447,14 @@ static NSString *const FrontCell=@"FrontCell";
     
     cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
     cell.amountLabel.text=[NSString stringWithFormat:@"$ %@",leadsModel.ask];
-    cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];
+     
+        if (leadsModel.donorCity != (id)[NSNull null]&&leadsModel.donorState != (id)[NSNull null] ) {
+             cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];
+        }else{
+            
+            cell.cityLabel.text=@"";
+        }
+   
     cell.donorTypeLabel.text=self.donorType;
     
     
