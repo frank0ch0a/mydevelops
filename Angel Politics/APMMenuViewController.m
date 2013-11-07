@@ -16,6 +16,10 @@
 #import "AFJSONRequestOperation.h"
 #import "APMCandidateModel.h"
 #import "APMLoginViewController.h"
+#import "APMCallHelpViewController.h"
+#import "APMPhone.h"
+#import "APMAppDelegate.h"
+#import "APMEditProfileViewController.h"
 
 static NSString *const CandidateCellIdentifier=@"CandidateCell";
 static NSString *const MenuCellIdentifier=@"MenuCell";
@@ -33,7 +37,11 @@ enum {
 };
 
 
-@interface APMMenuViewController ()
+@interface APMMenuViewController (){
+    
+      NSOperationQueue *queue;
+    
+}
 
 @property(nonatomic,strong)NSMutableArray *candidateArray;
 @property(strong,nonatomic)KeychainItemWrapper *keychain;
@@ -50,6 +58,8 @@ enum {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        
+        queue=[[NSOperationQueue alloc]init];
     }
     return self;
 }
@@ -214,10 +224,6 @@ enum {
             
             
             
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Usuario no registrado" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            
-            [alertView show];
-            
             
             NSLog(@"Usuario no registrado");
             
@@ -232,7 +238,7 @@ enum {
     
     operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
     
-    [operation start];
+    [queue addOperation:operation];
     
     
     
@@ -294,7 +300,7 @@ enum {
             break;
             
         case MenuHelp:
-            cell.menuLabel.text=@"Help";
+            cell.menuLabel.text=@"Call for Free Assistance";
             cell.menuImageView.image=[UIImage imageNamed:@"ic_help"];
             break;
             
@@ -434,6 +440,55 @@ enum {
     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
 }
 
+-(void)showHelpController{
+    APMCallHelpViewController *helpCall=[[APMCallHelpViewController alloc]init];
+    
+    APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
+    APMPhone* phone = appDelegate.phone;
+    [phone connect:@"+19143253307"];
+    
+    [self presentViewController:helpCall animated:YES completion:nil];
+    
+    
+    
+    
+    
+    
+    //APMFrontViewController *vc=[[APMFrontViewController alloc]init];
+    
+    
+    /*
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
+}
+
+-(void)showProfileController{
+    
+    
+    APMEditProfileViewController *editProfile=[[APMEditProfileViewController alloc]init];
+    
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:editProfile];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
+    
+    
+}
+
+-(void)showFundRaiseController{
+    
+    APMFrontViewController *frontVC=[[APMFrontViewController alloc]init];
+
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:frontVC];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
+    
+
+    
+    
+    
+    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
             
@@ -442,10 +497,19 @@ enum {
             [self showLogoutController];
             break;
             
-           /*
-        case MenuAboutRow:
-            [self showAboutController];
-            break;*/
+           
+        case MenuHelp:
+            [self showHelpController];
+            break;
+            
+        case MenuProfile:
+            [self showProfileController];
+            break;
+            
+            case MenuFundRaising:
+            
+            [self showFundRaiseController];
+            break;
 }
     
 }

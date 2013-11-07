@@ -17,6 +17,7 @@
 #import "AFHTTPClient.h"
 #import "APMLeadsModel.h"
 #import "Reachability.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -164,6 +165,8 @@ static NSString *const FrontCell=@"FrontCell";
     
      self.donorType=@"Pitch    Lead";
     
+    [SVProgressHUD show];
+    
 }
 
 
@@ -275,7 +278,7 @@ static NSString *const FrontCell=@"FrontCell";
         
     }
     
-    
+     self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
 }
 
@@ -299,6 +302,7 @@ static NSString *const FrontCell=@"FrontCell";
         
         if (JSON !=nil) {
             
+            [SVProgressHUD dismiss];
            // NSLog(@"Resulta JSON MenuVC %@",JSON);
             
            [self parseArray:JSON];
@@ -538,11 +542,13 @@ static NSString *const FrontCell=@"FrontCell";
     self.pitchUIView.hidden=YES;
     self.pledgeUIView.hidden=NO;
     self.donorType=@"Pledge Collection";
-    
+    self.FrontLineOne.text=@"Pledges to collect";
+    self.frontLineTwo.text=@"Lets turn these pledges into contributions!";
+    self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
         [self loadData];
     
-    
+     [SVProgressHUD show];
    
 
 }
@@ -556,11 +562,15 @@ static NSString *const FrontCell=@"FrontCell";
     self.pledgeUIView.hidden=YES;
     self.donorUIView.hidden=NO;
     self.donorType=@"Donor Match";
+    self.FrontLineOne.text=@"Donor-match available";
+    self.frontLineTwo.text=@"Unlock new donors. Make a call.";
+     self.frontNumber.text=[@([self.leadsResults count])stringValue];
+    
     
     
     [self loadData];
     
-    
+     [SVProgressHUD show];
 
     
     
@@ -576,10 +586,13 @@ static NSString *const FrontCell=@"FrontCell";
     self.donorUIView.hidden=YES;
     self.pitchUIView.hidden=NO;
     self.donorType=@"Pitch    Lead";
+    self.FrontLineOne.text=@"Leads available ";
+    self.frontLineTwo.text=@"Let’s get some contributions!";
+    self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
     [self loadData];
     
-    
+     [SVProgressHUD show];
 
 
 }

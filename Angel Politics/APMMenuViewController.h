@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "APMFrontViewController.h"
 #import "APMLoginViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface APMMenuViewController : UITableViewController<LoginDelegate>
 

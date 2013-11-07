@@ -18,9 +18,12 @@
 @interface APMFrontViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,APMFrontCellProtocol,LoginDelegate>
 
 
+@property (weak, nonatomic) IBOutlet UILabel *FrontLineOne;
+
+@property (weak, nonatomic) IBOutlet UILabel *frontLineTwo;
 
 
-
+@property (weak, nonatomic) IBOutlet UILabel *frontNumber;
 
 
 @property (weak, nonatomic) IBOutlet UITableView *donorTableView;

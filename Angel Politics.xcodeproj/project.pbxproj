@@ -72,6 +72,17 @@
 		019B7D64180C441D006202B5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 019B7D5E180C441D006202B5 /* README.md */; };
 		019B7D65180C441D006202B5 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 019B7D5F180C441D006202B5 /* release_notes.md */; };
 		019B7D67180C44C3006202B5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 019B7D66180C44C3006202B5 /* libz.dylib */; };
+		01B56174182B2AC4008E2077 /* APMEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B56172182B2AC4008E2077 /* APMEditProfileViewController.m */; };
+		01B56175182B2AC4008E2077 /* APMEditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B56173182B2AC4008E2077 /* APMEditProfileViewController.xib */; };
+		01B56179182B3C5E008E2077 /* APMCallHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B56177182B3C5E008E2077 /* APMCallHelpViewController.m */; };
+		01B5617A182B3C5E008E2077 /* APMCallHelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B56178182B3C5E008E2077 /* APMCallHelpViewController.xib */; };
+		01B5617D182B5215008E2077 /* APMGetPhoneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5617C182B5215008E2077 /* APMGetPhoneModel.m */; };
+		01B56181182B5BA9008E2077 /* APMEditCandProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5617F182B5BA9008E2077 /* APMEditCandProfileViewController.m */; };
+		01B56182182B5BA9008E2077 /* APMEditCandProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B56180182B5BA9008E2077 /* APMEditCandProfileViewController.xib */; };
+		01B56187182B614A008E2077 /* checkBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B56183182B614A008E2077 /* checkBox.png */; };
+		01B56188182B614A008E2077 /* checkBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B56184182B614A008E2077 /* checkBox@2x.png */; };
+		01B56189182B614A008E2077 /* checkBoxMarked.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B56185182B614A008E2077 /* checkBoxMarked.png */; };
+		01B5618A182B614A008E2077 /* checkBoxMarked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B56186182B614A008E2077 /* checkBoxMarked@2x.png */; };
 		01BB961817FCFF650040DE19 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960317FCFF650040DE19 /* AFHTTPClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -Wno-unused"; }; };
 		01BB961917FCFF650040DE19 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960517FCFF650040DE19 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		01BB961A17FCFF650040DE19 /* AFImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960717FCFF650040DE19 /* AFImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -217,6 +228,21 @@
 		019B7D61180C441D006202B5 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		019B7D62180C441D006202B5 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		019B7D66180C44C3006202B5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		01B56171182B2AC4008E2077 /* APMEditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMEditProfileViewController.h; sourceTree = "<group>"; };
+		01B56172182B2AC4008E2077 /* APMEditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMEditProfileViewController.m; sourceTree = "<group>"; };
+		01B56173182B2AC4008E2077 /* APMEditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMEditProfileViewController.xib; sourceTree = "<group>"; };
+		01B56176182B3C5E008E2077 /* APMCallHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCallHelpViewController.h; sourceTree = "<group>"; };
+		01B56177182B3C5E008E2077 /* APMCallHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCallHelpViewController.m; sourceTree = "<group>"; };
+		01B56178182B3C5E008E2077 /* APMCallHelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCallHelpViewController.xib; sourceTree = "<group>"; };
+		01B5617B182B5215008E2077 /* APMGetPhoneModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMGetPhoneModel.h; sourceTree = "<group>"; };
+		01B5617C182B5215008E2077 /* APMGetPhoneModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMGetPhoneModel.m; sourceTree = "<group>"; };
+		01B5617E182B5BA9008E2077 /* APMEditCandProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMEditCandProfileViewController.h; sourceTree = "<group>"; };
+		01B5617F182B5BA9008E2077 /* APMEditCandProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMEditCandProfileViewController.m; sourceTree = "<group>"; };
+		01B56180182B5BA9008E2077 /* APMEditCandProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMEditCandProfileViewController.xib; sourceTree = "<group>"; };
+		01B56183182B614A008E2077 /* checkBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkBox.png; sourceTree = "<group>"; };
+		01B56184182B614A008E2077 /* checkBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkBox@2x.png"; sourceTree = "<group>"; };
+		01B56185182B614A008E2077 /* checkBoxMarked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkBoxMarked.png; sourceTree = "<group>"; };
+		01B56186182B614A008E2077 /* checkBoxMarked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkBoxMarked@2x.png"; sourceTree = "<group>"; };
 		01BB960217FCFF650040DE19 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		01BB960317FCFF650040DE19 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		01BB960417FCFF650040DE19 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -399,6 +425,10 @@
 				01F95E7E181F65D8006CCF83 /* CloseButton.png */,
 				01F95E7F181F65D8006CCF83 /* CloseButton@2x.png */,
 				01E557A818024D0B0081AB21 /* phone.png */,
+				01B56183182B614A008E2077 /* checkBox.png */,
+				01B56184182B614A008E2077 /* checkBox@2x.png */,
+				01B56185182B614A008E2077 /* checkBoxMarked.png */,
+				01B56186182B614A008E2077 /* checkBoxMarked@2x.png */,
 				01508B2C1821DA8D0043C2A9 /* logout.png */,
 				01D2930717FE5DF3008F3F5C /* men@2x.png */,
 				0182D3AD17EF465B001EA3A6 /* list.png */,
@@ -433,7 +463,10 @@
 		014690F717F734D8002C0318 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				01B56180182B5BA9008E2077 /* APMEditCandProfileViewController.xib */,
+				01B56173182B2AC4008E2077 /* APMEditProfileViewController.xib */,
 				015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */,
+				01B56178182B3C5E008E2077 /* APMCallHelpViewController.xib */,
 				012A684A1829D91500CA05CB /* DonorDetailCell.xib */,
 				01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */,
 				01C9834F181C297A0043C8EA /* APMLoginViewController.xib */,
@@ -537,6 +570,12 @@
 				01F95E77181F5ED4006CCF83 /* APMCallViewController.m */,
 				0182D3AA17EF37E7001EA3A6 /* APMMenuViewController.h */,
 				0182D3AB17EF37E7001EA3A6 /* APMMenuViewController.m */,
+				01B56176182B3C5E008E2077 /* APMCallHelpViewController.h */,
+				01B56177182B3C5E008E2077 /* APMCallHelpViewController.m */,
+				01B56171182B2AC4008E2077 /* APMEditProfileViewController.h */,
+				01B56172182B2AC4008E2077 /* APMEditProfileViewController.m */,
+				01B5617E182B5BA9008E2077 /* APMEditCandProfileViewController.h */,
+				01B5617F182B5BA9008E2077 /* APMEditCandProfileViewController.m */,
 				01C9834D181C297A0043C8EA /* APMLoginViewController.h */,
 				01C9834E181C297A0043C8EA /* APMLoginViewController.m */,
 				015272331803A4FC00D79E1C /* APMFrontCell.h */,
@@ -594,6 +633,8 @@
 				01E360E51828161B0091B84D /* APMDetailModel.m */,
 				012A684F182A0E4500CA05CB /* APMContributionsModel.h */,
 				012A6850182A0E4500CA05CB /* APMContributionsModel.m */,
+				01B5617B182B5215008E2077 /* APMGetPhoneModel.h */,
+				01B5617C182B5215008E2077 /* APMGetPhoneModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -717,12 +758,15 @@
 				01D4F72118063C650054613C /* HelveticaBd___-.ttf in Resources */,
 				0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */,
 				01F95E75181F5935006CCF83 /* LoadingCell.xib in Resources */,
+				01B56182182B5BA9008E2077 /* APMEditCandProfileViewController.xib in Resources */,
+				01B56188182B614A008E2077 /* checkBox@2x.png in Resources */,
 				01732A91181DDE8E0044EF8E /* outgoing.wav in Resources */,
 				012A684B1829D91600CA05CB /* DonorDetailCell.xib in Resources */,
 				01508B2D1821DA8D0043C2A9 /* logout.png in Resources */,
 				01732A88181DDE8E0044EF8E /* dtmf_4.wav in Resources */,
 				01D4F72518063C650054613C /* HelveticaNeueBoldItalic.ttf in Resources */,
 				01732A8F181DDE8E0044EF8E /* dtmf_star.wav in Resources */,
+				01B56189182B614A008E2077 /* checkBoxMarked.png in Resources */,
 				014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */,
 				01D4F72A18063C650054613C /* HelveticaNeueLightItalic.ttf in Resources */,
 				019B7D64180C441D006202B5 /* README.md in Resources */,
@@ -731,6 +775,7 @@
 				01732A84181DDE8E0044EF8E /* dtmf_0.wav in Resources */,
 				01F95E88181F6C26006CCF83 /* hangup.png in Resources */,
 				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
+				01B5618A182B614A008E2077 /* checkBoxMarked@2x.png in Resources */,
 				01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */,
 				01732A8A181DDE8E0044EF8E /* dtmf_6.wav in Resources */,
 				01732A89181DDE8E0044EF8E /* dtmf_5.wav in Resources */,
@@ -744,14 +789,17 @@
 				0152723018038B6500D79E1C /* Default-568h@2x.png in Resources */,
 				01D4F72718063C650054613C /* HelveticaNeueCondensedBold.ttf in Resources */,
 				01508B2F1821F5B50043C2A9 /* downArrowBlack.png in Resources */,
+				01B56175182B2AC4008E2077 /* APMEditProfileViewController.xib in Resources */,
 				01F95E81181F65D8006CCF83 /* CloseButton@2x.png in Resources */,
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
 				01732A8D181DDE8E0044EF8E /* dtmf_9.wav in Resources */,
 				01732A90181DDE8E0044EF8E /* incoming.wav in Resources */,
 				01D4F72B18063C650054613C /* HelveticaNeueMedium.ttf in Resources */,
+				01B56187182B614A008E2077 /* checkBox.png in Resources */,
 				01D4F72C18063C650054613C /* HelveticaNeueUltraLight.ttf in Resources */,
 				019B7D65180C441D006202B5 /* release_notes.md in Resources */,
 				015EA1BD1803D64700960438 /* APMCallOutComeViewController.xib in Resources */,
+				01B5617A182B3C5E008E2077 /* APMCallHelpViewController.xib in Resources */,
 				01732A60181DAA360044EF8E /* SVProgressHUD.bundle in Resources */,
 				0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */,
 				01D4F72618063C650054613C /* HelveticaNeueCondensedBlack.ttf in Resources */,
@@ -783,11 +831,14 @@
 				01BB962417FD01870040DE19 /* APMCandidateModel.m in Sources */,
 				014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */,
 				0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */,
+				01B56181182B5BA9008E2077 /* APMEditCandProfileViewController.m in Sources */,
+				01B56179182B3C5E008E2077 /* APMCallHelpViewController.m in Sources */,
 				01F95E7D181F6254006CCF83 /* APMPhone.m in Sources */,
 				01C98350181C297A0043C8EA /* APMLoginViewController.m in Sources */,
 				01BB961917FCFF650040DE19 /* AFHTTPRequestOperation.m in Sources */,
 				01BB961C17FCFF650040DE19 /* AFJSONRequestOperation.m in Sources */,
 				01E360EB182851730091B84D /* Reachability.m in Sources */,
+				01B56174182B2AC4008E2077 /* APMEditProfileViewController.m in Sources */,
 				01BB961817FCFF650040DE19 /* AFHTTPClient.m in Sources */,
 				01BB962117FCFF650040DE19 /* UIImageView+AFNetworking.m in Sources */,
 				011D239E17EF31E4003A4204 /* main.m in Sources */,
@@ -803,6 +854,7 @@
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
 				014690F517F734B5002C0318 /* APMCandidateViewController.m in Sources */,
 				01BB961D17FCFF650040DE19 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				01B5617D182B5215008E2077 /* APMGetPhoneModel.m in Sources */,
 				015EA1BC1803D64700960438 /* APMCallOutComeViewController.m in Sources */,
 				0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */,
 				01F95E84181F69F2006CCF83 /* GradientView.m in Sources */,
