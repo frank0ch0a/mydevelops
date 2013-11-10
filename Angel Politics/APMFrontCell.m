@@ -106,12 +106,7 @@
     self.swipeView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_menu_row_up"]];
     
     
-    //Circle View
-    CGPoint saveCenter = self.circleView.center;
-    CGRect newFrame = CGRectMake(self.circleView.frame.origin.x, self.circleView.frame.origin.y, 50, 50);
-    self.circleView.frame = newFrame;
-    self.circleView.layer.cornerRadius = 50 / 2.0;
-    self.circleView.center = saveCenter;
+    
     
 }
 

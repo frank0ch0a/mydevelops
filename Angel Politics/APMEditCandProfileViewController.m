@@ -114,18 +114,21 @@
 - (IBAction)saveButton:(id)sender {
     
     
-    [self.delegate configEditDidUpdate:self];
+    
     
     if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
         
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
-        
+        NSUserDefaults *phone=[NSUserDefaults standardUserDefaults];
+        [phone setObject:self.editPhone1.text forKey:@"phone"];
+        [phone  synchronize];
+
         
         
     
-        if (active ==nil) {
+        if (active ==nil && !checked) {
             UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Check can not be empty" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             
             [alertview show];
@@ -153,7 +156,7 @@ NSDictionary *dict=@{@"email":self.email ,@"pass":self.password,@"selphone":acti
             NSLog(@"Resulta JSON phones %@",JSON);
             
            
-           
+        
             
             
             
@@ -179,7 +182,7 @@ NSDictionary *dict=@{@"email":self.email ,@"pass":self.password,@"selphone":acti
         [operation start];
 
     
-    
+       [self.delegate configEditDidUpdate:self];
     
         }
     }

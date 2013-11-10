@@ -17,6 +17,7 @@
 @property(nonatomic,copy)NSString *supportes;
 @property(nonatomic,copy)NSString *funraised;
 @property(nonatomic,copy)NSString *dayToElection;
+@property(nonatomic,copy)NSString *colorParty;
 
 
 

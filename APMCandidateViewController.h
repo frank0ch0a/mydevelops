@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import "APMCallHelpViewController.h"
 @class APMLeadsModel;
 @class APMDetailModel;
 
 
-@interface APMCandidateViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate>
+
+@interface APMCandidateViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,CallHelpDelegate>
 
 @property(nonatomic,strong)APMLeadsModel *leadsModel;
 @property(nonatomic,strong)APMDetailModel *detailModel;

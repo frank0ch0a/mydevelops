@@ -17,5 +17,6 @@
 @synthesize supportes;
 @synthesize funraised;
 @synthesize dayToElection;
+@synthesize colorParty;
 
 @end

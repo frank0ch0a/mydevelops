@@ -24,5 +24,7 @@
 @property(nonatomic,copy)NSString *supportName;
 @property(nonatomic,copy)NSString *supportAmount;
 @property(nonatomic,strong)NSArray *detalles;
+@property(nonatomic,copy)NSString *cand_id;
+@property(nonatomic,copy)NSString *donor_id;
 
 @end

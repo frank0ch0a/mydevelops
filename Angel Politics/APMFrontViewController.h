@@ -22,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *frontLineTwo;
 
+@property (weak, nonatomic) IBOutlet UILabel *fundraiseLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *frontNumber;
 

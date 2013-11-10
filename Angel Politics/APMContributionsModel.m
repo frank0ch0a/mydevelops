@@ -12,5 +12,6 @@
 @synthesize contributorName;
 @synthesize contributionDate;
 @synthesize contributionAmount;
+@synthesize image;
 
 @end

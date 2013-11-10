@@ -13,6 +13,7 @@
                 <outlet property="donorUIView" destination="gbE-pT-pYl" id="qZs-4h-O0W"/>
                 <outlet property="frontLineTwo" destination="9ce-nP-cKO" id="WeY-eB-PSz"/>
                 <outlet property="frontNumber" destination="aYc-iZ-ss4" id="ycA-3L-CaN"/>
+                <outlet property="fundraiseLabel" destination="XV9-ZL-AbE" id="AWx-j5-8Ac"/>
                 <outlet property="otherButton" destination="BX2-xn-AQG" id="TES-EN-kJD"/>
                 <outlet property="pitchUIView" destination="lQC-bu-tUC" id="WM1-ho-QoH"/>
                 <outlet property="pledgeButton" destination="XSg-K0-OTm" id="SNd-Ux-ekr"/>
@@ -30,22 +31,22 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fundraise" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XV9-ZL-AbE">
-                            <rect key="frame" x="20" y="9" width="76" height="21"/>
+                            <rect key="frame" x="14" y="11" width="145" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add lead" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DPT-kS-Q9x">
-                            <rect key="frame" x="219" y="9" width="69" height="21"/>
+                            <rect key="frame" x="211" y="9" width="69" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="98r-tU-owL">
-                            <rect key="frame" x="288" y="4" width="29" height="29"/>
+                            <rect key="frame" x="282" y="6" width="29" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                            <state key="normal" title="+">
+                            <state key="normal" backgroundImage="btn_plus.png">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -58,9 +59,9 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aYc-iZ-ss4">
-                            <rect key="frame" x="13" y="44" width="81" height="50"/>
+                            <rect key="frame" x="0.0" y="44" width="94" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="49"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="49"/>
                             <color key="textColor" red="0.18612365310000001" green="0.78679049739999996" blue="0.1171079218" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -147,4 +148,7 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <resources>
+        <image name="btn_plus.png" width="23" height="23"/>
+    </resources>
 </document>

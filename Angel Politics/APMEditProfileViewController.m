@@ -287,6 +287,11 @@
     editCanVC.editPhone2.text=self.phone2Label.text;
     editCanVC.editPhone3.text=self.phone3Label.text;
     
+    NSUserDefaults *phone=[NSUserDefaults standardUserDefaults];
+    [phone removeObjectForKey:@"phone"];
+    [phone  synchronize];
+
+    
     
 }
 
@@ -312,9 +317,11 @@
 
 -(void)configEditDidUpdate:(APMEditCandProfileViewController *)controller{
     
+    [self viewDidLoad];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    [self viewDidLoad];
+    
     
     
     

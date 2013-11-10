@@ -13,5 +13,6 @@
 @property(nonatomic,copy)NSString *contributorName;
 @property(nonatomic,copy)NSString *contributionDate;
 @property(nonatomic,copy)NSString *contributionAmount;
+@property(nonatomic,copy)NSString *image;
 
 @end

@@ -140,7 +140,7 @@
                             <rect key="frame" x="246" y="0.0" width="74" height="74"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                            <state key="normal" backgroundImage="mail.png">
+                            <state key="normal" backgroundImage="msg_up.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -151,7 +151,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                            <state key="normal" backgroundImage="phone.png">
+                            <state key="normal" backgroundImage="call_phone.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -190,8 +190,8 @@
     </objects>
     <resources>
         <image name="call_circles" width="285" height="120"/>
+        <image name="call_phone.png" width="79" height="79"/>
         <image name="call_user_icon" width="20" height="20"/>
-        <image name="mail.png" width="148" height="148"/>
-        <image name="phone.png" width="148" height="148"/>
+        <image name="msg_up.png" width="79" height="79"/>
     </resources>
 </document>

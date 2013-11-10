@@ -122,7 +122,7 @@ static NSString *const FrontCell=@"FrontCell";
     [self.donorTableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
     
     
-    [self updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:NO];
+    [self updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:YES];
     
    // self.title=@"Angel Politics";
     
@@ -209,6 +209,7 @@ static NSString *const FrontCell=@"FrontCell";
     self.donorUIView.hidden=YES;
     self.pledgeUIView.hidden=YES;
     
+    self.fundraiseLabel.font=[UIFont fontWithName:@"Helvetica Bold" size:25];
     
     
 }
@@ -450,7 +451,7 @@ static NSString *const FrontCell=@"FrontCell";
     APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
     
     cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
-    cell.amountLabel.text=[NSString stringWithFormat:@"$ %@",leadsModel.ask];
+    cell.amountLabel.text=[NSString stringWithFormat:@"%@",leadsModel.ask];
      
         if (leadsModel.donorCity != (id)[NSNull null]&&leadsModel.donorState != (id)[NSNull null] ) {
              cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];

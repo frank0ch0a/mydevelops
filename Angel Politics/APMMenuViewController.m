@@ -20,10 +20,11 @@
 #import "APMPhone.h"
 #import "APMAppDelegate.h"
 #import "APMEditProfileViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 static NSString *const CandidateCellIdentifier=@"CandidateCell";
 static NSString *const MenuCellIdentifier=@"MenuCell";
-
+static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-pictures/candidates/";
 enum {
     MenuCandidate=0,
    // MenuHomeRow ,
@@ -149,6 +150,7 @@ enum {
     candidateModel.supportes=[dictionary valueForKey:@"f"];
     candidateModel.funraised=[dictionary valueForKey:@"g"];
     candidateModel.dayToElection=[dictionary valueForKey:@"h"];
+    candidateModel.colorParty=[dictionary valueForKey:@"i"];
     
     
     return candidateModel;
@@ -322,12 +324,33 @@ enum {
         
         APMCandidateModel *candidateModel=[self.menuResults objectAtIndex:indexPath.row];
         
-        cell.candidateNameLabel.text=[NSString stringWithFormat:@"%@,%@",candidateModel.candidateName,candidateModel.candidateLastName];
+        cell.candidateNameLabel.text=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
         cell.candidateOficceAndCityLabel.text=[NSString stringWithFormat:@"%@,%@",candidateModel.officeCandidate,candidateModel.city];
         cell.candidateSupportersLabel.text=candidateModel.supportes;
         cell.candidateFundRaisedLabel.text=candidateModel.funraised;
         cell.candidateDayToElectLabel.text=candidateModel.dayToElection;
-        cell.candImageView.image=[UIImage imageNamed:@"men"];
+        
+       // cell.candImageView.image=[UIImage imageNamed:@"men"];
+        
+        [cell.candImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",UrlImage,candidateModel.candidateImage]] placeholderImage:[UIImage imageNamed:@"men"]];
+        
+        if (candidateModel.colorParty!=nil) {
+           
+            if ([candidateModel.colorParty isEqualToString:@"blue"]) {
+                cell.colorBgPartyUIView.backgroundColor=[UIColor blueColor];
+
+            }else if ([candidateModel.colorParty isEqualToString:@"red"]){
+                
+                cell.colorBgPartyUIView.backgroundColor=[UIColor redColor];
+                
+            }else{
+                
+                cell.colorBgPartyUIView.backgroundColor=[UIColor greenColor];
+            }
+            
+            
+            
+        }
         
         NSString *signCandidate=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
        

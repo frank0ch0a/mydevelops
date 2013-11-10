@@ -15,7 +15,8 @@
 @interface APMCallOutComeViewController (){
     
     CGFloat ymainView;
-    
+    NSString *candId;
+    NSString *donorId;
 }
 
 @property(nonatomic,strong)NSArray *callStatus;
@@ -58,12 +59,19 @@
     
     
     self.amountPledgeTextField.delegate=self;
+    self.pledgeTextField.delegate=self;
     
     self.nameLabel.text=[NSString stringWithFormat:@"%@ %@",self.detailModel.name,self.detailModel.lastName];
     self.askLabel.text=self.detailModel.ask;
     self.bestLabel.text=self.detailModel.best;
     self.averageLabel.text=self.detailModel.average;
     self.cityAndStateLabel.text=[NSString stringWithFormat:@"%@, %@",self.detailModel.city,self.detailModel.state];
+    
+    donorId=self.detailModel.donor_id;
+    candId=self.detailModel.cand_id;
+    
+    
+    
     
    
 }
@@ -100,17 +108,21 @@
         
         self.pledgeTextField.text=pickerView.selectedValue;
         
+        if ([self.pledgeTextField.text isEqualToString:@"Pledge"]) {
+            
+            APMCallViewController *apmCallVC=[[APMCallViewController alloc]init];
+            
+            [self.view addSubview:apmCallVC.view];
+            [self addChildViewController:apmCallVC];
+            [apmCallVC didMoveToParentViewController:self];
+            
+            apmCallVC.candID=candId;
+            apmCallVC.donorID=donorId;
+        }
+        
     }];
 }
 
-- (IBAction)dialButton:(id)sender {
-    
-    APMCallViewController *apmCallVC=[[APMCallViewController alloc]init];
-    
-    [self.view addSubview:apmCallVC.view];
-    [self addChildViewController:apmCallVC];
-    [apmCallVC didMoveToParentViewController:self];
-}
 
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
@@ -127,7 +139,16 @@
             
         } completion:nil];
         
-}
+    }else if (textField==self.pledgeTextField && [self.pledgeTextField.text isEqualToString:@"Pledge"] ){
+        
+        APMCallViewController *apmCallVC=[[APMCallViewController alloc]init];
+        
+        [self.view addSubview:apmCallVC.view];
+        [self addChildViewController:apmCallVC];
+        [apmCallVC didMoveToParentViewController:self];
+        
+        
+    }
     
 }
 

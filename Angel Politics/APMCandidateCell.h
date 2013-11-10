@@ -11,6 +11,7 @@
 
 @interface APMCandidateCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *colorBgPartyUIView;
 
 @property (weak, nonatomic) IBOutlet UILabel *candidateNameLabel;
 

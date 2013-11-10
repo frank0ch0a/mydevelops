@@ -38,15 +38,19 @@
     
     [phone disconnect];
     
-    [UIView animateWithDuration:0.3 delay:1.5f options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:1.5f delay:0.8f options:UIViewAnimationOptionCurveEaseOut animations:^{
         
         self.hangupButton.frame=CGRectMake(self.hangupButton.frame.origin.x, 700, self.hangupButton.frame.size.width, self.hangupButton.frame.size.height);
         
+    } completion:^(BOOL finished) {
+        //[self dismissViewControllerAnimated:NO completion:nil];
         
-    } completion:nil];
-    
-    [self dismissViewControllerAnimated:NO completion:nil];
+        [self.delegate CallHelpDidDismiss:self];
 
+    }];
+    
+  
+    
 }
 
 - (void)didReceiveMemoryWarning

@@ -17,6 +17,10 @@
 #import "SVProgressHUD.h"
 #import "APMContributionsModel.h"
 #import "DonorDetailCell.h"
+#import "APMCallHelpViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "APMPhone.h"
+#import "APMAppDelegate.h"
 
 @interface APMCandidateViewController (){
     
@@ -37,6 +41,8 @@
 @end
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
 static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
+static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-pictures/candidates/";
+
 @implementation APMCandidateViewController
 
 
@@ -104,6 +110,7 @@ static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
     contributionsModel.contributorName=[dictionary objectForKey:@"a"];
     contributionsModel.contributionDate=[dictionary objectForKey:@"b"];
     contributionsModel.contributionAmount=[dictionary objectForKey:@"c"];
+    contributionsModel.image=[dictionary objectForKey:@"d"];
     
     
     return contributionsModel;
@@ -176,6 +183,8 @@ static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
     self.detailModel.highlights2=[dictionary valueForKey:@"k"];
     self.detailModel.supportName=[dictionary valueForKey:@"l"];
     self.detailModel.supportAmount=[dictionary valueForKey:@"m"];
+    self.detailModel.cand_id=[dictionary valueForKey:@"n"];
+    self.detailModel.donor_id=[dictionary valueForKey:@"o"];
     
     
     return self.detailModel;
@@ -373,13 +382,11 @@ static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
         cell.donorDetailNameLabel.text=contributionsModel.contributorName;
         cell.donorDetailDateLabel.text=contributionsModel.contributionDate;
         cell.donorDetailAmountLabel.text=[NSString stringWithFormat:@"$ %@",contributionsModel.contributionAmount];
-        cell.donorDetailImage.image=[UIImage imageNamed:@"men"];
+        //cell.donorDetailImage.image=[UIImage imageNamed:@"men"];
         
-        /*
-    cell.textLabel.text=[self.lastDonations objectAtIndex:indexPath.row];
-    cell.detailTextLabel.text=[self.amounts objectAtIndex:indexPath.row];
-    
-    cell.imageView.image=[UIImage imageNamed:@"men"];*/
+        [cell.donorDetailImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",UrlImage,contributionsModel.image]] placeholderImage:[UIImage imageNamed:@"men"]];
+
+      
     
     
     return cell;
@@ -433,14 +440,33 @@ static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
 
 - (IBAction)callOutcome:(id)sender {
     
+    NSUserDefaults *phoneCall=[NSUserDefaults standardUserDefaults];
     
-   
+    NSString *phoneDial=[phoneCall objectForKey:@"phone"];
     
+    NSString *codeNumber=[NSString stringWithFormat:@"+1%@",phoneDial];
+    
+    APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
+    APMPhone* phone = appDelegate.phone;
+    [phone connect:codeNumber];
+    
+    NSLog(@"phonetest %@",codeNumber);
+
+    
+    APMCallHelpViewController *callVC=[[APMCallHelpViewController alloc]init];
+    
+    callVC.delegate=self;
+    
+    [self presentViewController:callVC animated:NO completion:nil];
+    
+    callVC.callLabel.text=[NSString stringWithFormat:@"Calling    %@",self.detailModel.name];
+    
+    /*
     APMCallOutComeViewController *callOut=[[APMCallOutComeViewController alloc]init];
     
     callOut.detailModel=self.detailModel;
     
-    [self.navigationController pushViewController:callOut animated:YES];
+    [self.navigationController pushViewController:callOut animated:YES];*/
     
     
     
@@ -504,4 +530,21 @@ static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
     }];
     
 }
+
+#pragma mark CallHelpDelegate
+
+-(void)CallHelpDidDismiss:(APMCallHelpViewController *)controller{
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
+    
+    APMCallOutComeViewController *callOut=[[APMCallOutComeViewController alloc]init];
+    
+    callOut.detailModel=self.detailModel;
+    
+    [self.navigationController pushViewController:callOut animated:YES];
+    
+    
+}
+
+
 @end

@@ -24,6 +24,8 @@
 @synthesize  supportName;
 @synthesize  supportAmount;
 @synthesize detalles;
+@synthesize cand_id;
+@synthesize donor_id;
 
 
 @end
