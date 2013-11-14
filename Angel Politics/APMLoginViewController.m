@@ -126,25 +126,25 @@
     NSLog(@"Login Success");
     
     
+    // Store username to keychain
+    if (self.emailTextField.text){
+        NSLog(@"email text %@",self.emailTextField.text);
+        
+        [self.keyChain setObject:self.emailTextField.text forKey:(__bridge id)kSecAttrAccount];}
     
-     // Store username to keychain
-     if (self.emailTextField.text){
-         NSLog(@"email text %@",self.emailTextField.text);
-         
-     [self.keyChain setObject:self.emailTextField.text forKey:(__bridge id)kSecAttrAccount];}
-     
-     // Store password to keychain
-     if (self.passwordTextField.text){
-         
-           NSLog(@"pass text %@",self.passwordTextField.text);
-     [self.keyChain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];}
+    // Store password to keychain
+    if (self.passwordTextField.text){
+        
+        NSLog(@"pass text %@",self.passwordTextField.text);
+        [self.keyChain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];}
+    
     
     
     
     [self.delegate dissmissLoginController:self];
     
     
-    
+   
     
     
     

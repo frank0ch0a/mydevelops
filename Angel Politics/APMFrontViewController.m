@@ -76,8 +76,8 @@ static NSString *const FrontCell=@"FrontCell";
 {
     [super viewDidLoad];
     
-    
-   self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+   
     
      NSLog(@"Front!");
     
@@ -89,8 +89,11 @@ static NSString *const FrontCell=@"FrontCell";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"]&&[_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [_keychain objectForKey:(__bridge id)kSecValueData]!=nil )
     {
         [self dismissViewControllerAnimated:NO completion:nil];
+        
+        
     }else{
         
+        /*
         // This is the first launch ever
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasPassLogin"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -103,7 +106,7 @@ static NSString *const FrontCell=@"FrontCell";
         
             loginVC.delegate=self;
         
-            [self presentViewController:loginVC animated:NO completion:nil];
+            [self presentViewController:loginVC animated:NO completion:nil];*/
 
         
         
@@ -122,7 +125,7 @@ static NSString *const FrontCell=@"FrontCell";
     [self.donorTableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
     
     
-    [self updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:YES];
+    [self updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:NO];
     
    // self.title=@"Angel Politics";
     
@@ -139,6 +142,8 @@ static NSString *const FrontCell=@"FrontCell";
     } else {
         // connected, do some internet stuff
         
+        self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+        
         if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
             
             self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
@@ -147,6 +152,14 @@ static NSString *const FrontCell=@"FrontCell";
             self.fundRaiseType=@"/mobile/leads.php";
             
             [self loadData];
+            
+            isLoading=YES;
+            
+            
+        self.donorType=@"Pitch    Lead";
+            
+            [SVProgressHUD show];
+
         }
         
     }
@@ -160,21 +173,34 @@ static NSString *const FrontCell=@"FrontCell";
   
     
     
-    isLoading=YES;
-    
-    
-     self.donorType=@"Pitch    Lead";
-    
-    [SVProgressHUD show];
     
 }
 
+
+#pragma mark Login Delegate
 
 -(void)dissmissLoginController:(APMLoginViewController *)controller{
     
     NSLog(@"delegado login");
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+        
+        NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
+        NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+        
+        self.fundRaiseType=@"/mobile/leads.php";
+        
+        [self loadData];
+        
+    }
     
     
 }
@@ -191,6 +217,7 @@ static NSString *const FrontCell=@"FrontCell";
     [super viewWillAppear:animated];
     
    
+    [self.navigationItem setRightBarButtonItem:[self rightBarButtonItem]];
     
     self.donorButton.layer.borderWidth=1.0f;
     self.donorButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
@@ -345,7 +372,7 @@ static NSString *const FrontCell=@"FrontCell";
     return [UIImage imageNamed:@"ic_menu"];
 }
 - (UIImage *)searchImage {
-    return [UIImage imageNamed:@"ic_Search"];
+    return [UIImage imageNamed:@"ic_search"];
 }
 
 
@@ -403,8 +430,7 @@ static NSString *const FrontCell=@"FrontCell";
     if (self.slideMenuController.slideDirection == NVSlideMenuControllerSlideFromLeftToRight)
 	{
 		[self.navigationItem setLeftBarButtonItem:self.leftBarButtonItem animated:animated];
-        [self.navigationItem setRightBarButtonItem:self.rightBarButtonItem animated:animated];
-	
+        
 	}
     
     

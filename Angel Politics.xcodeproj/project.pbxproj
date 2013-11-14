@@ -739,6 +739,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = angelpolitics;
 				TargetAttributes = {
+					011D238D17EF31E4003A4204 = {
+						DevelopmentTeam = H47CS6J324;
+					};
 					011D23A817EF31E4003A4204 = {
 						TestTargetID = 011D238D17EF31E4003A4204;
 					};
@@ -1013,6 +1016,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1045,6 +1049,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

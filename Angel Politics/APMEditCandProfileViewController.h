@@ -19,6 +19,7 @@
     
 
         BOOL checked;
+        NSString *active;
 
 
 }

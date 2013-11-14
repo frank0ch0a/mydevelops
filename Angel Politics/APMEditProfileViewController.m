@@ -23,6 +23,7 @@
     NSOperationQueue *queue;
     NSString *numbertoDial;
     
+    
 }
 
 @property(strong,nonatomic)KeychainItemWrapper *keychain;
@@ -32,6 +33,8 @@
 // Lazy buttons
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
+@property(strong,nonatomic)APMGetPhoneModel *phoneModel;
+
 
 @end
 
@@ -163,36 +166,39 @@
     
     for (NSDictionary *resultDict in array) {
         
-        APMGetPhoneModel *phoneModel;
         
-        phoneModel=[self parseData:resultDict];
         
-        if(phoneModel!=nil){
+        self.phoneModel=[self parseData:resultDict];
+        
+        if(self.phoneModel!=nil){
             
-            [self.profileResults addObject:phoneModel];
+            [self.profileResults addObject:self.phoneModel];
             
             NSUserDefaults *candName= [NSUserDefaults standardUserDefaults];
             
             NSString *sign=[candName objectForKey:@"nombreCandidato"];
             
             self.nameProfileLabel.text=sign;
-            self.phone1Label.text=phoneModel.phoneOne;
-            self.phone2Label.text=phoneModel.phoneTwo;
-            self.phone3Label.text=phoneModel.phoneThree;
+            self.phone1Label.text=self.phoneModel.phoneOne;
+            self.phone2Label.text=self.phoneModel.phoneTwo;
+            self.phone3Label.text=self.phoneModel.phoneThree;
 
-            switch ([phoneModel.activePhone integerValue]) {
+            switch ([self.phoneModel.activePhone integerValue]) {
                 case 1:
-                    self.phone1Label.text=[NSString stringWithFormat:@"%@ (Act)",phoneModel.phoneOne];
-                    numbertoDial=self.phone1Label.text;
+                    numbertoDial=self.phoneModel.phoneOne;
+                    self.phone1Label.text=[NSString stringWithFormat:@"%@ (Act)",self.phoneModel.phoneOne];
+                    
                     break;
                     
                 case 2:
-                    self.phone2Label.text=[NSString stringWithFormat:@"%@ (Act)",phoneModel.phoneTwo];
-                     numbertoDial=self.phone2Label.text;
+                    numbertoDial=self.phoneModel.phoneTwo;
+                    self.phone2Label.text=[NSString stringWithFormat:@"%@ (Act)",self.phoneModel.phoneTwo];
+                    
                     break;
                 case 3:
-                    self.phone3Label.text=[NSString stringWithFormat:@"%@ (Act)",phoneModel.phoneThree];
-                     numbertoDial=self.phone3Label.text;
+                    numbertoDial=self.phoneModel.phoneThree;
+                    self.phone3Label.text=[NSString stringWithFormat:@"%@ (Act)",self.phoneModel.phoneThree];
+                    
                     break;
                     
                 default:
@@ -281,11 +287,12 @@
     editCanVC.delegate=self;
     
     
+    
     [self presentViewController:editCanVC animated:YES completion:nil];
     
-    editCanVC.editPhone1.text=self.phone1Label.text;
-    editCanVC.editPhone2.text=self.phone2Label.text;
-    editCanVC.editPhone3.text=self.phone3Label.text;
+    editCanVC.editPhone1.text=self.phoneModel.phoneOne;
+    editCanVC.editPhone2.text=self.phoneModel.phoneTwo;
+    editCanVC.editPhone3.text=self.phoneModel.phoneThree;
     
     NSUserDefaults *phone=[NSUserDefaults standardUserDefaults];
     [phone removeObjectForKey:@"phone"];
@@ -300,9 +307,10 @@
     
     APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
     APMPhone* phone = appDelegate.phone;
+    NSString *dialNumber=[NSString stringWithFormat:@"+1%@",numbertoDial];
     [phone connect:numbertoDial];
     
-    NSLog(@"numero activo %@",numbertoDial);
+    NSLog(@"numero activo %@",dialNumber);
     
 }
 

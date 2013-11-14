@@ -43,13 +43,17 @@
         self.hangupButton.frame=CGRectMake(self.hangupButton.frame.origin.x, 700, self.hangupButton.frame.size.width, self.hangupButton.frame.size.height);
         
     } completion:^(BOOL finished) {
-        //[self dismissViewControllerAnimated:NO completion:nil];
+        
+       
         
         [self.delegate CallHelpDidDismiss:self];
+        
+        [self dismissViewControllerAnimated:NO completion:nil];
 
     }];
     
   
+    
     
 }
 

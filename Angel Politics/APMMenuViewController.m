@@ -61,42 +61,21 @@ enum {
         // Custom initialization
         
         queue=[[NSOperationQueue alloc]init];
+        
+       
     }
     return self;
 }
 
 
-#pragma mark LoginDelegate
--(void)dissmissLoginController:(APMLoginViewController *)controller
-{
-    NSLog(@"Login menu Controller");
-    
-    
-    
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
-    
-    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
-        
-        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
-        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
-        
-    
-        NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
-         NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
-        
-        [self downloadCandidateData];
-        
-    }
-    
-    
-   
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    
     self.tableView.backgroundColor = [UIColor darkGrayColor];
     //self.tableView.separatorColor = [UIColor lightGrayColor];
     self.tableView.separatorStyle=NO;
@@ -122,14 +101,34 @@ enum {
     
     
     
-    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"]&& [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+        
+         [self dismissViewControllerAnimated:NO completion:nil];
         
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
     
-        
+               
         [self downloadCandidateData];
 
+    }else{
+        
+        // This is the first launch ever
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasPassLogin"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+        
+        
+        
+        APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
+        
+        loginVC.delegate=self;
+        
+        [self presentViewController:loginVC animated:NO completion:nil];
+        
     }
 
     
@@ -470,7 +469,14 @@ enum {
     APMPhone* phone = appDelegate.phone;
     [phone connect:@"+19143253307"];
     
-    [self presentViewController:helpCall animated:YES completion:nil];
+    
+    [self presentViewController:helpCall animated:NO completion:nil];
+    
+    APMFrontViewController *vc=[[APMFrontViewController alloc]init];
+
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
     
     
     
@@ -547,5 +553,33 @@ enum {
     
 }
 
+#pragma mark LoginDelegate
+-(void)dissmissLoginController:(APMLoginViewController *)controller
+{
+    NSLog(@"Login menu Controller");
+    
+    
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+        
+        NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
+        NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+        
+        [self downloadCandidateData];
+        
+    }
+    
+    
+    
+}
 
 @end

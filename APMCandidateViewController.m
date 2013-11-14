@@ -448,9 +448,9 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
     APMPhone* phone = appDelegate.phone;
-    [phone connect:codeNumber];
+    [phone connect:phoneDial];
     
-    NSLog(@"phonetest %@",codeNumber);
+    NSLog(@"phonetest %@",phoneDial);
 
     
     APMCallHelpViewController *callVC=[[APMCallHelpViewController alloc]init];
