@@ -35,6 +35,8 @@
 		015272351803A4FC00D79E1C /* APMFrontCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 015272341803A4FC00D79E1C /* APMFrontCell.m */; };
 		015EA1BC1803D64700960438 /* APMCallOutComeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015EA1BA1803D64700960438 /* APMCallOutComeViewController.m */; };
 		015EA1BD1803D64700960438 /* APMCallOutComeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */; };
+		016D3B4F18367D1B006E881F /* APMSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 016D3B4D18367D1A006E881F /* APMSearchResultsViewController.m */; };
+		016D3B5018367D1B006E881F /* APMSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016D3B4E18367D1A006E881F /* APMSearchResultsViewController.xib */; };
 		01732A60181DAA360044EF8E /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01732A5D181DAA360044EF8E /* SVProgressHUD.bundle */; };
 		01732A61181DAA360044EF8E /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 01732A5F181DAA360044EF8E /* SVProgressHUD.m */; };
 		01732A64181DD30C0044EF8E /* APMLeadsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01732A63181DD30C0044EF8E /* APMLeadsModel.m */; };
@@ -190,6 +192,9 @@
 		015EA1B91803D64700960438 /* APMCallOutComeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCallOutComeViewController.h; sourceTree = "<group>"; };
 		015EA1BA1803D64700960438 /* APMCallOutComeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCallOutComeViewController.m; sourceTree = "<group>"; };
 		015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCallOutComeViewController.xib; sourceTree = "<group>"; };
+		016D3B4C18367D1A006E881F /* APMSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMSearchResultsViewController.h; sourceTree = "<group>"; };
+		016D3B4D18367D1A006E881F /* APMSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMSearchResultsViewController.m; sourceTree = "<group>"; };
+		016D3B4E18367D1A006E881F /* APMSearchResultsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMSearchResultsViewController.xib; sourceTree = "<group>"; };
 		01732A5C181DAA360044EF8E /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
 		01732A5D181DAA360044EF8E /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		01732A5E181DAA360044EF8E /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
@@ -489,6 +494,7 @@
 			isa = PBXGroup;
 			children = (
 				01B56180182B5BA9008E2077 /* APMEditCandProfileViewController.xib */,
+				016D3B4E18367D1A006E881F /* APMSearchResultsViewController.xib */,
 				01B56173182B2AC4008E2077 /* APMEditProfileViewController.xib */,
 				015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */,
 				01B56178182B3C5E008E2077 /* APMCallHelpViewController.xib */,
@@ -610,6 +616,8 @@
 				01F95E83181F69F2006CCF83 /* GradientView.m */,
 				012A684C1829D96000CA05CB /* DonorDetailCell.h */,
 				012A684D1829D96000CA05CB /* DonorDetailCell.m */,
+				016D3B4C18367D1A006E881F /* APMSearchResultsViewController.h */,
+				016D3B4D18367D1A006E881F /* APMSearchResultsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -826,6 +834,7 @@
 				018103A9182CB80900417680 /* btn_plus@2.png in Resources */,
 				01F95E81181F65D8006CCF83 /* CloseButton@2x.png in Resources */,
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
+				016D3B5018367D1B006E881F /* APMSearchResultsViewController.xib in Resources */,
 				018103A3182CB6BB00417680 /* msg_up@2x.png in Resources */,
 				01732A8D181DDE8E0044EF8E /* dtmf_9.wav in Resources */,
 				01732A90181DDE8E0044EF8E /* incoming.wav in Resources */,
@@ -894,6 +903,7 @@
 				01B5617D182B5215008E2077 /* APMGetPhoneModel.m in Sources */,
 				015EA1BC1803D64700960438 /* APMCallOutComeViewController.m in Sources */,
 				0182D3A417EF35FA001EA3A6 /* APMFrontViewController.m in Sources */,
+				016D3B4F18367D1B006E881F /* APMSearchResultsViewController.m in Sources */,
 				01F95E84181F69F2006CCF83 /* GradientView.m in Sources */,
 				01BB962017FCFF650040DE19 /* AFXMLRequestOperation.m in Sources */,
 				01E360E61828161B0091B84D /* APMDetailModel.m in Sources */,
@@ -955,7 +965,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Armida Ortiz (ELFR3NW8L3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Armida Ortiz (ELFR3NW8L3)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -972,7 +983,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				PROVISIONING_PROFILE = "3314F102-A921-4080-86AF-DCF2FB59D725";
 				SDKROOT = iphoneos6.1;
 			};
 			name = Debug;
@@ -994,7 +1006,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Armida Ortiz (ELFR3NW8L3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Armida Ortiz (ELFR3NW8L3)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1005,6 +1018,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				PROVISIONING_PROFILE = "3314F102-A921-4080-86AF-DCF2FB59D725";
 				SDKROOT = iphoneos6.1;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1031,6 +1045,7 @@
 					"/Users/Frank/Documents/IOS\\ develop/My\\ Develops/Angel\\ Politics/TestFlightSDK2.0.2",
 					"/Users/Frank/Documents/IOS\\ develop/My\\ Develops/Angel\\ Politics",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -1050,6 +1065,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Armida Ortiz (ELFR3NW8L3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Angel Politics/Angel Politics-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

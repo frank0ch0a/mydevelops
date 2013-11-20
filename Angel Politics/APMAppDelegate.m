@@ -67,6 +67,16 @@
     
     [[UIBarButtonItem appearance]setBackButtonBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
+    [[UISearchBar appearance]setBackgroundImage:barImage];
+     
+    
+    [[UIButton appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundImage:barImage forState:UIControlStateNormal];
+    
+    [[UIBarButtonItem appearance]setBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    [[UIToolbar appearance] setBackgroundImage:barImage forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+  
+    
     
     /*
     UIColor *tintColor=[UIColor colorWithRed:40/255.0f green:50/255.0f blue:50/255.0f alpha:1.0f];

@@ -17,5 +17,6 @@
 @synthesize donorPhoneNumber;
 @synthesize donorEmail;
 @synthesize donor_id;
-
+@synthesize statusNet;
+@synthesize party;
 @end

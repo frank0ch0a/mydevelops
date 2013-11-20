@@ -39,6 +39,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameSupport;
 
 @property (nonatomic,copy)NSString *title;
+@property (nonatomic)BOOL isADonor;
+
 
 
 - (IBAction)callOutcome:(id)sender;

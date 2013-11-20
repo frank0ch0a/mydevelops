@@ -5,7 +5,6 @@
 //  Created by Francisco on 22/09/13.
 //  Copyright (c) 2013 angelpolitics. All rights reserved.
 //
-
 #import "APMMenuViewController.h"
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
@@ -27,7 +26,7 @@ static NSString *const MenuCellIdentifier=@"MenuCell";
 static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-pictures/candidates/";
 enum {
     MenuCandidate=0,
-   // MenuHomeRow ,
+    // MenuHomeRow ,
     MenuProfile,
     MenuFundRaising,
     MenuMessages,
@@ -40,7 +39,7 @@ enum {
 
 @interface APMMenuViewController (){
     
-      NSOperationQueue *queue;
+    NSOperationQueue *queue;
     
 }
 
@@ -62,7 +61,7 @@ enum {
         
         queue=[[NSOperationQueue alloc]init];
         
-       
+        
     }
     return self;
 }
@@ -83,20 +82,20 @@ enum {
     [self.tableView registerNib:[self menuCellNib] forCellReuseIdentifier:MenuCellIdentifier];
     [self.tableView registerNib:[self candidateCellNib] forCellReuseIdentifier:CandidateCellIdentifier];
     
-   // self.tableView.frame=CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, 300);
+    // self.tableView.frame=CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, 300);
     
     
-  
-
+    
+    
     
     NSLog(@"Menu!");
     
     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
-        
+    
     
     //NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
-   // NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+    //NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
     
     
     
@@ -105,14 +104,14 @@ enum {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"]&& [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
         
-         [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
         
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
-    
-               
+        
+        
         [self downloadCandidateData];
-
+        
     }else{
         
         // This is the first launch ever
@@ -130,9 +129,9 @@ enum {
         [self presentViewController:loginVC animated:NO completion:nil];
         
     }
-
     
-   
+    
+    
 }
 
 
@@ -177,13 +176,15 @@ enum {
             
             [self.menuResults addObject:candidatoModel];
             
-            NSLog(@"results %@",self.menuResults);
+            
+            
+            //   NSLog(@"results %@",self.menuResults);
             
         }
         
         
     }
-
+    
     
     
     
@@ -197,7 +198,7 @@ enum {
     
     NSDictionary *dict=@{@"email":self.email ,@"pass":self.password};
     
-   // NSLog(@"Parameters %@",dict);
+    // NSLog(@"Parameters %@",dict);
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
     
@@ -218,7 +219,7 @@ enum {
             
             [self.tableView reloadData];
             
-           
+            
             
             
         }else{
@@ -270,15 +271,15 @@ enum {
 }
 
 - (void)configureCell:(MenuCell *)cell forIndexPath:(NSIndexPath *)indexPath {
-   
+    
     switch (indexPath.row) {
             
-        /*
-    
-        case MenuHomeRow:
-            cell.menuLabel.text = @"Home";
-            
-            break;*/
+            /*
+             
+             case MenuHomeRow:
+             cell.menuLabel.text = @"Home";
+             
+             break;*/
             
         case MenuProfile:
             cell.menuLabel.text = @"Edit Profile";
@@ -329,15 +330,15 @@ enum {
         cell.candidateFundRaisedLabel.text=candidateModel.funraised;
         cell.candidateDayToElectLabel.text=candidateModel.dayToElection;
         
-       // cell.candImageView.image=[UIImage imageNamed:@"men"];
+        // cell.candImageView.image=[UIImage imageNamed:@"men"];
         
         [cell.candImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",UrlImage,candidateModel.candidateImage]] placeholderImage:[UIImage imageNamed:@"men"]];
         
         if (candidateModel.colorParty!=nil) {
-           
+            
             if ([candidateModel.colorParty isEqualToString:@"blue"]) {
                 cell.colorBgPartyUIView.backgroundColor=[UIColor blueColor];
-
+                
             }else if ([candidateModel.colorParty isEqualToString:@"red"]){
                 
                 cell.colorBgPartyUIView.backgroundColor=[UIColor redColor];
@@ -352,12 +353,12 @@ enum {
         }
         
         NSString *signCandidate=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
-       
+        
         NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
         [registro setObject:signCandidate forKey:@"nombreCandidato"];
         [registro synchronize];
-
-    
+        
+        
     }
     
     
@@ -373,29 +374,29 @@ enum {
         
         [self configureCandidateCell:cell forIndexPath:indexPath];
         
-       
+        
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 120,320, 1)];
         lineView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:lineView];
         
-         return cell;
+        return cell;
         
     }else{
-    
-    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuCellIdentifier];
-    
-    [self configureCell:cell forIndexPath:indexPath];
+        
+        MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuCellIdentifier];
+        
+        [self configureCell:cell forIndexPath:indexPath];
         
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 45,320, 1)];
         lineView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:lineView];
         
-      
-
+        
+        
         return cell;
-
+        
     }
     
     
@@ -441,8 +442,8 @@ enum {
     
     APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
     
-      [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HasPassLogin"];
-   
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HasPassLogin"];
+    
     
     [_keychain resetKeychainItem];
     
@@ -473,7 +474,7 @@ enum {
     [self presentViewController:helpCall animated:NO completion:nil];
     
     APMFrontViewController *vc=[[APMFrontViewController alloc]init];
-
+    
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
@@ -487,8 +488,8 @@ enum {
     
     
     /*
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
+     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
 }
 
 -(void)showProfileController{
@@ -506,12 +507,12 @@ enum {
 -(void)showFundRaiseController{
     
     APMFrontViewController *frontVC=[[APMFrontViewController alloc]init];
-
+    
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:frontVC];
     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
     
-
+    
     
     
     
@@ -526,7 +527,7 @@ enum {
             [self showLogoutController];
             break;
             
-           
+            
         case MenuHelp:
             [self showHelpController];
             break;
@@ -535,20 +536,20 @@ enum {
             [self showProfileController];
             break;
             
-            case MenuFundRaising:
+        case MenuFundRaising:
             
             [self showFundRaiseController];
             break;
-}
+    }
     
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==MenuCandidate) {
-         return 120.0f;
+        return 120.0f;
     }
-   
+    
     return 45.0f;
     
 }
@@ -565,14 +566,16 @@ enum {
     
     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
+    
+    
+    
     if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
         
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
         
-        NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
-        NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+        
         
         [self downloadCandidateData];
         

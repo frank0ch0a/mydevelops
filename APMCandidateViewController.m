@@ -44,6 +44,7 @@ static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
 static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-pictures/candidates/";
 
 @implementation APMCandidateViewController
+@synthesize isADonor;
 
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
@@ -76,7 +77,20 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
-        [self loadData];
+        if ([self.leadsModel.statusNet isEqualToString:@"in"] || isADonor) {
+            
+            NSLog(@"Es IN!");
+            [self loadData];
+        }else{
+            
+             NSLog(@"Es OUT!");
+            
+            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"User out of network" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            
+            [alertView show];
+        }
+        
+        
      
     }
     
@@ -147,7 +161,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             [self.contributionsResults addObject:contributionsModel];
             
-            NSLog(@"contributions array %@",self.contributionsResults);
+            //NSLog(@"contributions array %@",self.contributionsResults);
         }
         
         
@@ -444,7 +458,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     NSString *phoneDial=[phoneCall objectForKey:@"phone"];
     
-    NSString *codeNumber=[NSString stringWithFormat:@"+1%@",phoneDial];
+   // NSString *codeNumber=[NSString stringWithFormat:@"+1%@",phoneDial];
     
     APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
     APMPhone* phone = appDelegate.phone;

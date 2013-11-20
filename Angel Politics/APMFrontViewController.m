@@ -18,12 +18,13 @@
 #import "APMLeadsModel.h"
 #import "Reachability.h"
 #import "SVProgressHUD.h"
-
+#import "APMSearchResultsViewController.h"
 
 
 @interface APMFrontViewController (){
     
     BOOL isLoading;
+    BOOL isSearch;
 }
 
 // Lazy buttons
@@ -38,6 +39,7 @@
 @property(nonatomic,strong)NSMutableArray *leadsResults;
 @property(nonatomic,strong)NSString *fundRaiseType;
 @property(nonatomic,strong)NSString *donorType;
+@property(nonatomic,strong)NSMutableArray *searchResults;
 
 @end
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
@@ -78,6 +80,7 @@ static NSString *const FrontCell=@"FrontCell";
     
      self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
    
+    self.searchBar.delegate=self;
     
      NSLog(@"Front!");
     
@@ -238,6 +241,8 @@ static NSString *const FrontCell=@"FrontCell";
     
     self.fundraiseLabel.font=[UIFont fontWithName:@"Helvetica Bold" size:25];
     
+    self.searchToolbar.hidden=YES;
+    
     
 }
 
@@ -272,6 +277,10 @@ static NSString *const FrontCell=@"FrontCell";
     leadsModel.donorPhoneNumber=[dictionary objectForKey:@"f"];
     leadsModel.donorEmail=[dictionary objectForKey:@"g"];
     leadsModel.donor_id=[dictionary objectForKey:@"h"];
+    
+    if ([dictionary objectForKey:@"i"] !=nil || [dictionary objectForKey:@"i"] != (id)[NSNull null]) {
+        leadsModel.statusNet=[dictionary objectForKey:@"i"];
+    }
     
     
     return leadsModel;
@@ -421,7 +430,13 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(void)mainSearch:(id)sender {
     
-    NSLog(@" Search Button");
+    if (!isSearch) {
+        self.navigationController.navigationBarHidden=YES;
+        self.searchToolbar.hidden=NO;
+        [self.searchBar becomeFirstResponder];
+    }
+    
+    
     
 }
 
@@ -645,6 +660,153 @@ static NSString *const FrontCell=@"FrontCell";
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return 65.0;
+    
+}
+
+- (IBAction)closeSearchButton:(id)sender {
+    
+    self.navigationController.navigationBarHidden=NO;
+    self.searchToolbar.hidden=YES;
+    [self.searchBar resignFirstResponder];
+}
+/*
+-(APMLeadsModel *)parseDataSearch:(NSDictionary *)dictionary
+{
+    
+    APMLeadsModel *leadsModel=[[APMLeadsModel alloc]init];
+    
+    leadsModel.party=[dictionary objectForKey:@"a"];
+    leadsModel.donorName=[dictionary objectForKey:@"b"];
+    leadsModel.donorLastName=[dictionary objectForKey:@"c"];
+    leadsModel.donorCity=[dictionary objectForKey:@"d"];
+    leadsModel.donorState=[dictionary objectForKey:@"e"];
+    leadsModel.donorPhoneNumber=[dictionary objectForKey:@"f"];
+    leadsModel.donor_id=[dictionary objectForKey:@"g"];
+    
+    
+    return leadsModel;
+    
+    
+    
+    
+}
+-(void)parseArraySearch:(NSArray *)array
+{
+    if (array==nil) {
+        NSLog(@"Expected 'results' array");
+        
+        return;
+    }
+    self.searchResults=[[NSMutableArray alloc]init];
+    
+    for (NSDictionary *resultDict in array) {
+        
+        APMLeadsModel *leadsModel;
+        
+        leadsModel=[self parseDataSearch:resultDict];
+        
+        if(leadsModel !=nil){
+            
+            [self.searchResults addObject:leadsModel];
+            
+            
+        }
+        
+        
+    }
+    
+    
+    
+    
+}
+*/
+
+-(void)performSearch
+{
+    if ([self.searchBar.text length]>0) {
+        
+        [self.searchBar resignFirstResponder];
+        
+        
+        
+        NSDictionary *dict=@{@"email":self.email ,@"pass":self.password,@"q":self.searchBar.text};
+        
+        // NSLog(@"Parameters %@",dict);
+        
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+        
+        [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+        [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+        NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                                path:@"/mobile/donorsearch.php"
+                                                          parameters:dict
+                                        ];
+        
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            if (JSON !=nil) {
+                
+                [SVProgressHUD dismiss];
+                // NSLog(@"Resulta JSON MenuVC %@",JSON);
+                
+        APMSearchResultsViewController *searchVC=[[APMSearchResultsViewController alloc]init];
+                
+                searchVC.arraySearch=JSON;
+                
+                [self presentViewController:searchVC animated:YES completion:nil];
+                
+                
+                isLoading=NO;
+                isSearch=NO;
+                
+                
+                
+            }else{
+                
+                isLoading=NO;
+                
+                
+                
+                
+                
+            }
+            
+            
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            NSLog(@"error %@", [error description]);
+            
+        }];
+        
+        operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+        
+        
+        
+        
+        [queue addOperation:operation];
+        
+        
+        
+    }
+    
+    
+    
+    
+}
+
+#pragma mark SearchBar Delegate
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    
+    isSearch=YES;
+    [SVProgressHUD show];
+    
+    self.navigationController.navigationBarHidden=NO;
+    self.searchToolbar.hidden=YES;
+    [self.searchBar resignFirstResponder];
+    
+    [self performSearch];
+    
     
 }
 
