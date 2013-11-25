@@ -26,6 +26,7 @@
     
     BOOL isLoading;
     NSOperationQueue *queue;
+    NSString *phoneDial;
     
     
 }
@@ -77,7 +78,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
-        if ([self.leadsModel.statusNet isEqualToString:@"in"] || isADonor) {
+        if ([self.leadsModel.statusNet isEqualToString:@"in"] || isADonor || self.leadsModel.statusNet ==nil) {
             
             NSLog(@"Es IN!");
             [self loadData];
@@ -233,7 +234,11 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             self.askLabel.text=self.detailModel.ask;
             self.donorLabel.text=[NSString stringWithFormat:@"%@ %@",self.detailModel.name,self.detailModel.lastName];
-            self.cityAndStateLabel.text=[NSString stringWithFormat:@"%@, %@",self.detailModel.city,self.detailModel.state];
+            if (self.detailModel.city !=(id)[NSNull null] && self.detailModel.state !=(id)[NSNull null]) {
+                self.cityAndStateLabel.text=[NSString stringWithFormat:@"%@, %@",self.detailModel.city,self.detailModel.state];
+            }
+            
+            
             self.averageLabel.text=self.detailModel.average;
             self.bestLabel.text=self.detailModel.best;
             self.highlight1.text=self.detailModel.highlights1;
@@ -297,7 +302,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         
         if (JSON !=nil) {
             
-            NSLog(@"Resulta JSON MenuVC %@",JSON);
+            NSLog(@"Resulta JSON Donor Details %@",JSON);
             
           [self parseData:JSON];
             isLoading=NO;
@@ -454,9 +459,28 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 
 - (IBAction)callOutcome:(id)sender {
     
-    NSUserDefaults *phoneCall=[NSUserDefaults standardUserDefaults];
     
-    NSString *phoneDial=[phoneCall objectForKey:@"phone"];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check"] ){
+        
+       
+        
+    NSUserDefaults *phoneCall=[NSUserDefaults standardUserDefaults];
+        
+       phoneDial=[phoneCall objectForKey:@"phone"];
+        
+    }else{
+        
+        if (self.detailModel.phone !=nil || self.detailModel.phone !=(id)[NSNull null]) {
+            
+            phoneDial=self.detailModel.phone;
+            
+        }
+        
+        
+    }
+    
+   
     
    // NSString *codeNumber=[NSString stringWithFormat:@"+1%@",phoneDial];
     
@@ -473,7 +497,12 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     [self presentViewController:callVC animated:NO completion:nil];
     
-    callVC.callLabel.text=[NSString stringWithFormat:@"Calling    %@",self.detailModel.name];
+    callVC.callLabel.text=[NSString stringWithFormat:@"Calling \n %@ %@",self.detailModel.name,self.detailModel.lastName];
+    callVC.ask.text=self.detailModel.ask;
+    callVC.cityAndState.text=[NSString stringWithFormat:@"%@,%@",self.detailModel.city,self.detailModel.state];
+    callVC.high1Label.text=self.detailModel.highlights1;
+    callVC.high2Label.text=self.detailModel.highlights2;
+    
     
     /*
     APMCallOutComeViewController *callOut=[[APMCallOutComeViewController alloc]init];

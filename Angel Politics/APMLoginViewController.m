@@ -107,6 +107,15 @@
     
 }
 
+-(void)dissmissModelView:(NSString *)text{
+    
+ 
+    
+    //raise notification about dismiss
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MODELVIEW DISMISS" object:text];
+    
+}
+
 -(void)loginSuccess{
     
     
@@ -144,7 +153,7 @@
     [self.delegate dissmissLoginController:self];
     
     
-   
+    [self dissmissModelView:@"YES"];
     
     
     

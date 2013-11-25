@@ -20,4 +20,12 @@
 @property(nonatomic,weak)id<CallHelpDelegate>delegate;
 
 @property (weak, nonatomic) IBOutlet UILabel *callLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *cityAndState;
+@property (weak, nonatomic) IBOutlet UILabel *ask;
+
+@property (weak, nonatomic) IBOutlet UILabel *high2Label;
+
+@property (weak, nonatomic) IBOutlet UILabel *high1Label;
+
 @end

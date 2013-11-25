@@ -19,6 +19,7 @@
 #import "APMPhone.h"
 #import "APMAppDelegate.h"
 #import "APMEditProfileViewController.h"
+#import "APMEditCandProfileViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 static NSString *const CandidateCellIdentifier=@"CandidateCell";
@@ -282,7 +283,7 @@ enum {
              break;*/
             
         case MenuProfile:
-            cell.menuLabel.text = @"Edit Profile";
+            cell.menuLabel.text = @"Demo";
             cell.menuImageView.image=[UIImage imageNamed:@"ic_profile"];
             break;
             
@@ -494,14 +495,18 @@ enum {
 
 -(void)showProfileController{
     
-    
+    /*
     APMEditProfileViewController *editProfile=[[APMEditProfileViewController alloc]init];
     
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:editProfile];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
+    
+    APMEditCandProfileViewController *editProfile=[[APMEditCandProfileViewController alloc]init];
+    
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:editProfile];
     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
-    
-    
 }
 
 -(void)showFundRaiseController{
@@ -559,7 +564,7 @@ enum {
 {
     NSLog(@"Login menu Controller");
     
-    
+   
     
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -575,6 +580,9 @@ enum {
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
         
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasUser"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         
         
         [self downloadCandidateData];
@@ -584,5 +592,7 @@ enum {
     
     
 }
+
+
 
 @end

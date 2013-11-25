@@ -82,16 +82,27 @@ static NSString *const FrontCell=@"FrontCell";
    
     self.searchBar.delegate=self;
     
-     NSLog(@"Front!");
+    // get register to fetch notification
+    [[NSNotificationCenter defaultCenter] addObserver:self  
+                                             selector:@selector(yourNotificationHandler:)
+                                                 name:@"MODELVIEW DISMISS" object:nil];
+
+    
+    
     
     //NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
 /*
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] &&
         [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil&& [_keychain objectForKey:(__bridge id)kSecValueData]!=nil)*/
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"]&&[_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [_keychain objectForKey:(__bridge id)kSecValueData]!=nil )
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] )
     {
-        [self dismissViewControllerAnimated:NO completion:nil];
+          NSLog(@"Front!");
+        
+        APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
+        
+        loginVC.delegate=self;
+       
         
         
     }else{
@@ -99,17 +110,14 @@ static NSString *const FrontCell=@"FrontCell";
         /*
         // This is the first launch ever
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasPassLogin"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
+        [[NSUserDefaults standardUserDefaults] synchronize];*/
         
       
+        NSLog(@" No entro");
         
         
-            APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
         
-            loginVC.delegate=self;
-        
-            [self presentViewController:loginVC animated:NO completion:nil];*/
+        //  [self presentViewController:loginVC animated:NO completion:nil];
 
         
         
@@ -159,7 +167,7 @@ static NSString *const FrontCell=@"FrontCell";
             isLoading=YES;
             
             
-        self.donorType=@"Pitch    Lead";
+        self.donorType=@"My Leads";
             
             [SVProgressHUD show];
 
@@ -179,30 +187,11 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
-
-#pragma mark Login Delegate
-
--(void)dissmissLoginController:(APMLoginViewController *)controller{
+-(void)yourNotificationHandler:(NSNotification *)notic{
     
-    NSLog(@"delegado login");
     
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
-    
-    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
-        
-        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
-        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
-        
-        
-        NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
-        NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
-        
-        self.fundRaiseType=@"/mobile/leads.php";
-        
-        [self loadData];
-        
+    if ([notic.object isEqualToString:@"YES"]) {
+        [self viewDidLoad];
     }
     
     
@@ -340,7 +329,7 @@ static NSString *const FrontCell=@"FrontCell";
         if (JSON !=nil) {
             
             [SVProgressHUD dismiss];
-           // NSLog(@"Resulta JSON MenuVC %@",JSON);
+         NSLog(@"Resulta JSON MenuVC %@",JSON);
             
            [self parseArray:JSON];
             isLoading=NO;
@@ -583,7 +572,7 @@ static NSString *const FrontCell=@"FrontCell";
     self.donorUIView.hidden=YES;
     self.pitchUIView.hidden=YES;
     self.pledgeUIView.hidden=NO;
-    self.donorType=@"Pledge Collection";
+    self.donorType=@"Owes Me";
     self.FrontLineOne.text=@"Pledges to collect";
     self.frontLineTwo.text=@"Lets turn these pledges into contributions!";
     self.frontNumber.text=[@([self.leadsResults count])stringValue];
@@ -603,7 +592,7 @@ static NSString *const FrontCell=@"FrontCell";
     self.pitchUIView.hidden=YES;
     self.pledgeUIView.hidden=YES;
     self.donorUIView.hidden=NO;
-    self.donorType=@"Donor Match";
+    self.donorType=@"New Matches";
     self.FrontLineOne.text=@"Donor-match available";
     self.frontLineTwo.text=@"Unlock new donors. Make a call.";
      self.frontNumber.text=[@([self.leadsResults count])stringValue];
@@ -809,5 +798,43 @@ static NSString *const FrontCell=@"FrontCell";
     
     
 }
+
+#pragma mark Login Delegate
+
+-(void)dissmissLoginController:(APMLoginViewController *)controller{
+    
+    NSLog(@"delegado login");
+    
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+        
+        NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
+        NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+        
+        self.fundRaiseType=@"/mobile/leads.php";
+        
+        [self loadData];
+        
+    }
+    
+    
+}
+
+
+-(void)dealloc{
+    
+    
+    NSNotificationCenter *center=[NSNotificationCenter defaultCenter];
+    
+    [center removeObserver:self];
+}
+
 
 @end

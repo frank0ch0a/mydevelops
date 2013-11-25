@@ -289,10 +289,10 @@
     
     
     [self presentViewController:editCanVC animated:YES completion:nil];
-    
+    /*
     editCanVC.editPhone1.text=self.phoneModel.phoneOne;
     editCanVC.editPhone2.text=self.phoneModel.phoneTwo;
-    editCanVC.editPhone3.text=self.phoneModel.phoneThree;
+    editCanVC.editPhone3.text=self.phoneModel.phoneThree;*/
     
     NSUserDefaults *phone=[NSUserDefaults standardUserDefaults];
     [phone removeObjectForKey:@"phone"];

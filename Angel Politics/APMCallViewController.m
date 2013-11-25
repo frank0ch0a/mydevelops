@@ -56,9 +56,10 @@
     [super viewWillAppear:animated];
     
     //Hacemos Diseño a la vista pop
+    /*
     self.callingUIView.layer.borderColor=[UIColor whiteColor].CGColor;
     self.callingUIView.layer.borderWidth=3.0f;
-    self.callingUIView.layer.cornerRadius=10.0f;
+    self.callingUIView.layer.cornerRadius=10.0f;*/
     
     UIImage *imageButton=[[UIImage imageNamed:@"btn_login_up"]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
     
@@ -78,9 +79,8 @@
 
 - (IBAction)closeCallVC:(id)sender {
     
-    [self willMoveToParentViewController:nil];
-    [self.view removeFromSuperview];
-    [self removeFromParentViewController];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
     
     APMCallOutComeViewController *callOut=[[APMCallOutComeViewController alloc]init];
     
@@ -143,7 +143,7 @@
 
 - (IBAction)callPledgeButtonAct:(id)sender {
     
-     [SVProgressHUD show];
+    
     
     [UIView animateWithDuration:0.25 delay:0
                         options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -155,7 +155,12 @@
                             
                         } completion:nil];
     
-    NSDictionary *dict=@{@"email":self.emailCallTextField.text ,@"canid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
+    if ([self.emailCallTextField.text length]>0 || [self.callAmountTextField.text length]>0) {
+        
+    
+    [SVProgressHUD show];
+    
+    NSDictionary *dict=@{@"email":self.emailCallTextField.text ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
     
     NSLog(@"Parameters %@",dict);
     
@@ -173,7 +178,14 @@
         if (JSON !=nil) {
             
             [SVProgressHUD dismiss];
-            NSLog(@"Resulta JSON MenuVC %@",JSON);
+            
+            if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
+                
+                 [self dismissViewControllerAnimated:YES completion:nil];
+                
+                NSLog(@"Resulta JSON MenuVC %@",JSON);
+            }
+            
             
         
             
@@ -181,7 +193,9 @@
         }else{
             
 
+            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Data do not send try again, please" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             
+            [alertView show];
             
             
             
@@ -202,9 +216,16 @@
     [queue addOperation:operation];
     
     
-    [self willMoveToParentViewController:nil];
-    [self.view removeFromSuperview];
-    [self removeFromParentViewController];
+    }else{
+        
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Email field or Amount can not be empty" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [alertView show];
+        
+        
+        
+        
+    }
     
     
 }

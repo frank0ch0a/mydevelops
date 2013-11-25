@@ -112,9 +112,7 @@
             
             APMCallViewController *apmCallVC=[[APMCallViewController alloc]init];
             
-            [self.view addSubview:apmCallVC.view];
-            [self addChildViewController:apmCallVC];
-            [apmCallVC didMoveToParentViewController:self];
+            [self presentViewController:apmCallVC animated:YES completion:nil];
             
             apmCallVC.candID=candId;
             apmCallVC.donorID=donorId;
@@ -143,9 +141,9 @@
         
         APMCallViewController *apmCallVC=[[APMCallViewController alloc]init];
         
-        [self.view addSubview:apmCallVC.view];
-        [self addChildViewController:apmCallVC];
-        [apmCallVC didMoveToParentViewController:self];
+    
+        
+        [self presentViewController:apmCallVC animated:YES completion:nil];
         
         
     }

@@ -10,6 +10,7 @@
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 #import "KeychainItemWrapper.h"
+#import "NVSlideMenuController.h"
 
 @interface APMEditCandProfileViewController (){
     
@@ -20,6 +21,8 @@
 @property(strong,nonatomic)KeychainItemWrapper *keychain;
 @property(copy,nonatomic)NSString *email;
 @property(nonatomic,copy)NSString *password;
+// Lazy buttons
+@property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 
 @end
 
@@ -41,10 +44,28 @@
     
     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
+     [self updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:NO];
     
     
+    NSUserDefaults *phoneCall=[NSUserDefaults standardUserDefaults];
+    
+   NSString *phoneDial=[phoneCall objectForKey:@"phone"];
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check" ] && phoneDial !=nil ){
+        
+        
+        [_checkBoxButton1 setImage:[UIImage imageNamed:@"checkBoxMarked.png"] forState:UIControlStateNormal];
+        
+        self.editPhone1.text=phoneDial;
+
+        
+        
+    }
     //NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
     // NSLog(@"password: %@",[self.keychain objectForKey:(__bridge id)kSecValueData]);
+    
+    
     
     
    self.editCandidateName.delegate=self;
@@ -55,6 +76,56 @@
     
     
 
+    
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    self.title=@"Demo";
+    
+    
+    
+    
+}
+#pragma mark - Lazy buttons
+
+- (UIImage *)listImage {
+    return [UIImage imageNamed:@"ic_menu"];
+}
+
+
+
+
+- (UIBarButtonItem *)leftBarButtonItem
+{
+	if (!_leftBarButtonItem)
+	{
+        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self listImage]
+                                                              style:UIBarButtonItemStyleBordered
+                                                             target:self.slideMenuController
+                                                             action:@selector(toggleMenuAnimated:)];
+        
+        [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        /*
+         
+         _leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward
+         target:self.slideMenuController
+         action:@selector(toggleMenuAnimated:)];*/
+	}
+	return _leftBarButtonItem;
+}
+
+- (void)updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:(BOOL)animated
+{
+    if (self.slideMenuController.slideDirection == NVSlideMenuControllerSlideFromLeftToRight)
+	{
+		[self.navigationItem setLeftBarButtonItem:self.leftBarButtonItem animated:animated];
+        
+        
+	}
     
     
 }
@@ -113,17 +184,42 @@
 
 - (IBAction)saveButton:(id)sender {
     
+    if (checked) {
+        
+        NSUserDefaults *phone=[NSUserDefaults standardUserDefaults];
+        [phone setObject:self.editPhone1.text forKey:@"phone"];
+        [phone  synchronize];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Check"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+    }else{
+        
+        NSUserDefaults *phone=[NSUserDefaults standardUserDefaults];
+        [phone removeObjectForKey:@"phone"];
+        [phone  synchronize];
+        
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"Check"];
+        
+        
+    }
     
+    [self.editPhone1 resignFirstResponder];
+   
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Saved" message:@"Changes Saved" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     
+    [alertView show];
     
+    [self viewDidLoad];
+    
+    /*
     if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
         
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
-        NSUserDefaults *phone=[NSUserDefaults standardUserDefaults];
-        [phone setObject:self.editPhone1.text forKey:@"phone"];
-        [phone  synchronize];
+      
 
         
         
@@ -185,7 +281,7 @@ NSDictionary *dict=@{@"email":self.email ,@"pass":self.password,@"selphone":acti
        [self.delegate configEditDidUpdate:self];
     
         }
-    }
+    }*/
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
