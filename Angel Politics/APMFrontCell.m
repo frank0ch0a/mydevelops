@@ -104,7 +104,9 @@
     [super awakeFromNib];
     
     self.swipeView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_menu_row_up"]];
-    
+    self.donorLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f];
+    self.cityLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:11.0f];
+    self.amountLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:13.0f];
     
     
     

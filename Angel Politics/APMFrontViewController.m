@@ -10,7 +10,7 @@
 #import "NVSlideMenuController.h"
 #import "AFJSONRequestOperation.h"
 #import "APMCandidateModel.h"
-#import "APMCandidateViewController.h"
+#import "APMDonorDetailController.h"
 #import "APMFrontCell.h"
 #import "KeychainItemWrapper.h"
 #import "APMLoginViewController.h"
@@ -19,12 +19,14 @@
 #import "Reachability.h"
 #import "SVProgressHUD.h"
 #import "APMSearchResultsViewController.h"
+#import "APMAddLeadsViewController.h"
 
 
 @interface APMFrontViewController (){
     
     BOOL isLoading;
     BOOL isSearch;
+    BOOL isSelect;
 }
 
 // Lazy buttons
@@ -78,6 +80,10 @@ static NSString *const FrontCell=@"FrontCell";
 {
     [super viewDidLoad];
     
+    self.pitchUIView.backgroundColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0];
+    
+    [self.donorButton setTitleColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0] forState:UIControlStateNormal];
+    
      self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
    
     self.searchBar.delegate=self;
@@ -99,9 +105,9 @@ static NSString *const FrontCell=@"FrontCell";
     {
           NSLog(@"Front!");
         
-        APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
+       // APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
         
-        loginVC.delegate=self;
+        //loginVC.delegate=self;
        
         
         
@@ -225,12 +231,27 @@ static NSString *const FrontCell=@"FrontCell";
     self.myImageView.frame=CGRectMake(80, 8, 145, 26);
     [self.navigationController.navigationBar addSubview:self.myImageView];
     
+    /*
     self.donorUIView.hidden=YES;
-    self.pledgeUIView.hidden=YES;
+    self.pledgeUIView.hidden=YES;*/
     
-    self.fundraiseLabel.font=[UIFont fontWithName:@"Helvetica Bold" size:25];
+    self.donorButton.titleLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
+    
+    self.pledgeButton.titleLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
+    
+    self.otherButton.titleLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
+
+    
+    
+    
+    
+    self.fundraiseLabel.font=[UIFont fontWithName:@"Helvetica75" size:22];
     
     self.searchToolbar.hidden=YES;
+  
+  
+    
+   
     
     
 }
@@ -329,7 +350,7 @@ static NSString *const FrontCell=@"FrontCell";
         if (JSON !=nil) {
             
             [SVProgressHUD dismiss];
-         NSLog(@"Resulta JSON MenuVC %@",JSON);
+        // NSLog(@"Resulta JSON MenuVC %@",JSON);
             
            [self parseArray:JSON];
             isLoading=NO;
@@ -423,6 +444,7 @@ static NSString *const FrontCell=@"FrontCell";
         self.navigationController.navigationBarHidden=YES;
         self.searchToolbar.hidden=NO;
         [self.searchBar becomeFirstResponder];
+        self.addLeadsButtonOut.hidden=YES;
     }
     
     
@@ -516,16 +538,16 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    APMCandidateViewController *candidateVC=[[APMCandidateViewController alloc]init];
+    APMDonorDetailController *donorDetailVC=[[APMDonorDetailController alloc]init];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
      APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
 
-    candidateVC.leadsModel=leadsModel;
-    candidateVC.title=self.donorType;
+    donorDetailVC.leadsModel=leadsModel;
+    donorDetailVC.title=self.donorType;
     
-    [self.navigationController pushViewController:candidateVC animated:YES];
+    [self.navigationController pushViewController:donorDetailVC animated:YES];
     
     self.myImageView.hidden=YES;
    
@@ -569,17 +591,42 @@ static NSString *const FrontCell=@"FrontCell";
     
     NSLog(@"pledge press");
     self.fundRaiseType=@"/mobile/pledges.php";
+    /*
     self.donorUIView.hidden=YES;
-    self.pitchUIView.hidden=YES;
-    self.pledgeUIView.hidden=NO;
+    self.pitchUIView.hidden=YES;*/
+  
     self.donorType=@"Owes Me";
     self.FrontLineOne.text=@"Pledges to collect";
     self.frontLineTwo.text=@"Lets turn these pledges into contributions!";
     self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
-        [self loadData];
     
-     [SVProgressHUD show];
+    if (!isSelect) {
+        self.pledgeUIView.backgroundColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0];
+        self.donorUIView.backgroundColor=[UIColor whiteColor];
+        self.pitchUIView.backgroundColor=[UIColor whiteColor];
+       
+       [self.pledgeButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.donorButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.otherButton setTitleColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0] forState:UIControlStateNormal];
+        
+        isSelect = NO;
+        [self loadData];
+         [SVProgressHUD show];
+        
+        
+    }
+    
+    else if (isSelect) {
+        self.pledgeUIView.hidden=YES;
+        isSelect = NO;
+    }
+    
+
+    
+    
+    
+    
    
 
 }
@@ -589,19 +636,41 @@ static NSString *const FrontCell=@"FrontCell";
     isLoading=YES;
     NSLog(@"DonorMatch Press");
     self.fundRaiseType=@"/mobile/donormatch.php";
+    /*
     self.pitchUIView.hidden=YES;
-    self.pledgeUIView.hidden=YES;
-    self.donorUIView.hidden=NO;
+    self.pledgeUIView.hidden=YES;*/
+    
     self.donorType=@"New Matches";
     self.FrontLineOne.text=@"Donor-match available";
     self.frontLineTwo.text=@"Unlock new donors. Make a call.";
      self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
+    if (!isSelect) {
+        
+        self.donorUIView.backgroundColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0];
+        self.pitchUIView.backgroundColor=[UIColor whiteColor];
+        self.pledgeUIView.backgroundColor=[UIColor whiteColor];
+        
+        [self.pledgeButton setTitleColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0] forState:UIControlStateNormal];
+        [self.donorButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.otherButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        isSelect = NO;
+        [self loadData];
+        [SVProgressHUD show];
+    }
+    
+    else if (isSelect) {
+        self.donorUIView.hidden=YES;
+         isSelect = NO;
+       
+    }
+
     
     
-    [self loadData];
     
-     [SVProgressHUD show];
+   
+    
+    
 
     
     
@@ -613,17 +682,38 @@ static NSString *const FrontCell=@"FrontCell";
     
     NSLog(@"Pitch Press");
    self.fundRaiseType=@"/mobile/leads.php";
+    /*
     self.pledgeUIView.hidden=YES;
-    self.donorUIView.hidden=YES;
-    self.pitchUIView.hidden=NO;
-    self.donorType=@"Pitch    Lead";
+    self.donorUIView.hidden=YES;*/
+   
+    self.donorType=@"My Leads";
     self.FrontLineOne.text=@"Leads available ";
     self.frontLineTwo.text=@"Let’s get some contributions!";
     self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
-    [self loadData];
+    if (!isSelect) {
+        self.pitchUIView.backgroundColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0];
+        self.donorUIView.backgroundColor=[UIColor whiteColor];
+        self.pledgeUIView.backgroundColor=[UIColor whiteColor];
+        [self.donorButton setTitleColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0] forState:UIControlStateNormal];
+        [self.pledgeButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+         [self.otherButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        
+        isSelect = NO;
+        [self loadData];
+        
+        [SVProgressHUD show];
+        
+    }
     
-     [SVProgressHUD show];
+    else if (isSelect) {
+        self.pitchUIView.hidden=YES;
+         isSelect = NO;
+        
+    }
+    
+   
+    
 
 
 }
@@ -656,59 +746,26 @@ static NSString *const FrontCell=@"FrontCell";
     
     self.navigationController.navigationBarHidden=NO;
     self.searchToolbar.hidden=YES;
+    self.addLeadsButtonOut.hidden=NO;
+    
     [self.searchBar resignFirstResponder];
 }
-/*
--(APMLeadsModel *)parseDataSearch:(NSDictionary *)dictionary
+
+- (IBAction)addLeadsButton:(id)sender
+
+
 {
     
-    APMLeadsModel *leadsModel=[[APMLeadsModel alloc]init];
+    NSLog(@"tocaste addLead");
     
-    leadsModel.party=[dictionary objectForKey:@"a"];
-    leadsModel.donorName=[dictionary objectForKey:@"b"];
-    leadsModel.donorLastName=[dictionary objectForKey:@"c"];
-    leadsModel.donorCity=[dictionary objectForKey:@"d"];
-    leadsModel.donorState=[dictionary objectForKey:@"e"];
-    leadsModel.donorPhoneNumber=[dictionary objectForKey:@"f"];
-    leadsModel.donor_id=[dictionary objectForKey:@"g"];
+    APMAddLeadsViewController *addLeads=[[APMAddLeadsViewController alloc]init];
     
-    
-    return leadsModel;
-    
+    [self presentViewController:addLeads animated:YES completion:nil];
     
     
     
 }
--(void)parseArraySearch:(NSArray *)array
-{
-    if (array==nil) {
-        NSLog(@"Expected 'results' array");
-        
-        return;
-    }
-    self.searchResults=[[NSMutableArray alloc]init];
-    
-    for (NSDictionary *resultDict in array) {
-        
-        APMLeadsModel *leadsModel;
-        
-        leadsModel=[self parseDataSearch:resultDict];
-        
-        if(leadsModel !=nil){
-            
-            [self.searchResults addObject:leadsModel];
-            
-            
-        }
-        
-        
-    }
-    
-    
-    
-    
-}
-*/
+
 
 -(void)performSearch
 {
@@ -741,6 +798,8 @@ static NSString *const FrontCell=@"FrontCell";
         APMSearchResultsViewController *searchVC=[[APMSearchResultsViewController alloc]init];
                 
                 searchVC.arraySearch=JSON;
+                
+                self.searchBar.text=@"";
                 
                 [self presentViewController:searchVC animated:YES completion:nil];
                 
@@ -793,11 +852,16 @@ static NSString *const FrontCell=@"FrontCell";
     self.navigationController.navigationBarHidden=NO;
     self.searchToolbar.hidden=YES;
     [self.searchBar resignFirstResponder];
+     self.addLeadsButtonOut.hidden=NO;
+    
+    
     
     [self performSearch];
     
     
 }
+
+/*
 
 #pragma mark Login Delegate
 
@@ -825,7 +889,7 @@ static NSString *const FrontCell=@"FrontCell";
     }
     
     
-}
+}*/
 
 
 -(void)dealloc{

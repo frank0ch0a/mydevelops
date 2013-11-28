@@ -7,6 +7,7 @@
 //
 
 #import "APMPhone.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 
 @implementation APMPhone
@@ -85,6 +86,37 @@
     [_connection disconnect];
     [_connection release];
     _connection = nil;
+}
+
+-(void)setSpeakerEnabled:(BOOL)enabled
+{
+	_speakerEnabled = enabled;
+	
+	[self updateAudioRoute];
+}
+
+-(void)updateAudioRoute
+{
+	if (_speakerEnabled)
+	{
+		UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+		
+		AudioSessionSetProperty (
+								 kAudioSessionProperty_OverrideAudioRoute,
+								 sizeof (audioRouteOverride),
+								 &audioRouteOverride
+								 );
+	}
+	else
+	{
+		UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_None;
+		
+		AudioSessionSetProperty (
+								 kAudioSessionProperty_OverrideAudioRoute,
+								 sizeof (audioRouteOverride),
+								 &audioRouteOverride
+								 );
+	}
 }
 
 

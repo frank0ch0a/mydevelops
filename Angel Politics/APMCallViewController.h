@@ -6,11 +6,20 @@
 //  Copyright (c) 2013 angelpolitics. All rights reserved.
 //
 
+@class APMCallViewController;
+
+@protocol SurveyDelegate <NSObject>
+
+-(void)CallViewDidDismiss:(APMCallViewController *)controller;
+
+@end
+
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
 @interface APMCallViewController : UIViewController<UITextFieldDelegate>
 
+@property(nonatomic,weak)id<SurveyDelegate>delegate;
 
 @property (weak, nonatomic) IBOutlet UIButton *closeButtonOutlet;
 

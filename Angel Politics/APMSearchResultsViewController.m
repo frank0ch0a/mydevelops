@@ -8,11 +8,24 @@
 
 #import "APMSearchResultsViewController.h"
 #import "APMLeadsModel.h"
+#import "AFHTTPClient.h"
+#import "AFJSONRequestOperation.h"
+#import "KeychainItemWrapper.h"
+#import "APMFrontViewController.h"
 
-@interface APMSearchResultsViewController ()
+@interface APMSearchResultsViewController (){
+    
+    NSOperationQueue *queue;
+    
+}
 
 
 @property(nonatomic,strong)NSMutableArray *searchResults;
+@property(nonatomic,strong)KeychainItemWrapper *keychain;
+@property(nonatomic,copy)NSString *email;
+@property(nonatomic,copy)NSString *password;
+
+
 
 @end
 
@@ -24,6 +37,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+        queue=[[NSOperationQueue alloc]init];
     }
     return self;
 }
@@ -88,7 +103,9 @@
         
         if(leadsModel !=nil){
             
+            
             [self.searchResults addObject:leadsModel];
+            
             
             
         }
@@ -129,10 +146,113 @@
     APMLeadsModel *leadsModel=[self.searchResults objectAtIndex:indexPath.row];
     
     cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
+    cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0f];
     
     cell.detailTextLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorCity,leadsModel.donorState];
+    cell.detailTextLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:11.0f];
+    
+    UIImage *image = [UIImage imageNamed:@"btn_plus"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+	CGRect frame = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+	button.frame = frame;	// match the button's size with the image size
+    
+	[button setBackgroundImage:image forState:UIControlStateNormal];
+
+    
+    // set the button's target to this table view controller so we can interpret touch events and map that to a NSIndexSet
+	[button addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
+    
+    cell.accessoryView = button;
     
     return cell;
+}
+
+- (void)checkButtonTapped:(id)sender event:(id)event
+{
+	NSSet *touches = [event allTouches];
+	UITouch *touch = [touches anyObject];
+	CGPoint currentTouchPosition = [touch locationInView:self.searchTableView];
+    
+	NSIndexPath *indexPath = [self.searchTableView indexPathForRowAtPoint: currentTouchPosition];
+	if (indexPath != nil)
+	{
+		[self tableView: self.searchTableView accessoryButtonTappedForRowWithIndexPath: indexPath];
+	}
+}
+
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+    
+    NSLog(@"tap accesory button");
+    
+     APMLeadsModel *leadsModel=[self.searchResults objectAtIndex:indexPath.row];
+    
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [self.keychain objectForKey:(__bridge id)kSecValueData]!=nil) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+    }
+
+    
+    NSDictionary *dict=@{@"email":self.email ,@"pass":self.password,@"dn":leadsModel.donor_id};
+    
+    NSLog(@"Parameters %@",dict);
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+    
+    [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+    [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                            path:@"/mobile/addtolist.php"
+                                                      parameters:dict
+                                    ];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        if ([[JSON objectForKey:@"a"] isEqualToString:@"Ok"]) {
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+                APMFrontViewController *frontVC=[[APMFrontViewController alloc]init];
+                
+               
+                [frontVC viewDidLoad];
+                
+                
+            }];
+         
+            NSLog(@"Lead Added");
+            
+        }else{
+            
+        
+            
+            
+            
+            
+            
+        }
+        
+        
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error %@", [error description]);
+        
+    }];
+    
+    operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+    
+    
+    
+    
+    [queue addOperation:operation];
+    
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

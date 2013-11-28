@@ -11,6 +11,7 @@
 #import "ModalPickerView.h"
 #import "APMLeadsModel.h"
 #import "APMDetailModel.h"
+#import "APMFrontViewController.h"
 
 @interface APMCallOutComeViewController (){
     
@@ -42,6 +43,9 @@
     
     self.title=@"Call Outcome";
     
+    self.askLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:25];
+    self.bestLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
+    self.averageLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
 
 }
 
@@ -112,6 +116,8 @@
             
             APMCallViewController *apmCallVC=[[APMCallViewController alloc]init];
             
+            apmCallVC.delegate=self;
+            
             [self presentViewController:apmCallVC animated:YES completion:nil];
             
             apmCallVC.candID=candId;
@@ -163,6 +169,21 @@
     } completion:nil];
     
     return YES;
+    
+}
+
+#pragma mark CallView Delegate
+
+-(void)CallViewDidDismiss:(APMCallViewController *)controller
+{
+    
+     [self dismissViewControllerAnimated:NO completion:nil];
+    
+    APMFrontViewController *fronVC=[[APMFrontViewController alloc]init];
+    
+    [self.navigationController pushViewController:fronVC animated:YES];
+    
+    
     
 }
 

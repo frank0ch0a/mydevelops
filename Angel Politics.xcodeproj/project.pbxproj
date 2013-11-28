@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01093E66182E8EFC0046AEFD /* img_circle_value@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01093E65182E8EFC0046AEFD /* img_circle_value@2x.png */; };
-		01093E68182E8F7A0046AEFD /* img_circle_value.png in Resources */ = {isa = PBXBuildFile; fileRef = 01093E67182E8F7A0046AEFD /* img_circle_value.png */; };
 		011D239217EF31E4003A4204 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D239117EF31E4003A4204 /* Foundation.framework */; };
 		011D239417EF31E4003A4204 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D239317EF31E4003A4204 /* CoreGraphics.framework */; };
 		011D239617EF31E4003A4204 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011D239517EF31E4003A4204 /* UIKit.framework */; };
@@ -23,8 +21,8 @@
 		012A684B1829D91600CA05CB /* DonorDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 012A684A1829D91500CA05CB /* DonorDetailCell.xib */; };
 		012A684E1829D96000CA05CB /* DonorDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 012A684D1829D96000CA05CB /* DonorDetailCell.m */; };
 		012A6851182A0E4500CA05CB /* APMContributionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 012A6850182A0E4500CA05CB /* APMContributionsModel.m */; };
-		014690F517F734B5002C0318 /* APMCandidateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690F317F734B5002C0318 /* APMCandidateViewController.m */; };
-		014690F617F734B5002C0318 /* APMCandidateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F417F734B5002C0318 /* APMCandidateViewController.xib */; };
+		014690F517F734B5002C0318 /* APMDonorDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690F317F734B5002C0318 /* APMDonorDetailController.m */; };
+		014690F617F734B5002C0318 /* APMDonorDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F417F734B5002C0318 /* APMDonorDetailController.xib */; };
 		014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F817F73664002C0318 /* APMCandidateCell.xib */; };
 		014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690FB17F73774002C0318 /* APMCandidateCell.m */; };
 		01508B2D1821DA8D0043C2A9 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 01508B2C1821DA8D0043C2A9 /* logout.png */; };
@@ -33,8 +31,14 @@
 		0152722E180386CB00D79E1C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0152722D180386CB00D79E1C /* Images.xcassets */; };
 		015272321803A3BB00D79E1C /* APMFrontCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015272311803A3BB00D79E1C /* APMFrontCell.xib */; };
 		015272351803A4FC00D79E1C /* APMFrontCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 015272341803A4FC00D79E1C /* APMFrontCell.m */; };
+		015AD89F184795A4008A739F /* img_circle_value.png in Resources */ = {isa = PBXBuildFile; fileRef = 015AD89D184795A4008A739F /* img_circle_value.png */; };
+		015AD8A0184795A4008A739F /* img_circle_value@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 015AD89E184795A4008A739F /* img_circle_value@2x.png */; };
+		015AD8A318479F65008A739F /* speaker_act@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 015AD8A118479F65008A739F /* speaker_act@2x.png */; };
+		015AD8A418479F65008A739F /* speaker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 015AD8A218479F65008A739F /* speaker@2x.png */; };
+		015AD8A61847A084008A739F /* fondoBotonBorrar.png in Resources */ = {isa = PBXBuildFile; fileRef = 015AD8A51847A084008A739F /* fondoBotonBorrar.png */; };
 		015EA1BC1803D64700960438 /* APMCallOutComeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015EA1BA1803D64700960438 /* APMCallOutComeViewController.m */; };
 		015EA1BD1803D64700960438 /* APMCallOutComeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */; };
+		016AE73B1844FD660012F2F1 /* hangoutButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 016AE73A1844FD660012F2F1 /* hangoutButton.png */; };
 		016D3B4F18367D1B006E881F /* APMSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 016D3B4D18367D1A006E881F /* APMSearchResultsViewController.m */; };
 		016D3B5018367D1B006E881F /* APMSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016D3B4E18367D1A006E881F /* APMSearchResultsViewController.xib */; };
 		01732A60181DAA360044EF8E /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01732A5D181DAA360044EF8E /* SVProgressHUD.bundle */; };
@@ -94,6 +98,8 @@
 		01B56188182B614A008E2077 /* checkBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B56184182B614A008E2077 /* checkBox@2x.png */; };
 		01B56189182B614A008E2077 /* checkBoxMarked.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B56185182B614A008E2077 /* checkBoxMarked.png */; };
 		01B5618A182B614A008E2077 /* checkBoxMarked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B56186182B614A008E2077 /* checkBoxMarked@2x.png */; };
+		01B97B491843ED1000E5513A /* APMAddLeadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B97B471843ED1000E5513A /* APMAddLeadsViewController.m */; };
+		01B97B4A1843ED1000E5513A /* APMAddLeadsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B97B481843ED1000E5513A /* APMAddLeadsViewController.xib */; };
 		01BB961817FCFF650040DE19 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960317FCFF650040DE19 /* AFHTTPClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -Wno-unused"; }; };
 		01BB961917FCFF650040DE19 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960517FCFF650040DE19 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		01BB961A17FCFF650040DE19 /* AFImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB960717FCFF650040DE19 /* AFImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -152,8 +158,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01093E65182E8EFC0046AEFD /* img_circle_value@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_circle_value@2x.png"; sourceTree = "<group>"; };
-		01093E67182E8F7A0046AEFD /* img_circle_value.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_circle_value.png; sourceTree = "<group>"; };
 		011D238E17EF31E4003A4204 /* Angel Politics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Angel Politics.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		011D239117EF31E4003A4204 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		011D239317EF31E4003A4204 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -174,9 +178,9 @@
 		012A684D1829D96000CA05CB /* DonorDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DonorDetailCell.m; sourceTree = "<group>"; };
 		012A684F182A0E4500CA05CB /* APMContributionsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMContributionsModel.h; sourceTree = "<group>"; };
 		012A6850182A0E4500CA05CB /* APMContributionsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMContributionsModel.m; sourceTree = "<group>"; };
-		014690F217F734B5002C0318 /* APMCandidateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APMCandidateViewController.h; path = ../APMCandidateViewController.h; sourceTree = "<group>"; };
-		014690F317F734B5002C0318 /* APMCandidateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMCandidateViewController.m; path = ../APMCandidateViewController.m; sourceTree = "<group>"; };
-		014690F417F734B5002C0318 /* APMCandidateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APMCandidateViewController.xib; path = ../APMCandidateViewController.xib; sourceTree = "<group>"; };
+		014690F217F734B5002C0318 /* APMDonorDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APMDonorDetailController.h; path = ../APMDonorDetailController.h; sourceTree = "<group>"; };
+		014690F317F734B5002C0318 /* APMDonorDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMDonorDetailController.m; path = ../APMDonorDetailController.m; sourceTree = "<group>"; };
+		014690F417F734B5002C0318 /* APMDonorDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APMDonorDetailController.xib; path = ../APMDonorDetailController.xib; sourceTree = "<group>"; };
 		014690F817F73664002C0318 /* APMCandidateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCandidateCell.xib; sourceTree = "<group>"; };
 		014690FA17F73774002C0318 /* APMCandidateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCandidateCell.h; sourceTree = "<group>"; };
 		014690FB17F73774002C0318 /* APMCandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCandidateCell.m; sourceTree = "<group>"; };
@@ -189,9 +193,15 @@
 		015272331803A4FC00D79E1C /* APMFrontCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMFrontCell.h; sourceTree = "<group>"; };
 		015272341803A4FC00D79E1C /* APMFrontCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMFrontCell.m; sourceTree = "<group>"; };
 		015272361803AEED00D79E1C /* APMFrontCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APMFrontCellProtocol.h; sourceTree = "<group>"; };
+		015AD89D184795A4008A739F /* img_circle_value.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_circle_value.png; sourceTree = "<group>"; };
+		015AD89E184795A4008A739F /* img_circle_value@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_circle_value@2x.png"; sourceTree = "<group>"; };
+		015AD8A118479F65008A739F /* speaker_act@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speaker_act@2x.png"; sourceTree = "<group>"; };
+		015AD8A218479F65008A739F /* speaker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speaker@2x.png"; sourceTree = "<group>"; };
+		015AD8A51847A084008A739F /* fondoBotonBorrar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fondoBotonBorrar.png; sourceTree = "<group>"; };
 		015EA1B91803D64700960438 /* APMCallOutComeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCallOutComeViewController.h; sourceTree = "<group>"; };
 		015EA1BA1803D64700960438 /* APMCallOutComeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCallOutComeViewController.m; sourceTree = "<group>"; };
 		015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMCallOutComeViewController.xib; sourceTree = "<group>"; };
+		016AE73A1844FD660012F2F1 /* hangoutButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hangoutButton.png; sourceTree = "<group>"; };
 		016D3B4C18367D1A006E881F /* APMSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMSearchResultsViewController.h; sourceTree = "<group>"; };
 		016D3B4D18367D1A006E881F /* APMSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMSearchResultsViewController.m; sourceTree = "<group>"; };
 		016D3B4E18367D1A006E881F /* APMSearchResultsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMSearchResultsViewController.xib; sourceTree = "<group>"; };
@@ -266,6 +276,9 @@
 		01B56184182B614A008E2077 /* checkBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkBox@2x.png"; sourceTree = "<group>"; };
 		01B56185182B614A008E2077 /* checkBoxMarked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkBoxMarked.png; sourceTree = "<group>"; };
 		01B56186182B614A008E2077 /* checkBoxMarked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkBoxMarked@2x.png"; sourceTree = "<group>"; };
+		01B97B461843ED1000E5513A /* APMAddLeadsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMAddLeadsViewController.h; sourceTree = "<group>"; };
+		01B97B471843ED1000E5513A /* APMAddLeadsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMAddLeadsViewController.m; sourceTree = "<group>"; };
+		01B97B481843ED1000E5513A /* APMAddLeadsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMAddLeadsViewController.xib; sourceTree = "<group>"; };
 		01BB960217FCFF650040DE19 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		01BB960317FCFF650040DE19 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		01BB960417FCFF650040DE19 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -435,6 +448,7 @@
 		011D239817EF31E4003A4204 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				016AE73A1844FD660012F2F1 /* hangoutButton.png */,
 				01D4F71218063C650054613C /* Helvetica */,
 				01D4F71518063C650054613C /* Helvetica Neue Font */,
 				0182D3B117EF487D001EA3A6 /* barPattern.png */,
@@ -442,6 +456,7 @@
 				01F95E86181F6C26006CCF83 /* hangup.png */,
 				018103A4182CB72700417680 /* img_arrow@2x.png */,
 				018103A6182CB80900417680 /* btn_plus.png */,
+				015AD8A51847A084008A739F /* fondoBotonBorrar.png */,
 				018103A7182CB80900417680 /* btn_plus@2.png */,
 				01E557AC18024DFA0081AB21 /* mail.png */,
 				01508B2E1821F5B50043C2A9 /* downArrowBlack.png */,
@@ -455,11 +470,13 @@
 				018103A0182CB63600417680 /* call_phone@2x.png */,
 				01B56183182B614A008E2077 /* checkBox.png */,
 				01B56184182B614A008E2077 /* checkBox@2x.png */,
-				01093E67182E8F7A0046AEFD /* img_circle_value.png */,
 				01B56185182B614A008E2077 /* checkBoxMarked.png */,
-				01093E65182E8EFC0046AEFD /* img_circle_value@2x.png */,
 				01B56186182B614A008E2077 /* checkBoxMarked@2x.png */,
+				015AD8A118479F65008A739F /* speaker_act@2x.png */,
+				015AD8A218479F65008A739F /* speaker@2x.png */,
 				01508B2C1821DA8D0043C2A9 /* logout.png */,
+				015AD89D184795A4008A739F /* img_circle_value.png */,
+				015AD89E184795A4008A739F /* img_circle_value@2x.png */,
 				01D2930717FE5DF3008F3F5C /* men@2x.png */,
 				0182D3AD17EF465B001EA3A6 /* list.png */,
 				0182D3AE17EF465B001EA3A6 /* list@2x.png */,
@@ -494,6 +511,7 @@
 			isa = PBXGroup;
 			children = (
 				01B56180182B5BA9008E2077 /* APMEditCandProfileViewController.xib */,
+				01B97B481843ED1000E5513A /* APMAddLeadsViewController.xib */,
 				016D3B4E18367D1A006E881F /* APMSearchResultsViewController.xib */,
 				01B56173182B2AC4008E2077 /* APMEditProfileViewController.xib */,
 				015EA1BB1803D64700960438 /* APMCallOutComeViewController.xib */,
@@ -502,7 +520,7 @@
 				01F95E78181F5ED4006CCF83 /* APMCallViewController.xib */,
 				01C9834F181C297A0043C8EA /* APMLoginViewController.xib */,
 				015272311803A3BB00D79E1C /* APMFrontCell.xib */,
-				014690F417F734B5002C0318 /* APMCandidateViewController.xib */,
+				014690F417F734B5002C0318 /* APMDonorDetailController.xib */,
 				014690F817F73664002C0318 /* APMCandidateCell.xib */,
 				0182D3A317EF35FA001EA3A6 /* APMFrontViewController.xib */,
 				0182D3B317EF4E03001EA3A6 /* MenuCell.xib */,
@@ -587,8 +605,8 @@
 		01BB95FF17FCFE7F0040DE19 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				014690F217F734B5002C0318 /* APMCandidateViewController.h */,
-				014690F317F734B5002C0318 /* APMCandidateViewController.m */,
+				014690F217F734B5002C0318 /* APMDonorDetailController.h */,
+				014690F317F734B5002C0318 /* APMDonorDetailController.m */,
 				015EA1B91803D64700960438 /* APMCallOutComeViewController.h */,
 				015EA1BA1803D64700960438 /* APMCallOutComeViewController.m */,
 				014690FA17F73774002C0318 /* APMCandidateCell.h */,
@@ -618,6 +636,8 @@
 				012A684D1829D96000CA05CB /* DonorDetailCell.m */,
 				016D3B4C18367D1A006E881F /* APMSearchResultsViewController.h */,
 				016D3B4D18367D1A006E881F /* APMSearchResultsViewController.m */,
+				01B97B461843ED1000E5513A /* APMAddLeadsViewController.h */,
+				01B97B471843ED1000E5513A /* APMAddLeadsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -790,14 +810,17 @@
 				01732A85181DDE8E0044EF8E /* dtmf_1.wav in Resources */,
 				018103A1182CB63600417680 /* call_phone@2x.png in Resources */,
 				01E557AD18024DFA0081AB21 /* mail.png in Resources */,
-				014690F617F734B5002C0318 /* APMCandidateViewController.xib in Resources */,
+				014690F617F734B5002C0318 /* APMDonorDetailController.xib in Resources */,
 				01D4F72D18063C650054613C /* HelveticaNeueUltraLightItalic.ttf in Resources */,
 				01D4F72118063C650054613C /* HelveticaBd___-.ttf in Resources */,
+				016AE73B1844FD660012F2F1 /* hangoutButton.png in Resources */,
 				0182D3B017EF465B001EA3A6 /* list@2x.png in Resources */,
 				01F95E75181F5935006CCF83 /* LoadingCell.xib in Resources */,
 				01B56182182B5BA9008E2077 /* APMEditCandProfileViewController.xib in Resources */,
 				0181039F182CB60A00417680 /* call_phone_down@2x.png in Resources */,
 				01B56188182B614A008E2077 /* checkBox@2x.png in Resources */,
+				015AD8A418479F65008A739F /* speaker@2x.png in Resources */,
+				015AD8A318479F65008A739F /* speaker_act@2x.png in Resources */,
 				01732A91181DDE8E0044EF8E /* outgoing.wav in Resources */,
 				012A684B1829D91600CA05CB /* DonorDetailCell.xib in Resources */,
 				01508B2D1821DA8D0043C2A9 /* logout.png in Resources */,
@@ -812,6 +835,7 @@
 				019B7D64180C441D006202B5 /* README.md in Resources */,
 				01F95E7A181F5ED4006CCF83 /* APMCallViewController.xib in Resources */,
 				01732A8E181DDE8E0044EF8E /* dtmf_hash.wav in Resources */,
+				015AD8A61847A084008A739F /* fondoBotonBorrar.png in Resources */,
 				01732A84181DDE8E0044EF8E /* dtmf_0.wav in Resources */,
 				01F95E88181F6C26006CCF83 /* hangup.png in Resources */,
 				018103AB182CB97000417680 /* ic_search@2x.png in Resources */,
@@ -819,9 +843,9 @@
 				01B5618A182B614A008E2077 /* checkBoxMarked@2x.png in Resources */,
 				01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */,
 				01732A8A181DDE8E0044EF8E /* dtmf_6.wav in Resources */,
+				01B97B4A1843ED1000E5513A /* APMAddLeadsViewController.xib in Resources */,
 				01732A89181DDE8E0044EF8E /* dtmf_5.wav in Resources */,
 				015272321803A3BB00D79E1C /* APMFrontCell.xib in Resources */,
-				01093E66182E8EFC0046AEFD /* img_circle_value@2x.png in Resources */,
 				01732A8B181DDE8E0044EF8E /* dtmf_7.wav in Resources */,
 				0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */,
 				01732A86181DDE8E0044EF8E /* dtmf_2.wav in Resources */,
@@ -834,6 +858,7 @@
 				018103A9182CB80900417680 /* btn_plus@2.png in Resources */,
 				01F95E81181F65D8006CCF83 /* CloseButton@2x.png in Resources */,
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
+				015AD89F184795A4008A739F /* img_circle_value.png in Resources */,
 				016D3B5018367D1B006E881F /* APMSearchResultsViewController.xib in Resources */,
 				018103A3182CB6BB00417680 /* msg_up@2x.png in Resources */,
 				01732A8D181DDE8E0044EF8E /* dtmf_9.wav in Resources */,
@@ -844,11 +869,11 @@
 				01D4F72C18063C650054613C /* HelveticaNeueUltraLight.ttf in Resources */,
 				019B7D65180C441D006202B5 /* release_notes.md in Resources */,
 				015EA1BD1803D64700960438 /* APMCallOutComeViewController.xib in Resources */,
-				01093E68182E8F7A0046AEFD /* img_circle_value.png in Resources */,
 				01B5617A182B3C5E008E2077 /* APMCallHelpViewController.xib in Resources */,
 				01732A60181DAA360044EF8E /* SVProgressHUD.bundle in Resources */,
 				0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */,
 				01D4F72618063C650054613C /* HelveticaNeueCondensedBlack.ttf in Resources */,
+				015AD8A0184795A4008A739F /* img_circle_value@2x.png in Resources */,
 				01D4F72818063C650054613C /* HelveticaNeueItalic.ttf in Resources */,
 				0182D3AF17EF465B001EA3A6 /* list.png in Resources */,
 			);
@@ -892,13 +917,14 @@
 				01BB961E17FCFF650040DE19 /* AFPropertyListRequestOperation.m in Sources */,
 				01732A64181DD30C0044EF8E /* APMLeadsModel.m in Sources */,
 				015272351803A4FC00D79E1C /* APMFrontCell.m in Sources */,
+				01B97B491843ED1000E5513A /* APMAddLeadsViewController.m in Sources */,
 				0182D3AC17EF37E7001EA3A6 /* APMMenuViewController.m in Sources */,
 				01BB961A17FCFF650040DE19 /* AFImageCache.m in Sources */,
 				01C98359181C740D0043C8EA /* KeychainItemWrapper.m in Sources */,
 				012A6851182A0E4500CA05CB /* APMContributionsModel.m in Sources */,
 				01732A61181DAA360044EF8E /* SVProgressHUD.m in Sources */,
 				011D23A217EF31E4003A4204 /* APMAppDelegate.m in Sources */,
-				014690F517F734B5002C0318 /* APMCandidateViewController.m in Sources */,
+				014690F517F734B5002C0318 /* APMDonorDetailController.m in Sources */,
 				01BB961D17FCFF650040DE19 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				01B5617D182B5215008E2077 /* APMGetPhoneModel.m in Sources */,
 				015EA1BC1803D64700960438 /* APMCallOutComeViewController.m in Sources */,
@@ -985,7 +1011,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "3314F102-A921-4080-86AF-DCF2FB59D725";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos7.0;
 			};
 			name = Debug;
 		};
@@ -1019,7 +1045,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PROVISIONING_PROFILE = "3314F102-A921-4080-86AF-DCF2FB59D725";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos7.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1052,7 +1078,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3314F102-A921-4080-86AF-DCF2FB59D725";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1086,7 +1112,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3314F102-A921-4080-86AF-DCF2FB59D725";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

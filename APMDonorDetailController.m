@@ -1,12 +1,12 @@
 //
-//  APMCandidateViewController.m
+//  APMDonorDetailController.m
 //  Angel Politics
 //
 //  Created by Francisco on 28/09/13.
 //  Copyright (c) 2013 angelpolitics. All rights reserved.
 //
 
-#import "APMCandidateViewController.h"
+#import "APMDonorDetailController.h"
 #import "APMCallOutComeViewController.h"
 #import "APMCallViewController.h"
 #import "APMLeadsModel.h"
@@ -21,8 +21,9 @@
 #import "UIImageView+AFNetworking.h"
 #import "APMPhone.h"
 #import "APMAppDelegate.h"
+#import "TestFlight.h"
 
-@interface APMCandidateViewController (){
+@interface APMDonorDetailController (){
     
     BOOL isLoading;
     NSOperationQueue *queue;
@@ -44,7 +45,7 @@ static NSString *const LoadingCellIdentifier=@"LoadingCell";
 static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
 static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-pictures/candidates/";
 
-@implementation APMCandidateViewController
+@implementation APMDonorDetailController
 @synthesize isADonor;
 
 
@@ -82,9 +83,16 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             NSLog(@"Es IN!");
             [self loadData];
+            
         }else{
             
+    
+            
+            
+            
              NSLog(@"Es OUT!");
+            
+            
             
             UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"User out of network" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             
@@ -237,7 +245,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             if (self.detailModel.city !=(id)[NSNull null] && self.detailModel.state !=(id)[NSNull null]) {
                 self.cityAndStateLabel.text=[NSString stringWithFormat:@"%@, %@",self.detailModel.city,self.detailModel.state];
             }
-            
+            self.partyLabel.text=self.detailModel.party;
             
             self.averageLabel.text=self.detailModel.average;
             self.bestLabel.text=self.detailModel.best;
@@ -349,6 +357,11 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     
     [self setTitle:self.title];
+    
+    
+    self.askLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:25];
+    self.bestLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
+    self.averageLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
     
     
 }
@@ -487,6 +500,10 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
     APMPhone* phone = appDelegate.phone;
     [phone connect:phoneDial];
+    
+    [TestFlight passCheckpoint:@"Call test"];
+    
+    [TestFlight submitFeedback:phoneDial];
     
     NSLog(@"phonetest %@",phoneDial);
 

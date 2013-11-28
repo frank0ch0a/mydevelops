@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TwilioClient.h"
 
 #import "TCDevice.h"
 
@@ -15,10 +16,13 @@
 @private
 	TCDevice* _device;
     TCConnection *_connection;
+    BOOL _speakerEnabled;
     
 }
 
 -(void)connect:(NSString *)phoneNumber;
 -(void)disconnect;
+-(void)updateAudioRoute;
+-(void)setSpeakerEnabled:(BOOL)enabled;
 
 @end

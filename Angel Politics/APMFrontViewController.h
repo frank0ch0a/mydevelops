@@ -15,7 +15,7 @@
 
 
 
-@interface APMFrontViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,APMFrontCellProtocol,LoginDelegate,UISearchBarDelegate>
+@interface APMFrontViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,APMFrontCellProtocol,UISearchBarDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UILabel *FrontLineOne;
@@ -56,6 +56,13 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 - (IBAction)closeSearchButton:(id)sender;
+
+- (IBAction)addLeadsButton:(id)sender;
+
+
+
+
+@property (weak, nonatomic) IBOutlet UIButton *addLeadsButtonOut;
 
 
 @end

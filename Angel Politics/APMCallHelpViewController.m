@@ -10,7 +10,11 @@
 #import "APMAppDelegate.h"
 #import "APMPhone.h"
 
-@interface APMCallHelpViewController ()
+@interface APMCallHelpViewController (){
+    
+    BOOL isSpeaker;
+    
+}
 @property (weak, nonatomic) IBOutlet UIButton *hangupButton;
 
 @end
@@ -30,6 +34,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    
+    
+    
+    UIImage *imageButton=[[UIImage imageNamed:@"fondoBotonBorrar"]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
+    
+    [self.hangupButton setBackgroundImage:imageButton forState:UIControlStateNormal];
+
 }
 - (IBAction)phoneDisconnect:(id)sender {
     
@@ -63,4 +75,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)speakerPress:(id)sender {
+    
+    
+    
+ 
+    
+    if (!isSpeaker) {
+         isSpeaker=YES;
+        [self.speakerButton setBackgroundImage:[UIImage imageNamed:@"speaker_act"] forState:UIControlStateNormal];
+        APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
+        APMPhone* phone = appDelegate.phone;
+        [phone setSpeakerEnabled:isSpeaker];
+       
+        NSLog(@"Speaker ON");
+    }
+    
+    else if (isSpeaker) {
+         isSpeaker=NO;
+        [self.speakerButton setBackgroundImage:[UIImage imageNamed:@"speaker"] forState:UIControlStateNormal];
+        APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
+        APMPhone* phone = appDelegate.phone;
+        [phone setSpeakerEnabled:isSpeaker];
+       
+        NSLog(@"Speaker OFF");
+    }
+    
+    
+}
 @end

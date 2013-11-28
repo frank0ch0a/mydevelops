@@ -11,6 +11,7 @@
 #import "AFJSONRequestOperation.h"
 #import "KeychainItemWrapper.h"
 #import "NVSlideMenuController.h"
+#import "TestFlight.h"
 
 @interface APMEditCandProfileViewController (){
     
@@ -192,6 +193,8 @@
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Check"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [TestFlight passCheckpoint:@"Save new Number"];
         
         
     }else{

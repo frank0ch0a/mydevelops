@@ -338,7 +338,7 @@ enum {
         if (candidateModel.colorParty!=nil) {
             
             if ([candidateModel.colorParty isEqualToString:@"blue"]) {
-                cell.colorBgPartyUIView.backgroundColor=[UIColor blueColor];
+                cell.colorBgPartyUIView.backgroundColor=[UIColor colorWithRed:0.208 green:0.537 blue:0.745 alpha:1.0];
                 
             }else if ([candidateModel.colorParty isEqualToString:@"red"]){
                 

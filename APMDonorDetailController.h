@@ -1,5 +1,5 @@
 //
-//  APMCandidateViewController.h
+//  APMDonorDetailController.h
 //  Angel Politics
 //
 //  Created by Francisco on 28/09/13.
@@ -14,7 +14,7 @@
 
 
 
-@interface APMCandidateViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,CallHelpDelegate>
+@interface APMDonorDetailController : UIViewController<UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,CallHelpDelegate>
 
 @property(nonatomic,strong)APMLeadsModel *leadsModel;
 @property(nonatomic,strong)APMDetailModel *detailModel;

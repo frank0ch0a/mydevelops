@@ -36,6 +36,8 @@
     CGRect newFrame = CGRectMake(self.CandUIView.frame.origin.x, self.CandUIView.frame.origin.y, 50, 50);
     self.CandUIView.frame = newFrame;
     self.CandUIView.layer.cornerRadius = 50 / 2.0;
+    self.CandUIView.layer.borderColor=[UIColor whiteColor].CGColor;
+    self.CandUIView.layer.borderWidth=0.9f;
     self.CandUIView.center = saveCenter;
     
     CGPoint saveCenter2 = self.candImageView.center;

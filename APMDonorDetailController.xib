@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="APMCandidateViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="APMDonorDetailController">
             <connections>
                 <outlet property="askLabel" destination="gR4-ct-BvC" id="71B-mx-AH4"/>
                 <outlet property="averageLabel" destination="znd-L8-Rwa" id="zLZ-NG-75g"/>

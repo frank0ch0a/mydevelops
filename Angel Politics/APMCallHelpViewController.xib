@@ -10,9 +10,10 @@
                 <outlet property="ask" destination="UsS-Xe-ELq" id="43S-o0-RsG"/>
                 <outlet property="callLabel" destination="6AM-pO-DbQ" id="JoH-y8-x4H"/>
                 <outlet property="cityAndState" destination="hUT-MS-tio" id="SSM-cP-Yuw"/>
-                <outlet property="hangupButton" destination="W66-TL-55W" id="Uj5-4P-rdY"/>
+                <outlet property="hangupButton" destination="W66-TL-55W" id="E0A-ks-N4I"/>
                 <outlet property="high1Label" destination="f0k-TW-Sgo" id="xGd-NQ-TBj"/>
                 <outlet property="high2Label" destination="pEc-vk-6NG" id="yqw-SW-mzt"/>
+                <outlet property="speakerButton" destination="CVa-QQ-m11" id="TbE-jc-lWj"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -22,10 +23,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="W66-TL-55W">
-                    <rect key="frame" x="101" y="351" width="119" height="42"/>
+                    <rect key="frame" x="28" y="373" width="167" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                    <state key="normal" backgroundImage="hangup.png">
+                    <state key="normal" title="Hangup">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -81,6 +82,16 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="CVa-QQ-m11">
+                    <rect key="frame" x="240" y="368" width="48" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="speaker.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="speakerPress:" destination="-1" eventType="touchUpInside" id="QK7-2g-gtJ"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -88,6 +99,6 @@
         </view>
     </objects>
     <resources>
-        <image name="hangup.png" width="237" height="85"/>
+        <image name="speaker.png" width="24" height="24"/>
     </resources>
 </document>

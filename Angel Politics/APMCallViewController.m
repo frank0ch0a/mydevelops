@@ -181,7 +181,14 @@
             
             if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
                 
-                 [self dismissViewControllerAnimated:YES completion:nil];
+                // [self dismissViewControllerAnimated:YES completion:nil];
+                
+                
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Data received sucessfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                
+                [alertView show];
+                
+                [self.delegate CallViewDidDismiss:self];
                 
                 NSLog(@"Resulta JSON MenuVC %@",JSON);
             }

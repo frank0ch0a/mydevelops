@@ -17,6 +17,8 @@
 
 @interface APMCallHelpViewController : UIViewController
 
+
+@property (weak, nonatomic) IBOutlet UIButton *speakerButton;
 @property(nonatomic,weak)id<CallHelpDelegate>delegate;
 
 @property (weak, nonatomic) IBOutlet UILabel *callLabel;
@@ -28,4 +30,5 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *high1Label;
 
+- (IBAction)speakerPress:(id)sender;
 @end

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APMCallViewController.h"
 @class APMDetailModel;
 
-@interface APMCallOutComeViewController : UIViewController<UITextFieldDelegate>
+
+@interface APMCallOutComeViewController : UIViewController<UITextFieldDelegate,SurveyDelegate>
 
 - (IBAction)callStatusButton:(id)sender;
 
