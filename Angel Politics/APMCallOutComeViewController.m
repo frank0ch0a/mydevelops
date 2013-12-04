@@ -46,6 +46,7 @@
     self.askLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:25];
     self.bestLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
     self.averageLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
+    self.callOutcomeLabel.font=[UIFont fontWithName:@"Helvetica75" size:17];
 
 }
 
@@ -74,6 +75,8 @@
     donorId=self.detailModel.donor_id;
     candId=self.detailModel.cand_id;
     
+    
+       NSLog(@"candid %@ y donorid %@",candId,donorId);
     
     
     
@@ -118,10 +121,13 @@
             
             apmCallVC.delegate=self;
             
-            [self presentViewController:apmCallVC animated:YES completion:nil];
-            
             apmCallVC.candID=candId;
             apmCallVC.donorID=donorId;
+            
+            [self presentViewController:apmCallVC animated:YES completion:nil];
+            
+           
+            
         }
         
     }];

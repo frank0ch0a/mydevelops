@@ -10,9 +10,12 @@
                 <outlet property="askLabel" destination="gR4-ct-BvC" id="71B-mx-AH4"/>
                 <outlet property="averageLabel" destination="znd-L8-Rwa" id="zLZ-NG-75g"/>
                 <outlet property="bestLabel" destination="4ep-Qy-g1f" id="h38-X3-qkv"/>
+                <outlet property="btn_plus" destination="3YH-t4-NLs" id="ukn-LJ-cLA"/>
+                <outlet property="callButton" destination="BK0-v1-74j" id="dC9-Dm-uZ6"/>
                 <outlet property="candTableView" destination="qN7-zq-bRB" id="Rth-PD-NEk"/>
                 <outlet property="cityAndStateLabel" destination="QaS-21-vx5" id="zhK-3D-NUv"/>
                 <outlet property="donorLabel" destination="qpV-8s-R6L" id="vAd-G8-Kno"/>
+                <outlet property="emailOutlet" destination="Apr-Gd-ubl" id="qWV-ca-niR"/>
                 <outlet property="highlight1" destination="WaA-jd-FDg" id="ChD-kr-WVe"/>
                 <outlet property="highlight2" destination="v3e-tW-VZf" id="sSL-Zk-8R8"/>
                 <outlet property="nameSupport" destination="kDP-3u-u1d" id="hjx-4y-QBE"/>
@@ -182,6 +185,16 @@
                         <outlet property="delegate" destination="-1" id="Dbt-du-Hq3"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3YH-t4-NLs">
+                    <rect key="frame" x="84" y="244" width="23" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="btn_plus@2.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addLeadAction:" destination="-1" eventType="touchUpInside" id="pnc-g7-JbG"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -189,6 +202,7 @@
         </view>
     </objects>
     <resources>
+        <image name="btn_plus@2.png" width="46" height="46"/>
         <image name="call_circles" width="285" height="120"/>
         <image name="call_phone.png" width="79" height="79"/>
         <image name="call_user_icon" width="20" height="20"/>

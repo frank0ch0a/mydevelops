@@ -26,5 +26,7 @@
 @property(nonatomic,strong)NSArray *detalles;
 @property(nonatomic,copy)NSString *cand_id;
 @property(nonatomic,copy)NSString *donor_id;
+@property(nonatomic,copy)NSString *call;
+@property(nonatomic,copy)NSString *inOut;
 
 @end

@@ -10,12 +10,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import "APMFrontCellProtocol.h"
 #import "APMLoginViewController.h"
+#import "APMAddLeadsViewController.h"
+
 @class APMFrontViewController;
 @class APMCandidateModel;
 
 
 
-@interface APMFrontViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,APMFrontCellProtocol,UISearchBarDelegate>
+@interface APMFrontViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,APMFrontCellProtocol,UISearchBarDelegate,AddLeadsDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UILabel *FrontLineOne;

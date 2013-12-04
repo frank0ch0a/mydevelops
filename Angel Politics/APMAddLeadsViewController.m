@@ -77,7 +77,6 @@
 - (IBAction)closeAddLeadVC:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 #pragma mark TextField Delegate
@@ -189,6 +188,8 @@
                     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads add succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     
                     [alertView show];
+                    
+                    [self.delegate dismissController:self];
 
                     
                     NSLog(@"Resulta AddLeads %@",JSON);

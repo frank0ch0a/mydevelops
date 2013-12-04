@@ -38,14 +38,24 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameSupport;
 
+@property (nonatomic)NSInteger donorType;
+
 @property (nonatomic,copy)NSString *title;
 @property (nonatomic)BOOL isADonor;
 
+
+@property (weak, nonatomic) IBOutlet UIButton *emailOutlet;
+
+@property (weak, nonatomic) IBOutlet UIButton *callButton;
 
 
 - (IBAction)callOutcome:(id)sender;
 
 - (IBAction)emailButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btn_plus;
+
+- (IBAction)addLeadAction:(id)sender;
+
 
 
 @end

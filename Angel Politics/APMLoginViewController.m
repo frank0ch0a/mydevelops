@@ -32,11 +32,20 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    UIColor *color = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1.0];
+    self.emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: color}];
+    
+    UIColor *color2 = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1.0];
+    self.passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: color2}];
+    
     UIImage *imageButton=[[UIImage imageNamed:@"btn_login_up"]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
     
     [self.loginButtonOutlet setBackgroundImage:imageButton forState:UIControlStateNormal];
+    self.loginButtonOutlet.titleLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15.0];
     
     loginy=self.loginUIView.frame.origin.y;
+    
+  
     
 }
 
@@ -46,6 +55,13 @@
     // Create instance keyChain
     
    self.keyChain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    if ([_keyChain objectForKey:(__bridge id)kSecAttrAccount]) {
+         self.emailTextField.text= [_keyChain objectForKey:(__bridge id)kSecAttrAccount];
+    }
+    
+   
+
     
     
     /*    [self.passwordTextField setText:[self.keyChain objectForKey:(__bridge id)kSecValueData]];
@@ -80,7 +96,10 @@
                                 
                                 
                                 self.loginUIView.frame=CGRectMake(0, -150, self.loginUIView.frame.size.width, self.loginUIView.frame.size.height);
-                                
+                                self.emailLine.backgroundColor=[UIColor whiteColor];
+                                self.emailLine.alpha=0.6f;
+                                self.passLine.backgroundColor=[UIColor whiteColor];
+                                self.passLine.alpha=0.6f;
                                 
                                 
                             } completion:nil];
@@ -102,6 +121,9 @@
     
     [self.emailTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
+    self.emailLine.backgroundColor=[UIColor colorWithRed:0 green:0.4 blue:0 alpha:1.0];
+    self.passLine.backgroundColor=[UIColor colorWithRed:0 green:0.4 blue:0 alpha:1.0];
+
     
     return YES;
     
@@ -131,9 +153,12 @@
     
     [self.emailTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
+    self.emailLine.backgroundColor=[UIColor colorWithRed:0 green:0.4 blue:0 alpha:1.0];
+    self.passLine.backgroundColor=[UIColor colorWithRed:0 green:0.4 blue:0 alpha:1.0];
     
     NSLog(@"Login Success");
     
+     [_keyChain resetKeychainItem];
     
     // Store username to keychain
     if (self.emailTextField.text){

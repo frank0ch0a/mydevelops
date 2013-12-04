@@ -30,5 +30,9 @@
 @property (weak, nonatomic) IBOutlet UIView *loginUIView;
 
 - (IBAction)loginButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *emailLine;
+
+@property (weak, nonatomic) IBOutlet UIView *passLine;
+
 
 @end

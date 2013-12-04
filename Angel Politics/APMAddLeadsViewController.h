@@ -6,11 +6,21 @@
 //  Copyright (c) 2013 angelpolitics. All rights reserved.
 //
 
+@class APMAddLeadsViewController;
+@protocol AddLeadsDelegate <NSObject>
+
+-(void)dismissController:(APMAddLeadsViewController *)delegate;
+
+@end
+
 #import <UIKit/UIKit.h>
 
 @interface APMAddLeadsViewController : UIViewController<UITextFieldDelegate>
 - (IBAction)closeAddLeadVC:(id)sender;
+
+@property(nonatomic,weak)id<AddLeadsDelegate>delegate;
 @property (weak, nonatomic) IBOutlet UIButton *saveLeadButton;
+
 @property (weak, nonatomic) IBOutlet UITextField *leadsNameTextField;
 
 @property (weak, nonatomic) IBOutlet UITextField *leadsLastNTextField;

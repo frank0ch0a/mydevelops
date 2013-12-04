@@ -111,6 +111,7 @@
 		01BB962017FCFF650040DE19 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB961517FCFF650040DE19 /* AFXMLRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -Wno-unused"; }; };
 		01BB962117FCFF650040DE19 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB961717FCFF650040DE19 /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		01BB962417FD01870040DE19 /* APMCandidateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB962317FD01870040DE19 /* APMCandidateModel.m */; };
+		01C77763184866B000D0018E /* bg_navbar@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C77762184866B000D0018E /* bg_navbar@x2.png */; };
 		01C98350181C297A0043C8EA /* APMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C9834E181C297A0043C8EA /* APMLoginViewController.m */; };
 		01C98351181C297A0043C8EA /* APMLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C9834F181C297A0043C8EA /* APMLoginViewController.xib */; };
 		01C98356181C5FB80043C8EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C98355181C5FB80043C8EA /* Security.framework */; };
@@ -303,6 +304,7 @@
 		01BB961717FCFF650040DE19 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		01BB962217FD01870040DE19 /* APMCandidateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMCandidateModel.h; sourceTree = "<group>"; };
 		01BB962317FD01870040DE19 /* APMCandidateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMCandidateModel.m; sourceTree = "<group>"; };
+		01C77762184866B000D0018E /* bg_navbar@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_navbar@x2.png"; sourceTree = "<group>"; };
 		01C9834D181C297A0043C8EA /* APMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMLoginViewController.h; sourceTree = "<group>"; };
 		01C9834E181C297A0043C8EA /* APMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMLoginViewController.m; sourceTree = "<group>"; };
 		01C9834F181C297A0043C8EA /* APMLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMLoginViewController.xib; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 				0182D3B117EF487D001EA3A6 /* barPattern.png */,
 				01F95E85181F6C26006CCF83 /* dial.png */,
 				01F95E86181F6C26006CCF83 /* hangup.png */,
+				01C77762184866B000D0018E /* bg_navbar@x2.png */,
 				018103A4182CB72700417680 /* img_arrow@2x.png */,
 				018103A6182CB80900417680 /* btn_plus.png */,
 				015AD8A51847A084008A739F /* fondoBotonBorrar.png */,
@@ -858,6 +861,7 @@
 				018103A9182CB80900417680 /* btn_plus@2.png in Resources */,
 				01F95E81181F65D8006CCF83 /* CloseButton@2x.png in Resources */,
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
+				01C77763184866B000D0018E /* bg_navbar@x2.png in Resources */,
 				015AD89F184795A4008A739F /* img_circle_value.png in Resources */,
 				016D3B5018367D1B006E881F /* APMSearchResultsViewController.xib in Resources */,
 				018103A3182CB6BB00417680 /* msg_up@2x.png in Resources */,

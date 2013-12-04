@@ -39,5 +39,6 @@
 
 @property(nonatomic,strong)APMDetailModel *detailModel;
 
+@property (weak, nonatomic) IBOutlet UILabel *callOutcomeLabel;
 
 @end

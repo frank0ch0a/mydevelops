@@ -47,6 +47,8 @@
     self.psCallTextField.delegate=self;
     self.detailsCallTextField.delegate=self;
     
+    NSLog(@"candid %@ y donorid %@ call view",self.candID,self.donorID);
+    
    
     
 }
@@ -159,8 +161,14 @@
         
     
     [SVProgressHUD show];
+        
+        NSDictionary *dict;
+        
+        if (self.candID !=nil && self.donorID !=nil) {
+             dict=@{@"email":self.emailCallTextField.text ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
+        }
     
-    NSDictionary *dict=@{@"email":self.emailCallTextField.text ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
+   
     
     NSLog(@"Parameters %@",dict);
     

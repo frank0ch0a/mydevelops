@@ -54,6 +54,8 @@
         
         self.hangupButton.frame=CGRectMake(self.hangupButton.frame.origin.x, 700, self.hangupButton.frame.size.width, self.hangupButton.frame.size.height);
         
+        self.speakerButton.hidden=YES;
+        
     } completion:^(BOOL finished) {
         
        

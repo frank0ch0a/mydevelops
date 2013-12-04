@@ -19,7 +19,7 @@
 #import "Reachability.h"
 #import "SVProgressHUD.h"
 #import "APMSearchResultsViewController.h"
-#import "APMAddLeadsViewController.h"
+#import "TestFlight.h"
 
 
 @interface APMFrontViewController (){
@@ -27,6 +27,8 @@
     BOOL isLoading;
     BOOL isSearch;
     BOOL isSelect;
+    BOOL isView;
+    NSInteger donorKind;
 }
 
 // Lazy buttons
@@ -76,13 +78,41 @@ static NSString *const FrontCell=@"FrontCell";
 }
 
 
+-(void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
+    
+    UIImage* myImage = [UIImage imageNamed:@"nav_logo"];
+    self.myImageView = [[UIImageView alloc] initWithImage:myImage];
+    self.myImageView.frame=CGRectMake(80, 8, 145, 26);
+    [self.navigationController.navigationBar addSubview:self.myImageView];
+    
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    
+    [super viewDidDisappear:animated];
+    
+    
+    self.myImageView=nil;
+    
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    
+   
+    
+ 
+    
     self.pitchUIView.backgroundColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0];
     
     [self.donorButton setTitleColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0] forState:UIControlStateNormal];
+    
+        donorKind=1;
     
      self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
    
@@ -215,6 +245,8 @@ static NSString *const FrontCell=@"FrontCell";
     [super viewWillAppear:animated];
     
    
+    
+   
     [self.navigationItem setRightBarButtonItem:[self rightBarButtonItem]];
     
     self.donorButton.layer.borderWidth=1.0f;
@@ -226,10 +258,10 @@ static NSString *const FrontCell=@"FrontCell";
     self.otherButton.layer.borderWidth=1.0f;
     self.otherButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
     
-    UIImage* myImage = [UIImage imageNamed:@"nav_logo"];
-    self.myImageView = [[UIImageView alloc] initWithImage:myImage];
-    self.myImageView.frame=CGRectMake(80, 8, 145, 26);
-    [self.navigationController.navigationBar addSubview:self.myImageView];
+    self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:19.0];
+    self.frontLineTwo.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:12.5];
+    
+   
     
     /*
     self.donorUIView.hidden=YES;
@@ -276,7 +308,7 @@ static NSString *const FrontCell=@"FrontCell";
     leadsModel.ask=[dictionary objectForKey:@"a"];
     leadsModel.donorName=[dictionary objectForKey:@"b"];
     leadsModel.donorLastName=[dictionary objectForKey:@"c"];
-    if ([dictionary objectForKey:@"d"]!=(id)[NSNull null]) {
+    if ([dictionary objectForKey:@"d"]!=(id)[NSNull null] && [dictionary objectForKey:@"d"] !=nil ) {
       leadsModel.donorCity=[dictionary objectForKey:@"d"];
     }
     if ([dictionary objectForKey:@"e"]!=(id)[NSNull null]) {
@@ -285,13 +317,32 @@ static NSString *const FrontCell=@"FrontCell";
     
     
     leadsModel.donorPhoneNumber=[dictionary objectForKey:@"f"];
-    leadsModel.donorEmail=[dictionary objectForKey:@"g"];
-    leadsModel.donor_id=[dictionary objectForKey:@"h"];
     
-    if ([dictionary objectForKey:@"i"] !=nil || [dictionary objectForKey:@"i"] != (id)[NSNull null]) {
+    if (isSearch && [dictionary objectForKey:@"g"]!=(id)[NSNull null] && [dictionary objectForKey:@"g" ] != nil) {
+        
+        leadsModel.donor_id=[dictionary objectForKey:@"g"];
+        
+    }else{
+        
+    
+        leadsModel.donorEmail=[dictionary objectForKey:@"g"];
+    }
+    
+    
+    
+    if (!isSearch && [ dictionary objectForKey:@"h"] !=nil && [dictionary objectForKey:@"h"] != (id)[NSNull null]) {
+           leadsModel.donor_id=[dictionary objectForKey:@"h"];
+    }
+    
+
+    
+    if ([dictionary objectForKey:@"i"] !=nil && [dictionary objectForKey:@"i"] != (id)[NSNull null]) {
         leadsModel.statusNet=[dictionary objectForKey:@"i"];
     }
     
+    if ([dictionary objectForKey:@"j"] !=nil && [dictionary objectForKey:@"j"] != (id)[NSNull null]) {
+        leadsModel.pledgeID=[dictionary objectForKey:@"j"];
+    }
     
     return leadsModel;
     
@@ -350,12 +401,13 @@ static NSString *const FrontCell=@"FrontCell";
         if (JSON !=nil) {
             
             [SVProgressHUD dismiss];
-        // NSLog(@"Resulta JSON MenuVC %@",JSON);
+      //  NSLog(@"Resulta JSON MenuVC %@",JSON);
             
            [self parseArray:JSON];
             isLoading=NO;
             
             [self.donorTableView reloadData];
+            isView=NO;
             
             
         }else{
@@ -445,6 +497,13 @@ static NSString *const FrontCell=@"FrontCell";
         self.searchToolbar.hidden=NO;
         [self.searchBar becomeFirstResponder];
         self.addLeadsButtonOut.hidden=YES;
+        self.pitchUIView.backgroundColor=[UIColor whiteColor];
+        self.donorUIView.backgroundColor=[UIColor whiteColor];
+        self.pledgeUIView.backgroundColor=[UIColor whiteColor];
+        [self.donorButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.pledgeButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [self.otherButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        
     }
     
     
@@ -513,6 +572,12 @@ static NSString *const FrontCell=@"FrontCell";
         }
    
     cell.donorTypeLabel.text=self.donorType;
+        
+        
+        if (isView) {
+        cell.amountLabel.text=@"";
+        
+        }
     
     
       
@@ -546,10 +611,15 @@ static NSString *const FrontCell=@"FrontCell";
 
     donorDetailVC.leadsModel=leadsModel;
     donorDetailVC.title=self.donorType;
+    donorDetailVC.donorType=donorKind;
+    
+    self.myImageView.hidden=YES;
+    
+    
     
     [self.navigationController pushViewController:donorDetailVC animated:YES];
     
-    self.myImageView.hidden=YES;
+    
    
 
     
@@ -597,6 +667,7 @@ static NSString *const FrontCell=@"FrontCell";
   
     self.donorType=@"Owes Me";
     self.FrontLineOne.text=@"Pledges to collect";
+    self.frontLineTwo.hidden=NO;
     self.frontLineTwo.text=@"Lets turn these pledges into contributions!";
     self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
@@ -609,6 +680,7 @@ static NSString *const FrontCell=@"FrontCell";
        [self.pledgeButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [self.donorButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [self.otherButton setTitleColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0] forState:UIControlStateNormal];
+          donorKind=3;
         
         isSelect = NO;
         [self loadData];
@@ -642,6 +714,7 @@ static NSString *const FrontCell=@"FrontCell";
     
     self.donorType=@"New Matches";
     self.FrontLineOne.text=@"Donor-match available";
+    self.frontLineTwo.hidden=NO;
     self.frontLineTwo.text=@"Unlock new donors. Make a call.";
      self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
@@ -655,6 +728,7 @@ static NSString *const FrontCell=@"FrontCell";
         [self.donorButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [self.otherButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         isSelect = NO;
+        donorKind=2;
         [self loadData];
         [SVProgressHUD show];
     }
@@ -688,6 +762,7 @@ static NSString *const FrontCell=@"FrontCell";
    
     self.donorType=@"My Leads";
     self.FrontLineOne.text=@"Leads available ";
+    self.frontLineTwo.hidden=NO;
     self.frontLineTwo.text=@"Let’s get some contributions!";
     self.frontNumber.text=[@([self.leadsResults count])stringValue];
     
@@ -698,6 +773,7 @@ static NSString *const FrontCell=@"FrontCell";
         [self.donorButton setTitleColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0] forState:UIControlStateNormal];
         [self.pledgeButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
          [self.otherButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        donorKind=1;
         
         isSelect = NO;
         [self loadData];
@@ -748,6 +824,8 @@ static NSString *const FrontCell=@"FrontCell";
     self.searchToolbar.hidden=YES;
     self.addLeadsButtonOut.hidden=NO;
     
+    [self PitchLeadsButton:self];
+    
     [self.searchBar resignFirstResponder];
 }
 
@@ -758,9 +836,17 @@ static NSString *const FrontCell=@"FrontCell";
     
     NSLog(@"tocaste addLead");
     
+    [TestFlight passCheckpoint:@"press AddLeads button"];
+    
     APMAddLeadsViewController *addLeads=[[APMAddLeadsViewController alloc]init];
     
-    [self presentViewController:addLeads animated:YES completion:nil];
+    addLeads.delegate=self;
+    
+    
+    
+    [self.navigationController presentViewController:addLeads animated:YES completion:nil];
+    
+    
     
     
     
@@ -790,28 +876,53 @@ static NSString *const FrontCell=@"FrontCell";
         
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
             
-            if (JSON !=nil) {
+            if (JSON !=nil && [JSON count]>0) {
                 
                 [SVProgressHUD dismiss];
-                // NSLog(@"Resulta JSON MenuVC %@",JSON);
+                NSLog(@"Resulta JSON MenuVC %@",JSON);
                 
-        APMSearchResultsViewController *searchVC=[[APMSearchResultsViewController alloc]init];
+                [self parseArray:JSON];
                 
-                searchVC.arraySearch=JSON;
+                self.FrontLineOne.text=@"Donor Results";
+                self.frontLineTwo.hidden=YES;
+                donorKind=0;
+            
+                
+        //APMSearchResultsViewController *searchVC=[[APMSearchResultsViewController alloc]init];
+                
+                //searchVC.arraySearch=JSON;
+                
+                
+                
+                [self.donorTableView reloadData];
                 
                 self.searchBar.text=@"";
+                 
                 
-                [self presentViewController:searchVC animated:YES completion:nil];
+              //  [self presentViewController:searchVC animated:YES completion:nil];
                 
+               
+              //  [self viewDidLoad];
                 
                 isLoading=NO;
                 isSearch=NO;
+                isView=YES;
                 
                 
                 
             }else{
                 
+                [SVProgressHUD dismiss];
+                isSearch=NO;
                 isLoading=NO;
+                self.searchBar.text=@"";
+                
+                
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"No records were found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                
+                [alertView show];
+                
+                
                 
                 
                 
@@ -891,6 +1002,17 @@ static NSString *const FrontCell=@"FrontCell";
     
 }*/
 
+
+#pragma mark Add Delegate
+
+-(void)dismissController:(APMAddLeadsViewController *)delegate{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self viewDidLoad];
+    
+    
+}
 
 -(void)dealloc{
     

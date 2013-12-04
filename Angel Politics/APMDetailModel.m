@@ -26,6 +26,8 @@
 @synthesize detalles;
 @synthesize cand_id;
 @synthesize donor_id;
+@synthesize call;
+@synthesize inOut;
 
 
 @end

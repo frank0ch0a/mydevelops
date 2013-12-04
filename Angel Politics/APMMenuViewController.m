@@ -33,6 +33,8 @@ enum {
     MenuMessages,
     MenuSettings,
     MenuHelp,
+    MenuDummy1,
+    MenuDummy2,
     MenuLogout,
     MenuRowCount
 };
@@ -309,8 +311,12 @@ enum {
             
         case MenuLogout:
             cell.menuLabel.text=@"Logout";
+            cell.menuLabel.alpha=0.6f;
             cell.menuImageView.image=[UIImage imageNamed:@"logout"];
+            cell.menuImageView.alpha=0.6f;
             break;
+            
+        
             
         default:
             break;
@@ -383,6 +389,25 @@ enum {
         
         return cell;
         
+    }else if (indexPath.row==MenuDummy1 || indexPath.row==MenuDummy2 || indexPath.row==MenuLogout){
+        
+        MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuCellIdentifier];
+        
+        [self configureCell:cell forIndexPath:indexPath];
+        
+        cell.arrowView.hidden=YES;
+        
+        
+        
+        /*
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 45,320, 1)];
+        lineView.backgroundColor = [UIColor whiteColor];
+        [cell.contentView addSubview:lineView];*/
+        
+        
+        
+        return cell;
+        
     }else{
         
         MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuCellIdentifier];
@@ -390,13 +415,13 @@ enum {
         [self configureCell:cell forIndexPath:indexPath];
         
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 45,320, 1)];
-        lineView.backgroundColor = [UIColor whiteColor];
-        [cell.contentView addSubview:lineView];
+         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 45,320, 1)];
+         lineView.backgroundColor = [UIColor whiteColor];
+         [cell.contentView addSubview:lineView];
+        
+        return  cell;
         
         
-        
-        return cell;
         
     }
     
@@ -446,7 +471,7 @@ enum {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HasPassLogin"];
     
     
-    [_keychain resetKeychainItem];
+   // [_keychain resetKeychainItem];
     
     NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
     [registro removeObjectForKey:@"nombreCandidato"];
@@ -469,10 +494,14 @@ enum {
     
     APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
     APMPhone* phone = appDelegate.phone;
-    [phone connect:@"+19143253307"];
+    [phone connect:@"9143253307"];
+    
     
     
     [self presentViewController:helpCall animated:NO completion:nil];
+    
+    helpCall.askTitle.hidden=YES;
+    helpCall.highTitleLabel.hidden=YES;
     
     APMFrontViewController *vc=[[APMFrontViewController alloc]init];
     
@@ -553,6 +582,9 @@ enum {
 {
     if (indexPath.row==MenuCandidate) {
         return 120.0f;
+    }if (indexPath.row==MenuDummy1 || indexPath.row==MenuDummy2 ){
+        
+        return 30.0f;
     }
     
     return 45.0f;

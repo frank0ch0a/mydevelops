@@ -22,12 +22,15 @@
 #import "APMPhone.h"
 #import "APMAppDelegate.h"
 #import "TestFlight.h"
+#import "APMFrontViewController.h"
 
 @interface APMDonorDetailController (){
     
     BOOL isLoading;
     NSOperationQueue *queue;
     NSString *phoneDial;
+    CGFloat ySupport;
+
     
     
 }
@@ -47,6 +50,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 
 @implementation APMDonorDetailController
 @synthesize isADonor;
+@synthesize donorType=_donorType;
 
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
@@ -66,6 +70,8 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    ySupport=self.supportAmount.frame.origin.y;
   
     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     /*
@@ -85,8 +91,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             [self loadData];
             
         }else{
-            
-    
+
             
             
             
@@ -96,7 +101,12 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"User out of network" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             
-            [alertView show];
+        [alertView show];
+            
+            [self loadData];
+            
+           
+
         }
         
         
@@ -115,6 +125,32 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     self.candTableView.rowHeight=50.f;
     
     isLoading=YES;
+    
+    switch (self.donorType) {
+            
+        case 0:
+            self.emailOutlet.enabled=NO;
+            self.callButton.enabled=NO;
+            
+            NSLog(@"Hay Busqueda");
+            
+            break;
+            
+        case 1:
+            self.emailOutlet.enabled=NO;
+            break;
+            
+        case 2:
+            self.emailOutlet.enabled=NO;
+            break;
+            
+        case 3:
+            self.emailOutlet.enabled=YES;
+            break;
+            
+        default:
+            break;
+    }
     
 }
 
@@ -193,22 +229,174 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     self.detailModel=[[APMDetailModel alloc]init];
     
-    self.detailModel.ask=[dictionary valueForKey:@"a"];
-    self.detailModel.name=[dictionary valueForKey:@"b"];
-    self.detailModel.lastName=[dictionary valueForKey:@"c"];
-    self.detailModel.city=[dictionary valueForKey:@"d"];
-    self.detailModel.state=[dictionary valueForKey:@"e"];
-    self.detailModel.phone=[dictionary valueForKey:@"f"];
-    self.detailModel.party=[dictionary valueForKey:@"g"];
+    if ([self.leadsModel.statusNet isEqualToString:@"in"] || self.leadsModel.statusNet ==nil) {
+        
+    
+    
+        if ([dictionary objectForKey:@"a"] != (id)[NSNull null] && [dictionary objectForKey:@"a"] != nil  ) {
+            
+            self.detailModel.ask=[dictionary valueForKey:@"a"];
+        }
+        
+        if ([dictionary objectForKey:@"b"] != (id)[NSNull null] && [dictionary objectForKey:@"b"] != nil   ) {
+            
+            self.detailModel.name=[dictionary valueForKey:@"b"];
+        }
+
+        if ([dictionary objectForKey:@"c"] != (id)[NSNull null] && [dictionary objectForKey:@"c"] != nil  ) {
+            
+            self.detailModel.lastName=[dictionary valueForKey:@"c"];
+        }
+        
+        if ([dictionary objectForKey:@"d"] != (id)[NSNull null] && [dictionary objectForKey:@"d"] != nil ) {
+            
+            self.detailModel.city=[dictionary valueForKey:@"d"];
+
+        }
+   
+        if ([dictionary objectForKey:@"e"] != (id)[NSNull null] && [dictionary objectForKey:@"e"] != nil  ) {
+            self.detailModel.state=[dictionary valueForKey:@"e"];
+
+            
+        }
+   
+        if ([dictionary objectForKey:@"f"] != (id)[NSNull null] && [dictionary objectForKey:@"f"] != nil  ) {
+           self.detailModel.phone=[dictionary valueForKey:@"f"];
+            
+            
+        }
+        
+   
+        
+    if ([dictionary objectForKey:@"g"] != (id)[NSNull null] && [dictionary objectForKey:@"g"] !=nil  ) {
+         self.detailModel.party=[dictionary valueForKey:@"g"];
+    }
+   
     self.detailModel.average=[dictionary valueForKey:@"h"];
     self.detailModel.best=[dictionary valueForKey:@"i"];
-    self.detailModel.highlights1=[dictionary valueForKey:@"j"];
-    self.detailModel.highlights2=[dictionary valueForKey:@"k"];
-    self.detailModel.supportName=[dictionary valueForKey:@"l"];
-    self.detailModel.supportAmount=[dictionary valueForKey:@"m"];
-    self.detailModel.cand_id=[dictionary valueForKey:@"n"];
-    self.detailModel.donor_id=[dictionary valueForKey:@"o"];
+        
+    if ([dictionary objectForKey:@"j"] != (id)[NSNull null] && [dictionary objectForKey:@"j"] !=nil ) {
+         self.detailModel.highlights1=[dictionary valueForKey:@"j"];
+    }
+    if ([dictionary objectForKey:@"k"] != (id)[NSNull null] && [dictionary objectForKey:@"k"] !=nil  ) {
+        self.detailModel.highlights2=[dictionary valueForKey:@"k"];
+    }
     
+    if ([dictionary objectForKey:@"l"] != (id)[NSNull null] && [dictionary objectForKey:@"l"] !=nil  ) {
+        self.detailModel.supportName=[dictionary valueForKey:@"l"];
+    }
+    
+    if ([dictionary objectForKey:@"m"] != (id)[NSNull null] && [dictionary objectForKey:@"m"] !=nil  ) {
+         self.detailModel.supportAmount=[dictionary valueForKey:@"m"];
+    }
+    
+        if ([dictionary objectForKey:@"n"] != (id)[NSNull null] && [dictionary objectForKey:@"n"] !=nil  ) {
+             self.detailModel.cand_id=[dictionary valueForKey:@"n"];
+        }
+        
+        
+        if ([dictionary objectForKey:@"o"] != (id)[NSNull null] && [dictionary objectForKey:@"o"] !=nil  ) {
+            self.detailModel.donor_id=[dictionary valueForKey:@"o"];
+        }
+
+    
+    
+    if ([dictionary objectForKey:@"p"] != (id)[NSNull null] && [dictionary objectForKey:@"p"] !=nil  ) {
+        self.detailModel.call=[dictionary valueForKey:@"p"];
+    }
+
+    
+    if ([dictionary objectForKey:@"q"] != (id)[NSNull null] && [dictionary objectForKey:@"q"] !=nil  ) {
+        self.detailModel.inOut=[dictionary valueForKey:@"q"];
+    }
+        
+       
+    
+    
+    }else{
+        
+        if ([dictionary objectForKey:@"a"] != (id)[NSNull null] && [dictionary objectForKey:@"a"] != nil  ) {
+            
+            self.detailModel.ask=[dictionary valueForKey:@"a"];
+        }
+        
+        if ([dictionary objectForKey:@"b"] != (id)[NSNull null] && [dictionary objectForKey:@"b"] != nil   ) {
+            
+            self.detailModel.name=[dictionary valueForKey:@"b"];
+        }
+        
+        if ([dictionary objectForKey:@"c"] != (id)[NSNull null] && [dictionary objectForKey:@"c"] != nil  ) {
+            
+            self.detailModel.lastName=[dictionary valueForKey:@"c"];
+        }
+        
+        if ([dictionary objectForKey:@"d"] != (id)[NSNull null] && [dictionary objectForKey:@"d"] != nil ) {
+            
+            self.detailModel.city=[dictionary valueForKey:@"d"];
+            
+        }
+        
+        if ([dictionary objectForKey:@"e"] != (id)[NSNull null] && [dictionary objectForKey:@"e"] != nil  ) {
+            self.detailModel.state=[dictionary valueForKey:@"e"];
+            
+            
+        }
+        
+        if ([dictionary objectForKey:@"f"] != (id)[NSNull null] && [dictionary objectForKey:@"f"] != nil  ) {
+            self.detailModel.phone=[dictionary valueForKey:@"f"];
+            
+            
+        }
+        
+        
+        
+        if ([dictionary objectForKey:@"g"] != (id)[NSNull null] && [dictionary objectForKey:@"g"] !=nil  ) {
+            self.detailModel.party=[dictionary valueForKey:@"g"];
+        }
+        
+        self.detailModel.average=[dictionary valueForKey:@"h"];
+        self.detailModel.best=[dictionary valueForKey:@"i"];
+        
+        if ([dictionary objectForKey:@"j"] != (id)[NSNull null] && [dictionary objectForKey:@"j"] !=nil ) {
+            self.detailModel.highlights1=[dictionary valueForKey:@"j"];
+        }
+        if ([dictionary objectForKey:@"k"] != (id)[NSNull null] && [dictionary objectForKey:@"k"] !=nil  ) {
+            self.detailModel.highlights2=[dictionary valueForKey:@"k"];
+        }
+        
+        if ([dictionary objectForKey:@"l"] != (id)[NSNull null] && [dictionary objectForKey:@"l"] !=nil  ) {
+            self.detailModel.supportName=[dictionary valueForKey:@"l"];
+        }
+        
+        if ([dictionary objectForKey:@"m"] != (id)[NSNull null] && [dictionary objectForKey:@"m"] !=nil  ) {
+            self.detailModel.supportAmount=[dictionary valueForKey:@"m"];
+        }
+
+        
+        if ([dictionary objectForKey:@"n"] != (id)[NSNull null] && [dictionary objectForKey:@"n"] !=nil ) {
+            
+            self.detailModel.cand_id=[dictionary valueForKey:@"n"];
+        }
+        
+        if ([dictionary objectForKey:@"o"] != (id)[NSNull null] && [dictionary objectForKey:@"o"] !=nil ) {
+            
+            self.detailModel.donor_id=[dictionary valueForKey:@"o"];
+        }
+       
+        
+        if ([dictionary objectForKey:@"p"] != (id)[NSNull null] && [dictionary objectForKey:@"p"] !=nil  ) {
+            self.detailModel.call=[dictionary valueForKey:@"p"];
+        }
+        
+        
+        if ([dictionary objectForKey:@"q"] != (id)[NSNull null] && [dictionary objectForKey:@"q"] !=nil  ) {
+            self.detailModel.inOut=[dictionary valueForKey:@"q"];
+        }
+
+        
+        
+        
+    }
     
     return self.detailModel;
     
@@ -245,6 +433,8 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             if (self.detailModel.city !=(id)[NSNull null] && self.detailModel.state !=(id)[NSNull null]) {
                 self.cityAndStateLabel.text=[NSString stringWithFormat:@"%@, %@",self.detailModel.city,self.detailModel.state];
             }
+            
+            NSLog(@" party %@",self.detailModel.party);
             self.partyLabel.text=self.detailModel.party;
             
             self.averageLabel.text=self.detailModel.average;
@@ -252,13 +442,26 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             self.highlight1.text=self.detailModel.highlights1;
             self.highlight2.text=self.detailModel.highlights2;
             
-            if (self.detailModel.supportAmount !=(id)[NSNull null]) {
-                self.supportAmount.text=[NSString stringWithFormat:@"Supported with %@ $",self.detailModel.supportAmount];
+            if (self.donorType==0) {
+                
+                self.btn_plus.hidden=NO;
+                self.supportAmount.text=@"Add Lead";
+                self.supportAmount.frame=CGRectMake(self.supportAmount.frame.origin.x, 48, self.supportAmount.frame.size.width, self.supportAmount.frame.size.height);
+                self.supportAmount.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0];
+                self.nameSupport.hidden=YES;
+                
+            }else{
+                
+                if (self.detailModel.supportAmount ==(id)[NSNull null]) {
+                    self.supportAmount.text=@"Supported with N/A $";
+                }else{
+                    
+                      self.supportAmount.text=[NSString stringWithFormat:@"Supported with %@ $",self.detailModel.supportAmount];
+                    
+                }
+                
             }
-            if (self.detailModel.supportName !=(id)[NSNull null]) {
-                self.nameSupport.text=self.detailModel.supportName;
-            }
-
+           
             
             [self.detailsResults addObject:self.detailModel];
         }
@@ -292,10 +495,18 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 
 -(void)loadData{
     
+    NSDictionary *dict;
     
-    NSDictionary *dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id};
+    if (self.donorType == 3) {
+         dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id,@"call":self.leadsModel.pledgeID,@"inout":self.leadsModel.statusNet};
+        
+    }else{
+        
+        dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id};
+        
+    }
     
-    // NSLog(@"Parameters %@",dict);
+    NSLog(@"Donor Parameters %@",dict);
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
     
@@ -310,7 +521,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         
         if (JSON !=nil) {
             
-            NSLog(@"Resulta JSON Donor Details %@",JSON);
+           NSLog(@"Resulta JSON Donor Details %@",JSON);
             
           [self parseData:JSON];
             isLoading=NO;
@@ -354,7 +565,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     [super viewWillAppear:animated];
     
-    
+   self.btn_plus.hidden=YES;
     
     [self setTitle:self.title];
     
@@ -441,9 +652,10 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
      
      [headerView addSubview:headerImage];*/
     
-    UILabel *menuText=[[UILabel alloc]initWithFrame:CGRectMake(15, 8, 240, 30)];
+    UILabel *menuText=[[UILabel alloc]initWithFrame:CGRectMake(15, 6, 240, 30)];
     menuText.backgroundColor=[UIColor clearColor];
     menuText.text=@"Last Donations";
+    menuText.font=[UIFont fontWithName:@"Helvetica75" size:17.0];
     
     [headerView addSubview:menuText];
     
@@ -521,6 +733,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     callVC.high2Label.text=self.detailModel.highlights2;
     
     
+    
     /*
     APMCallOutComeViewController *callOut=[[APMCallOutComeViewController alloc]init];
     
@@ -541,6 +754,67 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 
 - (IBAction)emailButton:(id)sender {
     
+    [queue cancelAllOperations];
+    
+    [SVProgressHUD show];
+    
+    NSDictionary *dict=@{@"email":self.email ,@"pass":self.pass,@"call":self.detailModel.call,@"inout":self.detailModel.inOut};
+    
+    NSLog(@"Parameters %@",dict);
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+    
+    [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+    [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                            path:@"/mobile/sendreminder.php"
+                                                      parameters:dict
+                                    ];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        if (JSON !=nil) {
+            
+            [SVProgressHUD dismiss];
+            NSLog(@"Resulta JSON sendmailreminder %@",JSON);
+            
+            if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
+                
+                
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"email sent successfully" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                
+                [alertView show];
+                
+            }
+           
+            
+            
+        }else{
+            
+            isLoading=NO;
+            
+            
+            
+            
+            
+        }
+        
+        
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error %@", [error description]);
+        
+    }];
+    
+    operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+    
+    
+    
+    
+    [queue addOperation:operation];
+    
+    
+    /*
     if ([MFMailComposeViewController canSendMail]) {
         
          NSUserDefaults *candName= [NSUserDefaults standardUserDefaults];
@@ -575,10 +849,11 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         }];
         
         
-    }
+    }*/
     
 
 }
+/*
 -(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     
@@ -589,7 +864,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         nil;
     }];
     
-}
+}*/
 
 #pragma mark CallHelpDelegate
 
@@ -599,6 +874,15 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     APMCallOutComeViewController *callOut=[[APMCallOutComeViewController alloc]init];
     
+   
+    
+    //Override backBarButton title
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                   style:UIBarButtonItemStyleBordered target:nil action:nil];
+    [[self navigationItem] setBackBarButtonItem:backButton];
+
+    
     callOut.detailModel=self.detailModel;
     
     [self.navigationController pushViewController:callOut animated:YES];
@@ -607,4 +891,60 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 }
 
 
+- (IBAction)addLeadAction:(id)sender {
+    
+    NSLog(@"Tocaste Boton Lead");
+    
+    
+    NSDictionary *dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id};
+    
+    NSLog(@"Parameters %@",dict);
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+    
+    [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+    [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                            path:@"/mobile/addtolist.php"
+                                                      parameters:dict
+                                    ];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        if ([[JSON objectForKey:@"a"] isEqualToString:@"Ok"]) {
+            
+        
+            APMFrontViewController *frontVC=[[APMFrontViewController alloc]init];
+            
+            [self.navigationController pushViewController:frontVC animated:YES];
+    
+            NSLog(@"Lead Added");
+            
+        }else{
+            
+            
+            
+            
+            
+            
+            
+        }
+        
+        
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error %@", [error description]);
+        
+    }];
+    
+    operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+    
+    
+    
+    
+    [queue addOperation:operation];
+    
+    
+
+}
 @end

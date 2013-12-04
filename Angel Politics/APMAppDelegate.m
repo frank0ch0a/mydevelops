@@ -59,23 +59,28 @@
 
 -(void)customizeAppearance
 {
-    UIImage *barImage=[UIImage imageNamed:@"barPattern"];
+    
+    UIImage *barImage=[UIImage imageNamed:@"bg_navbar"];
     
    // [[UISearchBar appearance]setBackgroundImage:barImage];
     
     [[UINavigationBar appearance]setBackgroundImage:barImage forBarMetrics:UIBarMetricsDefault];
+    /*
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0]];*/
     
     
     [[UIBarButtonItem appearance]setBackButtonBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
-    [[UIBarButtonItem appearance]setBackButtonBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+  
     
     [[UISearchBar appearance]setBackgroundImage:barImage];
      
-    
+    /*
     [[UIButton appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundImage:barImage forState:UIControlStateNormal];
     
-    [[UIBarButtonItem appearance]setBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance]setBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];*/
+    
+    [[UIBarButtonItem appearance]setTintColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0]];
     
     [[UIToolbar appearance] setBackgroundImage:barImage forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
   

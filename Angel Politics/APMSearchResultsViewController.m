@@ -12,6 +12,7 @@
 #import "AFJSONRequestOperation.h"
 #import "KeychainItemWrapper.h"
 #import "APMFrontViewController.h"
+#import "TestFlight.h"
 
 @interface APMSearchResultsViewController (){
     
@@ -183,7 +184,7 @@
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
     
-    NSLog(@"tap accesory button");
+    [TestFlight passCheckpoint:@"add to list Button"];
     
      APMLeadsModel *leadsModel=[self.searchResults objectAtIndex:indexPath.row];
     
@@ -214,13 +215,11 @@
         
         if ([[JSON objectForKey:@"a"] isEqualToString:@"Ok"]) {
             
+            
             [self dismissViewControllerAnimated:YES completion:^{
                 
-                APMFrontViewController *frontVC=[[APMFrontViewController alloc]init];
-                
                
-                [frontVC viewDidLoad];
-                
+               
                 
             }];
          

@@ -39,6 +39,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="arrowView" destination="24A-1w-UKR" id="Bt4-Im-kxk"/>
                 <outlet property="menuImageView" destination="VKJ-O9-yiY" id="Ie6-Ry-0tV"/>
                 <outlet property="menuLabel" destination="VEe-fX-v1a" id="fOm-3k-DQi"/>
             </connections>

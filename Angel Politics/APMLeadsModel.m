@@ -19,4 +19,5 @@
 @synthesize donor_id;
 @synthesize statusNet;
 @synthesize party;
+@synthesize pledgeID;
 @end

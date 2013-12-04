@@ -11,6 +11,7 @@
                 <outlet property="askLabel" destination="BwV-wg-5D7" id="gAt-AV-Mno"/>
                 <outlet property="averageLabel" destination="6co-0E-PLt" id="ELO-2v-pEY"/>
                 <outlet property="bestLabel" destination="XrD-iU-TDw" id="CRg-gH-0hW"/>
+                <outlet property="callOutcomeLabel" destination="vXb-cb-e8U" id="ZYj-t3-VkL"/>
                 <outlet property="callStatusTextField" destination="YVV-77-dC8" id="CS6-RE-kJ5"/>
                 <outlet property="cityAndStateLabel" destination="qBg-Wi-nVd" id="kLM-dz-s3M"/>
                 <outlet property="mainCallOutUIView" destination="7Pf-YW-5im" id="Cgn-jw-VNT"/>

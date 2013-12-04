@@ -20,5 +20,6 @@
 @property(nonatomic,copy)NSString *donor_id;
 @property(nonatomic,copy)NSString *statusNet;
 @property(nonatomic,copy)NSString *party;
+@property(nonatomic,copy)NSString *pledgeID;
 
 @end

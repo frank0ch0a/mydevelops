@@ -7,9 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="APMLoginViewController">
             <connections>
+                <outlet property="emailLine" destination="ZwP-5C-dPt" id="Fxm-Uf-80D"/>
                 <outlet property="emailTextField" destination="eld-Od-Lyc" id="xGm-Ul-2e5"/>
                 <outlet property="loginButtonOutlet" destination="YR1-NK-Tqf" id="6Qq-UL-BrZ"/>
                 <outlet property="loginUIView" destination="W3f-nX-iVS" id="3YS-br-ELa"/>
+                <outlet property="passLine" destination="Dhd-Bz-d3I" id="Moh-Tm-ILf"/>
                 <outlet property="passwordTextField" destination="scf-mr-FAL" id="r7h-Lp-pkD"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -34,14 +36,14 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" id="eld-Od-Lyc">
                             <rect key="frame" x="28" y="206" width="263" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="textColor" red="0.096090826219999995" green="0.42051977039999999" blue="0.063398814659999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" id="scf-mr-FAL">
                             <rect key="frame" x="28" y="270" width="263" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="textColor" red="0.096090826219999995" green="0.42051977039999999" blue="0.063398814659999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
