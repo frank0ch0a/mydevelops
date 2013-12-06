@@ -95,6 +95,8 @@
 	[self updateAudioRoute];
 }
 
+
+
 -(void)updateAudioRoute
 {
 	if (_speakerEnabled)
@@ -117,6 +119,20 @@
 								 &audioRouteOverride
 								 );
 	}
+}
+
+
+#pragma mark -
+#pragma mark Mute
+
+-(void)setMuted:(BOOL)muted
+{
+    _connection.muted = muted;
+}
+
+-(BOOL)muted
+{
+	return _connection.muted;
 }
 
 

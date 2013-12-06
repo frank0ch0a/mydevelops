@@ -13,6 +13,7 @@
 @interface APMCallHelpViewController (){
     
     BOOL isSpeaker;
+    BOOL isMuted;
     
 }
 @property (weak, nonatomic) IBOutlet UIButton *hangupButton;
@@ -103,6 +104,32 @@
         NSLog(@"Speaker OFF");
     }
     
+    
+}
+
+- (IBAction)mutedPress:(id)sender {
+    
+    if (!isMuted) {
+        isMuted=YES;
+        [self.muteButton setBackgroundImage:[UIImage imageNamed:@"muted_on"] forState:UIControlStateNormal];
+        APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
+        APMPhone* phone = appDelegate.phone;
+        [phone setMuted:isMuted];
+        
+        NSLog(@"Muted ON");
+    }
+    
+    else if (isMuted) {
+        
+        isMuted=NO;
+        [self.muteButton setBackgroundImage:[UIImage imageNamed:@"muted_off"] forState:UIControlStateNormal];
+        APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
+        APMPhone* phone = appDelegate.phone;
+        [phone setMuted:isMuted];
+        
+        NSLog(@"Muted OFF");
+    }
+
     
 }
 @end

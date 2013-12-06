@@ -33,4 +33,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *high1Label;
 
 - (IBAction)speakerPress:(id)sender;
+
+- (IBAction)mutedPress:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *muteButton;
+
+
+
 @end

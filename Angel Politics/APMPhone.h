@@ -19,7 +19,7 @@
     BOOL _speakerEnabled;
     
 }
-
+@property (nonatomic)BOOL muted;
 -(void)connect:(NSString *)phoneNumber;
 -(void)disconnect;
 -(void)updateAudioRoute;
