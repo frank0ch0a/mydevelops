@@ -16,6 +16,7 @@
 
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "KeychainItemWrapper.h"
 
 @interface APMLoginViewController : UIViewController<UITextFieldDelegate>
@@ -33,6 +34,9 @@
 @property (weak, nonatomic) IBOutlet UIView *emailLine;
 
 @property (weak, nonatomic) IBOutlet UIView *passLine;
+
+- (IBAction)btnFacebookPress:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnFacebook;
 
 
 @end

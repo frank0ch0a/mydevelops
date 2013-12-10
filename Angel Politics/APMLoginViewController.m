@@ -11,6 +11,7 @@
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
 #import "SVProgressHUD.h"
+#import "APMAppDelegate.h"
 
 @interface APMLoginViewController (){
     CGFloat loginy;
@@ -42,6 +43,11 @@
     
     [self.loginButtonOutlet setBackgroundImage:imageButton forState:UIControlStateNormal];
     self.loginButtonOutlet.titleLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15.0];
+    
+    UIImage *imageButton2=[[UIImage imageNamed:@"btnFacebook"]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
+    
+    [self.btnFacebook setBackgroundImage:imageButton2 forState:UIControlStateNormal];
+    self.btnFacebook.titleLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15.0];
     
     loginy=self.loginUIView.frame.origin.y;
     
@@ -276,4 +282,20 @@
 }
 
 
+- (IBAction)btnFacebookPress:(id)sender {
+    
+    APMAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    // The person using the app has initiated a login, so call the openSession method
+    // and show the login UX if necessary.
+    if (FBSession.activeSession.isOpen) {
+        [appDelegate closeSession];
+    } else {
+        // The person has initiated a login, so call the openSession method
+        // and show the login UX if necessary.
+        [appDelegate openSessionWithAllowLoginUI:YES];
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
 @end

@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
+
+extern NSString *const FBSessionStateChangedNotification;
 
 @class APMFrontViewController;
 @class APMPhone;
@@ -17,6 +20,9 @@
 @property(strong,nonatomic) APMFrontViewController *viewController;
 @property (nonatomic, retain) NSMutableDictionary *keychainItemData;
 @property(nonatomic,strong)APMPhone *phone;
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+- (void) closeSession;
+
 
 
 @end

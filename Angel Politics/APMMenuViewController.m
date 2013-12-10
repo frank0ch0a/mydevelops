@@ -105,7 +105,7 @@ enum {
     
     
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"]&& [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil ) {
+    if (([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"]&& [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil &&[self.keychain objectForKey:(__bridge id)kSecValueData]!=nil) ) {
         
         [self dismissViewControllerAnimated:NO completion:nil];
         
@@ -472,6 +472,8 @@ enum {
     
     
    // [_keychain resetKeychainItem];
+    
+    [FBSession.activeSession closeAndClearTokenInformation];
     
     NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
     [registro removeObjectForKey:@"nombreCandidato"];

@@ -42,6 +42,7 @@
 @property(nonatomic,strong)NSString *pass;
 @property(nonatomic,strong)NSMutableArray *detailsResults;
 @property(nonatomic,strong)NSMutableArray *contributionsResults;
+@property(nonatomic,strong)NSString *donorinOut;
 
 @end
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
@@ -87,23 +88,36 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         
         if ([self.leadsModel.statusNet isEqualToString:@"in"] || isADonor || self.leadsModel.statusNet ==nil) {
             
+            self.donorinOut=@"/mobile/donordetails.php";
+            
+            NSLog(@"donortype %d",self.donorType);
+            
             NSLog(@"Es IN!");
             [self loadData];
             
         }else{
-
             
             
+            if (self.donorType==1) {
+                  self.donorinOut=@"/mobile/donoroutdetails_leads.php";
+            }else if (self.donorType==3){
+                
+                self.donorinOut=@"/mobile/donoroutdetails_pledge.php";
+            }
             
+            [self loadData];
              NSLog(@"Es OUT!");
             
             
             
+            
+            /*
+            
             UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"User out of network" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             
-        [alertView show];
+        [alertView show];*/
             
-            [self loadData];
+            
             
            
 
@@ -434,6 +448,11 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
                 self.cityAndStateLabel.text=[NSString stringWithFormat:@"%@, %@",self.detailModel.city,self.detailModel.state];
             }
             
+            if ([self.leadsModel.statusNet isEqualToString:@"out"] && self.donorType==3) {
+                self.cityAndStateLabel.hidden=YES;
+                self.partyLabel.hidden=YES;
+            }
+            
             NSLog(@" party %@",self.detailModel.party);
             self.partyLabel.text=self.detailModel.party;
             
@@ -452,12 +471,13 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
                 
             }else{
                 
-                if (self.detailModel.supportAmount ==(id)[NSNull null]) {
+                if (self.detailModel.supportAmount ==nil) {
                     self.supportAmount.text=@"Supported with N/A $";
+                    
+                   
                 }else{
-                    
-                      self.supportAmount.text=[NSString stringWithFormat:@"Supported with %@ $",self.detailModel.supportAmount];
-                    
+                                         self.supportAmount.text=[NSString stringWithFormat:@"Supported with %@ $",self.detailModel.supportAmount];
+                     NSLog(@"Suppor text %@",self.supportAmount.text);
                 }
                 
             }
@@ -497,23 +517,47 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     NSDictionary *dict;
     
+    if ([self.leadsModel.statusNet isEqualToString:@"in"] || self.leadsModel.statusNet==nil ) {
+        
+    
+    
     if (self.donorType == 3) {
+        
          dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id,@"call":self.leadsModel.pledgeID,@"inout":self.leadsModel.statusNet};
         
     }else{
         
         dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id};
+         NSLog(@" dict matches %@",dict);
+    }
+        
+    }else{
+        
+        if (self.donorType==1 ) {
+            dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id,@"call":@"320",@"inout":self.leadsModel.statusNet};
+            
+           
+            
+
+        }else if (self.donorType==3){
+        
+        
+            dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id,@"call":self.leadsModel.pledgeID,@"inout":self.leadsModel.statusNet};
+            
+            NSLog(@" dict details %@",dict);
+        
         
     }
+}
     
-    NSLog(@"Donor Parameters %@",dict);
+    //NSLog(@"Donor Parameters %@",dict);
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
     
     [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
     [httpClient setParameterEncoding:AFFormURLParameterEncoding];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
-                                                            path:@"/mobile/donordetails.php"
+                                                            path:self.donorinOut
                                                       parameters:dict
                                     ];
     
@@ -535,7 +579,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             isLoading=NO;
             
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Usuario no registrado" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Error loading data" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             
             [alertView show];
             

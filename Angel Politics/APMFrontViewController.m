@@ -401,7 +401,7 @@ static NSString *const FrontCell=@"FrontCell";
         if (JSON !=nil) {
             
             [SVProgressHUD dismiss];
-      //  NSLog(@"Resulta JSON MenuVC %@",JSON);
+      NSLog(@"Resulta JSON frontVC %@",JSON);
             
            [self parseArray:JSON];
             isLoading=NO;

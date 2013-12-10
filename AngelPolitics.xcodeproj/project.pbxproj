@@ -23,6 +23,7 @@
 		012A6851182A0E4500CA05CB /* APMContributionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 012A6850182A0E4500CA05CB /* APMContributionsModel.m */; };
 		0133584F1850E49E00AD3C0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0133584E1850E49E00AD3C0C /* FacebookSDK.framework */; };
 		013358511850E5A700AD3C0C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013358501850E5A700AD3C0C /* Social.framework */; };
+		0133585318522D1400AD3C0C /* btnFacebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 0133585218522D1400AD3C0C /* btnFacebook.png */; };
 		014690F517F734B5002C0318 /* APMDonorDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690F317F734B5002C0318 /* APMDonorDetailController.m */; };
 		014690F617F734B5002C0318 /* APMDonorDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F417F734B5002C0318 /* APMDonorDetailController.xib */; };
 		014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F817F73664002C0318 /* APMCandidateCell.xib */; };
@@ -185,6 +186,15 @@
 		012A6850182A0E4500CA05CB /* APMContributionsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMContributionsModel.m; sourceTree = "<group>"; };
 		0133584E1850E49E00AD3C0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		013358501850E5A700AD3C0C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		0133585218522D1400AD3C0C /* btnFacebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnFacebook.png; path = ../../../../../Pictures/ap/btnFacebook.png; sourceTree = "<group>"; };
+		013358581855F07900AD3C0C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		013358591855F09700AD3C0C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		0133585A1855F0C500AD3C0C /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60.png"; sourceTree = "<group>"; };
+		0133585B1855F0EE00AD3C0C /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
+		0133585C1855F10A00AD3C0C /* Icon-Spotlight-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Spotlight-40.png"; sourceTree = "<group>"; };
+		0133585D1855F13900AD3C0C /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		0133585E1855F14E00AD3C0C /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		0133585F1855F16400AD3C0C /* Icon-Spotlight-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Spotlight-40@2x.png"; sourceTree = "<group>"; };
 		014690F217F734B5002C0318 /* APMDonorDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APMDonorDetailController.h; path = ../APMDonorDetailController.h; sourceTree = "<group>"; };
 		014690F317F734B5002C0318 /* APMDonorDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMDonorDetailController.m; path = ../APMDonorDetailController.m; sourceTree = "<group>"; };
 		014690F417F734B5002C0318 /* APMDonorDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APMDonorDetailController.xib; path = ../APMDonorDetailController.xib; sourceTree = "<group>"; };
@@ -398,6 +408,14 @@
 		011D238517EF31E4003A4204 = {
 			isa = PBXGroup;
 			children = (
+				0133585F1855F16400AD3C0C /* Icon-Spotlight-40@2x.png */,
+				0133585E1855F14E00AD3C0C /* Icon-Small@2x.png */,
+				0133585D1855F13900AD3C0C /* Icon-Small.png */,
+				0133585C1855F10A00AD3C0C /* Icon-Spotlight-40.png */,
+				0133585B1855F0EE00AD3C0C /* Icon-60@2x.png */,
+				0133585A1855F0C500AD3C0C /* Icon-60.png */,
+				013358591855F09700AD3C0C /* Icon@2x.png */,
+				013358581855F07900AD3C0C /* Icon.png */,
 				01E360E9182851730091B84D /* Reachability.h */,
 				01E360EA182851730091B84D /* Reachability.m */,
 				01508B331821F78F0043C2A9 /* ModalPickerView */,
@@ -488,6 +506,7 @@
 				01B56183182B614A008E2077 /* checkBox.png */,
 				01B56184182B614A008E2077 /* checkBox@2x.png */,
 				01B56185182B614A008E2077 /* checkBoxMarked.png */,
+				0133585218522D1400AD3C0C /* btnFacebook.png */,
 				01B56186182B614A008E2077 /* checkBoxMarked@2x.png */,
 				015AD8A118479F65008A739F /* speaker_act@2x.png */,
 				015AD8A218479F65008A739F /* speaker@2x.png */,
@@ -785,7 +804,7 @@
 				ORGANIZATIONNAME = angelpolitics;
 				TargetAttributes = {
 					011D238D17EF31E4003A4204 = {
-						DevelopmentTeam = H47CS6J324;
+						DevelopmentTeam = 8S4M2JZG2M;
 					};
 					011D23A817EF31E4003A4204 = {
 						TestTargetID = 011D238D17EF31E4003A4204;
@@ -845,6 +864,7 @@
 				01D4F72518063C650054613C /* HelveticaNeueBoldItalic.ttf in Resources */,
 				01732A8F181DDE8E0044EF8E /* dtmf_star.wav in Resources */,
 				018103A5182CB72700417680 /* img_arrow@2x.png in Resources */,
+				0133585318522D1400AD3C0C /* btnFacebook.png in Resources */,
 				01B56189182B614A008E2077 /* checkBoxMarked.png in Resources */,
 				014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */,
 				018103AD182CB97A00417680 /* ic_search.png in Resources */,
@@ -1074,9 +1094,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/Frank/Documents/IOS\\ develop/My\\ Develops/Angel\\ Politics",
@@ -1101,7 +1121,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = AngelPolitics;
-				PROVISIONING_PROFILE = "3314F102-A921-4080-86AF-DCF2FB59D725";
+				PROVISIONING_PROFILE = "FC221E51-249D-454D-AFF8-EBB371025F09";
 				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1112,10 +1132,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Armida Ortiz (ELFR3NW8L3)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/Frank/Documents/IOS\\ develop/My\\ Develops/Angel\\ Politics",
@@ -1139,7 +1159,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = AngelPolitics;
-				PROVISIONING_PROFILE = "3314F102-A921-4080-86AF-DCF2FB59D725";
+				PROVISIONING_PROFILE = "FC221E51-249D-454D-AFF8-EBB371025F09";
 				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
