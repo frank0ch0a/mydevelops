@@ -451,6 +451,10 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             if ([self.leadsModel.statusNet isEqualToString:@"out"] && self.donorType==3) {
                 self.cityAndStateLabel.hidden=YES;
                 self.partyLabel.hidden=YES;
+            }else if ([self.leadsModel.statusNet isEqualToString:@"out"] && self.donorType==1){
+                
+                self.partyLabel.hidden=YES;
+                
             }
             
             NSLog(@" party %@",self.detailModel.party);

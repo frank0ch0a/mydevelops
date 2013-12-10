@@ -141,7 +141,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="cTN-cq-7To">
-                    <rect key="frame" x="214" y="221" width="104" height="4"/>
+                    <rect key="frame" x="214" y="221" width="105" height="4"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
