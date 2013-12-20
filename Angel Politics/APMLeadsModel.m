@@ -20,4 +20,6 @@
 @synthesize statusNet;
 @synthesize party;
 @synthesize pledgeID;
+@synthesize section;
+
 @end

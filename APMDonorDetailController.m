@@ -103,6 +103,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             }else if (self.donorType==3){
                 
                 self.donorinOut=@"/mobile/donoroutdetails_pledge.php";
+                self.callButton.enabled=NO;
             }
             
             [self loadData];
@@ -327,7 +328,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
        
     
     
-    }else{
+    }else if ([self.leadsModel.statusNet isEqualToString:@"out"] && self.donorType==1 ){
         
         if ([dictionary objectForKey:@"a"] != (id)[NSNull null] && [dictionary objectForKey:@"a"] != nil  ) {
             
@@ -347,6 +348,8 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         if ([dictionary objectForKey:@"d"] != (id)[NSNull null] && [dictionary objectForKey:@"d"] != nil ) {
             
             self.detailModel.city=[dictionary valueForKey:@"d"];
+            
+            
             
         }
         
@@ -407,6 +410,57 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             self.detailModel.inOut=[dictionary valueForKey:@"q"];
         }
 
+        
+        
+        
+    }else if ([self.leadsModel.statusNet isEqualToString:@"out"] && self.donorType==3){
+        
+        if ([dictionary objectForKey:@"a"] != (id)[NSNull null] && [dictionary objectForKey:@"a"] != nil  ) {
+            
+            self.detailModel.ask=[dictionary valueForKey:@"a"];
+        }
+        
+        if ([dictionary objectForKey:@"b"] != (id)[NSNull null] && [dictionary objectForKey:@"b"] != nil   ) {
+            
+            self.detailModel.name=[dictionary valueForKey:@"b"];
+        }
+        
+        if ([dictionary objectForKey:@"c"] != (id)[NSNull null] && [dictionary objectForKey:@"c"] != nil  ) {
+            
+            self.detailModel.lastName=[dictionary valueForKey:@"c"];
+        }
+        
+        if ([dictionary objectForKey:@"d"] != (id)[NSNull null] && [dictionary objectForKey:@"d"] != nil ) {
+            
+            self.detailModel.email=[dictionary valueForKey:@"d"];
+            
+            
+            
+        }
+        
+        if ([dictionary objectForKey:@"e"] != (id)[NSNull null] && [dictionary objectForKey:@"e"] != nil  ) {
+            self.detailModel.details=[dictionary valueForKey:@"e"];
+            
+            
+        }
+        
+        if ([dictionary objectForKey:@"f"] != (id)[NSNull null] && [dictionary objectForKey:@"f"] != nil  ) {
+            self.detailModel.cand_id=[dictionary valueForKey:@"f"];
+            
+            
+        }
+        
+        
+        
+        if ([dictionary objectForKey:@"g"] != (id)[NSNull null] && [dictionary objectForKey:@"g"] !=nil  ) {
+            self.detailModel.donor_id=[dictionary valueForKey:@"g"];
+        }
+        
+        self.detailModel.call=[dictionary valueForKey:@"h"];
+        self.detailModel.inOut=[dictionary valueForKey:@"i"];
+
+        
+        
         
         
         
@@ -804,9 +858,21 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     [queue cancelAllOperations];
     
+    NSString *email;
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check"] ){
+        
+        
+        
+        NSUserDefaults *sendEmail=[NSUserDefaults standardUserDefaults];
+        
+        email=[sendEmail objectForKey:@"email"];
+        
+    }
+    
     [SVProgressHUD show];
     
-    NSDictionary *dict=@{@"email":self.email ,@"pass":self.pass,@"call":self.detailModel.call,@"inout":self.detailModel.inOut};
+    NSDictionary *dict=@{@"email":self.email ,@"pass":self.pass,@"call":self.detailModel.call,@"inout":self.detailModel.inOut,@"demomail":email};
     
     NSLog(@"Parameters %@",dict);
     

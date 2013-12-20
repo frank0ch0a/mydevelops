@@ -21,5 +21,7 @@
 @property(nonatomic,copy)NSString *statusNet;
 @property(nonatomic,copy)NSString *party;
 @property(nonatomic,copy)NSString *pledgeID;
+@property(nonatomic)NSInteger section;
+
 
 @end

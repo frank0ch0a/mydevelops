@@ -109,26 +109,39 @@ NSString *const FBSessionStateChangedNotification =
     [self customizeAppearance];
     
     
+    APMMenuViewController *menuViewController=[[APMMenuViewController alloc]init];
+    
+    
+/*
 #ifdef __IPHONE_7_0
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
-    if ([self.viewController respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+    if ([self.viewController respondsToSelector:@selector(setEdgesForExtendedLayout:)])  {
         self.viewController.edgesForExtendedLayout &= ~UIRectEdgeTop;
     }
 #endif
 #endif
-#endif
+#endif*/
       
     self.viewController=[[APMFrontViewController alloc]initWithNibName:@"APMFrontViewController" bundle:nil];
     
     UINavigationController *navc=[[UINavigationController alloc]initWithRootViewController:self.viewController];
     
     
-    
-    APMMenuViewController *menuViewController=[[APMMenuViewController alloc]init];
+  
     
     
     NVSlideMenuController *slideMenuController=[[NVSlideMenuController alloc]initWithMenuViewController:menuViewController andContentViewController:navc];
+    
+#ifdef __IPHONE_7_0
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
+    if ([slideMenuController respondsToSelector:@selector(setEdgesForExtendedLayout:)])  {
+        slideMenuController.edgesForExtendedLayout &= ~UIRectEdgeTop;
+    }
+#endif
+#endif
+#endif
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

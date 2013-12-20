@@ -14,8 +14,9 @@
 @end
 
 #import <UIKit/UIKit.h>
+#import <AddressBook/AddressBook.h>
 
-@interface APMAddLeadsViewController : UIViewController<UITextFieldDelegate>
+@interface APMAddLeadsViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 - (IBAction)closeAddLeadVC:(id)sender;
 
 @property(nonatomic,weak)id<AddLeadsDelegate>delegate;
@@ -42,5 +43,13 @@
 
 @property (weak, nonatomic) IBOutlet UIView *addLeadsUIView;
 
+- (IBAction)addContact:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
+@property (strong,nonatomic) UISearchDisplayController *searchController;
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar2;
+
+- (IBAction)addAllContacs:(id)sender;
 
 @end

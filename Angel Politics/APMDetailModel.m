@@ -28,6 +28,8 @@
 @synthesize donor_id;
 @synthesize call;
 @synthesize inOut;
+@synthesize email;
+@synthesize details;
 
 
 @end

@@ -61,10 +61,18 @@
 
 - (IBAction)addLeadsButton:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *searchByPhoneButton;
 
+- (IBAction)searchByPhone:(id)sender;
+- (IBAction)selectState:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UITableView *stateTableView;
 
 @property (weak, nonatomic) IBOutlet UIButton *addLeadsButtonOut;
+
+@property (weak, nonatomic) IBOutlet UIView *quickSearchUIView;
+
+@property (weak, nonatomic) IBOutlet UITextField *stateTextField;
 
 
 @end

@@ -28,5 +28,7 @@
 @property(nonatomic,copy)NSString *donor_id;
 @property(nonatomic,copy)NSString *call;
 @property(nonatomic,copy)NSString *inOut;
+@property(nonatomic,copy)NSString *email;
+@property(nonatomic,copy)NSString *details;
 
 @end

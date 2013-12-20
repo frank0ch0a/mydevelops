@@ -11,17 +11,27 @@
 #import "AFJSONRequestOperation.h"
 #import "SVProgressHUD.h"
 #import "KeychainItemWrapper.h"
+#import "APMLeadsModel.h"
 
 @interface APMAddLeadsViewController (){
     
     CGFloat yAddView;
     NSOperationQueue *queue;
+    ABAddressBookRef addresBook;
+    NSMutableArray *contacs;
     
 }
 
 @property(nonatomic,strong)KeychainItemWrapper *keychain;
 @property(nonatomic,strong)NSString* email;
 @property(nonatomic,strong)NSString* pass;
+@property(nonatomic,strong)UILocalizedIndexedCollation *collation;
+@property(nonatomic,strong)NSMutableArray *nameList;
+@property(nonatomic,strong)NSArray *indexTitlesArray;
+@property(nonatomic,strong)NSArray *filteredName;
+@property(nonatomic,strong)NSMutableArray *selectArray;
+
+
 
 
 @end
@@ -65,6 +75,12 @@
     self.leadsAskTextField.delegate=self;
     self.leadsZipTextFiels.delegate=self;
     self.leadsPhone.delegate=self;
+    
+    self.collation=[UILocalizedIndexedCollation currentCollation];
+    
+    [self LoadContacts];
+    
+    self.selectArray=[[NSMutableArray alloc]init];
     
 }
 
@@ -236,6 +252,735 @@
         
     }
 
+    
+}
+
+-(void)configureSections
+{
+
+   
+    
+    self.nameList=[[NSMutableArray alloc]init];
+    
+    for (APMLeadsModel *theName in contacs) {
+        
+        NSInteger section=[self.collation sectionForObject:theName
+                                     collationStringSelector:@selector(donorLastName)];
+        theName.section=section;
+        
+    }
+    
+    NSInteger sectionCount=[[self.collation sectionTitles]count];
+    
+    NSMutableArray *sectionsArray=[NSMutableArray arrayWithCapacity:sectionCount];
+    
+    for (NSInteger i=0; i<sectionCount; i++) {
+        
+        NSMutableArray *singleSectionArray=[NSMutableArray arrayWithCapacity:1];
+        [sectionsArray addObject:singleSectionArray];
+
+    }
+    
+    
+    for (APMLeadsModel *theName in contacs) {
+        [(NSMutableArray *) [sectionsArray objectAtIndex:theName.section]addObject:theName];
+    }
+
+    
+    //Iterate over each section array to sort the items in the section
+    
+    for (NSMutableArray *singleSectionArray in sectionsArray) {
+        // Use the UILocalizedIndexedCollation sortedArrayFromArray: method to sort each array
+        NSArray *sortedSection = [self.collation sortedArrayFromArray:singleSectionArray collationStringSelector:@selector(donorLastName)];
+        
+        [self.nameList addObject:sortedSection];
+        
+     
+    
+    }
+    
+    
+       [self.contactsTableView reloadData];
+    
+    // Create and configure the search controller
+    self.searchController=[[UISearchDisplayController alloc]initWithSearchBar:self.searchBar2
+                                                           contentsController:self];
+    
+    self.searchController.searchResultsDelegate=self;
+    self.searchController.searchResultsDataSource=self;
+    
+
+    
+    
+}
+
+-(APMLeadsModel *)logPersonEmails:(ABRecordRef)paramPerson
+{
+    APMLeadsModel *donorModel=[[APMLeadsModel alloc]init];
+    
+    NSString *name;
+    NSString *lastName;
+    
+    
+    if (paramPerson==NULL) {
+        NSLog(@"The given person is NULL");
+        
+    }
+    
+    name=(__bridge_transfer NSString *)ABRecordCopyValue(paramPerson, kABPersonFirstNameProperty);
+    
+    if (name ==NULL)
+    {
+        name=@"";
+        donorModel.donorName=name;
+        
+    }else{
+        
+        name=(__bridge_transfer NSString *)ABRecordCopyValue(paramPerson, kABPersonFirstNameProperty);
+        
+        donorModel.donorName=name;
+        
+    }
+    
+    lastName=(__bridge_transfer NSString *)ABRecordCopyValue(paramPerson, kABPersonLastNameProperty);
+    
+    if (lastName ==NULL) {
+        
+        lastName=@"";
+        donorModel.donorLastName=lastName;
+        
+
+    }else{
+        
+        lastName=(__bridge_transfer NSString *)ABRecordCopyValue(paramPerson, kABPersonLastNameProperty);
+        
+        donorModel.donorLastName=lastName;
+        
+        
+    }
+    
+    
+    
+    
+    ABMultiValueRef emails=ABRecordCopyValue(paramPerson,kABPersonEmailProperty);
+    
+    if (emails==NULL) {
+        NSLog(@"This contact does no have any emails");
+        
+    }
+    
+//Go trough all the emails
+    
+    NSUInteger emailCounter=0;
+    
+    for (emailCounter=0; emailCounter<ABMultiValueGetCount(emails) ; emailCounter++) {
+        
+        //Get the label of the email (if any)
+        /*
+        NSString *emailLabel=(__bridge_transfer NSString *)ABMultiValueCopyLabelAtIndex(emails, emailCounter);
+        
+        NSString *localizedEmailLabel=(__bridge_transfer NSString *)ABAddressBookCopyLocalizedLabel((__bridge CFStringRef)emailLabel);
+        
+        //And then get the email address itself
+        
+        NSString *email=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, emailCounter);
+        
+        NSLog(@"Label= %@ Localized Label=%@, Email=%@",emailLabel,localizedEmailLabel,email);*/
+        
+        if (emails !=NULL) {
+            
+            donorModel.donorEmail=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, emailCounter);
+            
+            NSLog(@"email %@",donorModel.donorEmail);
+            
+        }
+        
+        
+         
+         
+    }
+    
+    CFRelease(emails);
+    
+    
+    ABMultiValueRef phones=ABRecordCopyValue(paramPerson,kABPersonPhoneProperty);
+    
+    if (phones==NULL) {
+                
+    }
+    
+    
+    //Go trough all the phone
+    
+    NSUInteger phoneCounter=0;
+    
+    for (phoneCounter=0; phoneCounter<ABMultiValueGetCount(phones) ; phoneCounter++)
+    
+    {
+        
+        //Get the label of the email (if any)
+        /*
+         NSString *emailLabel=(__bridge_transfer NSString *)ABMultiValueCopyLabelAtIndex(emails, emailCounter);
+         
+         NSString *localizedEmailLabel=(__bridge_transfer NSString *)ABAddressBookCopyLocalizedLabel((__bridge CFStringRef)emailLabel);
+         
+         //And then get the email address itself
+         
+         NSString *email=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, emailCounter);
+         
+         NSLog(@"Label= %@ Localized Label=%@, Email=%@",emailLabel,localizedEmailLabel,email);*/
+        
+        if (phones !=NULL) {
+            
+            donorModel.donorPhoneNumber=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, phoneCounter);
+            
+          }
+        
+        
+        
+    }
+    
+    CFRelease(phones);
+    
+
+    
+    
+    return donorModel;
+    
+}
+
+-(void)readFromAddressBook:(ABAddressBookRef)paramAddressBook{
+    
+   
+    
+   
+    
+    
+    
+    NSArray *arrayOfAllPeople=(__bridge_transfer NSArray *)
+    ABAddressBookCopyArrayOfAllPeople(paramAddressBook);
+    
+    
+    
+    NSUInteger peopleCounter=0;
+    
+    contacs=[[NSMutableArray alloc]init];
+    
+    for (peopleCounter=0; peopleCounter<[arrayOfAllPeople count]; peopleCounter++) {
+        
+        ABRecordRef thisPerson=(__bridge ABRecordRef)[arrayOfAllPeople objectAtIndex:peopleCounter];
+        
+        APMLeadsModel *donorModel;
+        
+        
+        donorModel=[self logPersonEmails:thisPerson];
+        
+        /*
+        NSString *firstName=(__bridge_transfer NSString *)ABRecordCopyValue(thisPerson, kABPersonFirstNameProperty);
+        
+        NSString *lastName=(__bridge_transfer NSString *)ABRecordCopyValue(thisPerson, kABPersonLastNameProperty);
+        
+        NSString *phoneNumber=(__bridge_transfer NSString *)ABRecordCopyValue(thisPerson, kABPersonPhoneProperty);
+        
+        
+       NSString *email=(__bridge_transfer NSString *)ABRecordCopyValue(thisPerson, kABPersonEmailProperty);
+        
+        NSLog(@"First Name=%@",firstName);
+        NSLog(@"Last Name=%@",lastName);
+        NSLog(@"Phone=%@",phoneNumber);
+        [self logPersonEmails:thisPerson];*/
+        
+        if (donorModel !=nil) {
+            
+            
+            [contacs addObject:donorModel];
+            
+           
+            
+         
+            
+            
+            
+        }
+        
+        
+    }
+    
+ 
+
+     [self configureSections];
+    
+    
+    
+    
+     NSLog(@" contacts %@",contacs);
+    
+}
+
+-(void)LoadContacts{
+    
+    
+    
+    CFErrorRef error=NULL;
+    addresBook=ABAddressBookCreateWithOptions(NULL, &error);
+    
+    ABAddressBookRequestAccessWithCompletion(addresBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+            NSLog(@"Access granted");
+            
+            [self readFromAddressBook:addresBook];
+            
+            // [self.contactsTableView reloadData];
+            
+        }else{
+            
+            NSLog(@"Acces was not granted");
+            
+        }
+        
+        if (addresBook !=NULL) {
+            CFRelease(addresBook);
+        }
+    });
+    
+    
+    
+    
+
+    
+    
+    
+}
+- (IBAction)addContact:(id)sender {
+    
+    
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         
+                         
+                         self.addLeadsUIView.frame=CGRectMake(-400
+                                                              , self.addLeadsUIView.frame.origin.y, self.addLeadsUIView.frame.size.width, self.addLeadsUIView.frame.size.height);
+                     } completion:nil];
+    
+
+    [self.contactsTableView reloadData];
+    
+    
+    
+}
+
+
+
+#pragma mark UITableView DataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    
+    // Return the number of sections.
+    
+    if (tableView==self.contactsTableView) {
+         return [self.nameList count];
+    }else{
+        
+        return 1;
+    }
+   
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    /*
+    return contacs.count;*/
+    
+    // Just return the count of the productsl like before
+    
+    if (tableView==self.contactsTableView) {
+        return [[self.nameList objectAtIndex:section] count];
+    }
+        
+        // We need the count for the filtered table
+        //  First, we have to flatten the array of arrays self.products
+        NSMutableArray *flattenedArray = [[NSMutableArray alloc] initWithCapacity:1];
+        for (NSMutableArray *theArray in self.nameList)
+        {
+            for (int i=0; i<[theArray count];i++)
+            {
+                [flattenedArray addObject:[theArray objectAtIndex:i]];
+            }
+        }
+        
+        // Set up an NSPredicate to filter the rows
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"donorLastName beginswith[c] %@", self.searchBar2.text];
+        self.filteredName = [flattenedArray
+                              filteredArrayUsingPredicate:predicate];
+        
+        return self.filteredName.count;
+        
+        
+        
+    
+    
+
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //APMLeadsModel *donorModel=[contacs objectAtIndex:indexPath.row];
+    
+   
+    
+    static NSString *CellIdentifier=@"CellIdentifier";
+    
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell==nil) {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    if (tableView==self.contactsTableView) {
+        
+         APMLeadsModel *donorModel=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+        
+        cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",donorModel.donorName,donorModel.donorLastName];
+        cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:19.0f];
+        
+        UIImage *image = [UIImage imageNamed:@"btn_plus"];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        CGRect frame = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+        button.frame = frame;	// match the button's size with the image size
+        
+        [button setBackgroundImage:image forState:UIControlStateNormal];
+        
+        
+        // set the button's target to this table view controller so we can interpret touch events and map that to a NSIndexSet
+        [button addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.accessoryView = button;
+        
+        
+       return  cell;
+        
+    }else{
+        
+         APMLeadsModel *donorModel=[self.filteredName objectAtIndex:indexPath.row];
+        
+        
+        cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",donorModel.donorName,donorModel.donorLastName];
+        cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:19.0f];
+        
+        UIImage *image = [UIImage imageNamed:@"btn_plus"];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        CGRect frame = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+        button.frame = frame;	// match the button's size with the image size
+        
+        [button setBackgroundImage:image forState:UIControlStateNormal];
+        
+        
+        // set the button's target to this table view controller so we can interpret touch events and map that to a NSIndexSet
+        [button addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.accessoryView = button;
+        
+        
+        
+        return  cell;
+        
+    }
+    
+    
+    
+    
+    
+    
+}
+
+- (void)checkButtonTapped:(id)sender event:(id)event
+{
+	NSSet *touches = [event allTouches];
+	UITouch *touch = [touches anyObject];
+	CGPoint currentTouchPosition = [touch locationInView:self.contactsTableView];
+    
+	NSIndexPath *indexPath = [self.contactsTableView indexPathForRowAtPoint: currentTouchPosition];
+	if (indexPath != nil)
+	{
+		[self tableView: self.contactsTableView accessoryButtonTappedForRowWithIndexPath: indexPath];
+	}
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+}
+
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+    
+
+    
+    if (tableView==self.contactsTableView) {
+        
+        APMLeadsModel *donorModel=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+        
+        
+        NSLog(@"nombres %@ %@",donorModel.donorName,donorModel.donorLastName);
+        
+        NSLog(@"phone %@ email %@",donorModel.donorPhoneNumber,donorModel.donorEmail);
+        
+    }
+    
+    
+    NSLog(@"Tocaste button");
+    
+    
+    
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    
+    
+    if (tableView==self.contactsTableView) {
+        if ([[self.nameList objectAtIndex:section] count] > 0) {
+            // If it does, get the section title from the UILocalizedIndexedCollation object
+            return [[[UILocalizedIndexedCollation currentCollation] sectionTitles]
+                    objectAtIndex:section];
+        }
+    }
+    
+    return nil;
+    
+}
+-(void)sendAllContacts:(NSMutableArray *)array
+{
+    
+    /*
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+
+    
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [self.keychain objectForKey:(__bridge id)kSecValueData]!=nil) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+    }
+ 
+  */
+    
+   /*
+    NSError *error;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array
+                                                       options:0
+                                                         error:&error];
+    
+    if (!jsonData) {
+        NSLog(@"JSON error: %@", error);
+    } else {
+        
+        NSString *JSONString = [[NSString alloc] initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
+        NSLog(@"JSON OUTPUT: %@",JSONString);
+        
+        //URL
+        
+        NSURL *url=[NSURL URLWithString:@"https://www.angelpolitics.com/mobile/ios_contact.php"];
+        
+        NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setValue:@"people" forHTTPHeaderField:@"JSON"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/json"  forHTTPHeaderField:@"Content-Type"];
+        
+        [request addValue:[NSString stringWithFormat:@"%d",[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+        [request setHTTPBody:jsonData];
+        
+        
+        //NSURLResponse *response=nil;
+        //  NSError *error=nil;
+        
+        //NSData *resultData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (error==nil){
+                NSDictionary *dictJson=[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&connectionError];
+                
+                NSLog(@"Dictionary Json %@",dictJson);
+                
+            
+                
+            }
+            
+        }];
+        
+
+        
+        
+    }*/
+    
+    
+    if ([NSJSONSerialization isValidJSONObject:array]) {
+        
+        
+        NSDictionary *dict=@{@"people":array};
+        NSLog(@"dict %@",dict);
+        
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+        
+        [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+        [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+        NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                                path:@"/mobile/ios_contact.php"
+                                                          parameters:dict
+                                        ];
+        
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            
+            if (JSON !=nil) {
+                
+                [SVProgressHUD dismiss];
+                
+                NSLog(@"Result contacts %@",JSON);
+                
+                
+                if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
+                    
+                    
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads add succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    
+                    [alertView show];
+                    
+                    [self.delegate dismissController:self];
+                    
+                    
+                    NSLog(@"Resulta AddLeads %@",JSON);
+                }
+                
+                
+                
+                
+                
+            }else{
+                
+                
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Data do not send try again, please" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                
+                [alertView show];
+                
+                
+                
+            }
+            
+            
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            NSLog(@"error %@", [error description]);
+            
+        }];
+        
+        operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+        
+        
+        
+        
+        [queue addOperation:operation];
+        
+        
+        
+        
+
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+
+    
+}
+
+- (IBAction)addAllContacs:(id)sender {
+    
+    NSMutableArray *arrayContacs=[[NSMutableArray alloc]init];
+    
+    
+    NSDictionary *dict;
+    
+    for (NSInteger i=0; i<[contacs count]; i++) {
+        
+        APMLeadsModel *donorModel=[contacs objectAtIndex:i];
+        
+        NSString *name=donorModel.donorName;
+        NSString *lastname=donorModel.donorLastName;
+        NSString *phone=donorModel.donorPhoneNumber;
+        NSString *email=donorModel.donorEmail;
+        
+        if (name==nil) {
+            name=@"N/A";
+            donorModel.donorName=name;
+       
+        }else{
+            
+            name=donorModel.donorName;
+        }
+        
+        if (lastname==nil) {
+            lastname=@"N/A";
+            donorModel.donorLastName=lastname;
+        }else{
+            
+            lastname=donorModel.donorLastName;
+        }
+        
+        if (phone==nil) {
+            phone=@"N/A";
+            donorModel.donorPhoneNumber=phone;
+        }else{
+            
+            phone=donorModel.donorPhoneNumber;
+            
+        }
+        
+        if (email==nil) {
+            
+            email=@"N/A";
+            donorModel.donorEmail=email;
+        }else{
+            
+            email=donorModel.donorEmail;
+            
+            
+        }
+        
+        dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
+               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail
+               };
+        
+        [arrayContacs addObject:dict];
+        
+    }
+    
+    NSLog(@"arraycontacts %@",arrayContacs);
+    
+    [self sendAllContacts:arrayContacs];
+    
+    
     
 }
 @end

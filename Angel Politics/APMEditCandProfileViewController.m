@@ -53,6 +53,12 @@
    NSString *phoneDial=[phoneCall objectForKey:@"phone"];
     
     
+    NSUserDefaults *email=[NSUserDefaults standardUserDefaults];
+    NSString *emailSend=[email objectForKey:@"email"];
+    
+
+    
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check" ] && phoneDial !=nil ){
         
         
@@ -61,6 +67,13 @@
         self.editPhone1.text=phoneDial;
 
         
+        
+    }else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check" ] && emailSend !=nil){
+        
+        
+        [_checkBoxButton2 setImage:[UIImage imageNamed:@"checkBoxMarked.png"] forState:UIControlStateNormal];
+        
+        self.editPhone2.text=emailSend;
         
     }
     //NSLog(@"email %@",[_keychain objectForKey:(__bridge id)kSecAttrAccount]);
@@ -194,6 +207,15 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Check"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        if (self.editPhone2.text.length >0) {
+            
+            NSUserDefaults *email=[NSUserDefaults standardUserDefaults];
+            [email setObject:self.editPhone2.text forKey:@"email"];
+            [email  synchronize];
+
+            
+        }
+        
         [TestFlight passCheckpoint:@"Save new Number"];
         
         
@@ -203,12 +225,16 @@
         [phone removeObjectForKey:@"phone"];
         [phone  synchronize];
         
+        NSUserDefaults *email=[NSUserDefaults standardUserDefaults];
+        [email removeObjectForKey:@"email"];
+        [email  synchronize];
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"Check"];
         
         
     }
     
     [self.editPhone1 resignFirstResponder];
+    [self.editPhone2 resignFirstResponder];
    
     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Saved" message:@"Changes Saved" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     

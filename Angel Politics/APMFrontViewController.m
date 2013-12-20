@@ -26,9 +26,13 @@
     
     BOOL isLoading;
     BOOL isSearch;
+    BOOL isResult;
     BOOL isSelect;
     BOOL isView;
     NSInteger donorKind;
+    CGFloat quickSearchY;
+    BOOL checked;
+    NSString *phone;
 }
 
 // Lazy buttons
@@ -44,6 +48,7 @@
 @property(nonatomic,strong)NSString *fundRaiseType;
 @property(nonatomic,strong)NSString *donorType;
 @property(nonatomic,strong)NSMutableArray *searchResults;
+@property(nonatomic,strong)NSArray *states;
 
 @end
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
@@ -104,6 +109,7 @@ static NSString *const FrontCell=@"FrontCell";
     [super viewDidLoad];
     
     
+    quickSearchY=self.quickSearchUIView.frame.origin.y;
    
     
  
@@ -214,7 +220,9 @@ static NSString *const FrontCell=@"FrontCell";
     
    
     
+    NSString *path=[[NSBundle mainBundle]pathForResource:@"states" ofType:@"plist"];
     
+    self.states=[[NSArray alloc]initWithContentsOfFile:path];
 
     
   
@@ -244,6 +252,7 @@ static NSString *const FrontCell=@"FrontCell";
 {
     [super viewWillAppear:animated];
     
+    self.stateTableView.hidden=YES;
    
     
    
@@ -305,7 +314,12 @@ static NSString *const FrontCell=@"FrontCell";
     
     APMLeadsModel *leadsModel=[[APMLeadsModel alloc]init];
     
-    leadsModel.ask=[dictionary objectForKey:@"a"];
+    if (!isResult) {
+        leadsModel.ask=[dictionary objectForKey:@"a"];
+
+    
+    
+    
     leadsModel.donorName=[dictionary objectForKey:@"b"];
     leadsModel.donorLastName=[dictionary objectForKey:@"c"];
     if ([dictionary objectForKey:@"d"]!=(id)[NSNull null] && [dictionary objectForKey:@"d"] !=nil ) {
@@ -318,7 +332,7 @@ static NSString *const FrontCell=@"FrontCell";
     
     leadsModel.donorPhoneNumber=[dictionary objectForKey:@"f"];
     
-    if (isSearch && [dictionary objectForKey:@"g"]!=(id)[NSNull null] && [dictionary objectForKey:@"g" ] != nil) {
+    if (!isSearch && [dictionary objectForKey:@"g"]!=(id)[NSNull null] && [dictionary objectForKey:@"g" ] != nil) {
         
         leadsModel.donor_id=[dictionary objectForKey:@"g"];
         
@@ -343,9 +357,26 @@ static NSString *const FrontCell=@"FrontCell";
     if ([dictionary objectForKey:@"j"] !=nil && [dictionary objectForKey:@"j"] != (id)[NSNull null]) {
         leadsModel.pledgeID=[dictionary objectForKey:@"j"];
     }
+        
+    }else{
+        
+        
+        leadsModel.ask=[dictionary objectForKey:@"h"];
+        leadsModel.party=[dictionary objectForKey:@"a"];
+        leadsModel.donorName=[dictionary objectForKey:@"b"];
+        leadsModel.donorLastName=[dictionary objectForKey:@"c"];
+        leadsModel.donorCity=[dictionary objectForKey:@"d"];
+        leadsModel.donorState=[dictionary objectForKey:@"e"];
+        leadsModel.donor_id=[dictionary objectForKey:@"g"];
+        
+        
+        
+        
+    }
     
     return leadsModel;
     
+
     
 }
 
@@ -402,6 +433,8 @@ static NSString *const FrontCell=@"FrontCell";
             
             [SVProgressHUD dismiss];
       NSLog(@"Resulta JSON frontVC %@",JSON);
+            
+            isResult=NO;
             
            [self parseArray:JSON];
             isLoading=NO;
@@ -503,6 +536,13 @@ static NSString *const FrontCell=@"FrontCell";
         [self.donorButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [self.pledgeButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [self.otherButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    
+        [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            
+            self.quickSearchUIView.frame=CGRectMake(0, 42, self.quickSearchUIView.frame.size.width, self.quickSearchUIView.frame.size.height);
+            
+            
+        } completion:nil];
         
     }
     
@@ -532,58 +572,90 @@ static NSString *const FrontCell=@"FrontCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (isLoading) {
-        return 1;
+    if (tableView==self.donorTableView) {
+        if (isLoading) {
+            return 1;
+        }else{
+            
+            return self.leadsResults.count;
+        }
     }else{
         
-        return self.leadsResults.count;
+        return self.states.count;
+        
     }
+    
+    
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (isLoading) {
-        return  [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
-    }else{
-    
-    APMFrontCell *cell = [tableView dequeueReusableCellWithIdentifier:FrontCell];
-    
-    if (cell==nil) {
-        
-        cell=[[APMFrontCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FrontCell];
-    }
-    
-    
-    
-    cell.indexPath = indexPath;
-    cell.delegate = self;
-    
-    APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
-    
-    cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
-    cell.amountLabel.text=[NSString stringWithFormat:@"%@",leadsModel.ask];
-     
-        if (leadsModel.donorCity != (id)[NSNull null]&&leadsModel.donorState != (id)[NSNull null] ) {
-             cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];
+    if (tableView==self.donorTableView) {
+        if (isLoading) {
+            return  [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
         }else{
             
-            cell.cityLabel.text=@"";
+            APMFrontCell *cell = [tableView dequeueReusableCellWithIdentifier:FrontCell];
+            
+            if (cell==nil) {
+                
+                cell=[[APMFrontCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FrontCell];
+            }
+            
+            
+            
+            cell.indexPath = indexPath;
+            cell.delegate = self;
+            
+            APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
+            
+            cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
+            cell.amountLabel.text=[NSString stringWithFormat:@"%@",leadsModel.ask];
+            
+            if (leadsModel.donorCity != (id)[NSNull null]&&leadsModel.donorState != (id)[NSNull null] ) {
+                cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];
+            }else{
+                
+                cell.cityLabel.text=@"";
+            }
+            
+            cell.donorTypeLabel.text=self.donorType;
+            
+            /*
+            if (isView) {
+                cell.amountLabel.text=@"";
+                
+            }*/
+            
+            
+            
+            return cell;
+            
         }
-   
-    cell.donorTypeLabel.text=self.donorType;
         
+    }else{
         
-        if (isView) {
-        cell.amountLabel.text=@"";
+        static NSString *CellIdentifier=@"CellIdentifier";
         
+        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell==nil) {
+            
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-    
-    
-      
-    return cell;
         
+        
+        cell.textLabel.text=[self.states objectAtIndex:indexPath.row];
+        cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
+
+        
+        
+        return  cell;
     }
+    
+    
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -603,21 +675,36 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    APMDonorDetailController *donorDetailVC=[[APMDonorDetailController alloc]init];
+    if (tableView==self.donorTableView) {
+        APMDonorDetailController *donorDetailVC=[[APMDonorDetailController alloc]init];
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
+        
+        donorDetailVC.leadsModel=leadsModel;
+        donorDetailVC.title=self.donorType;
+        donorDetailVC.donorType=donorKind;
+        
+        self.myImageView.hidden=YES;
+        
+        
+        
+        [self.navigationController pushViewController:donorDetailVC animated:YES];
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }else{
+        
+        self.stateTextField.text=[self.states objectAtIndex:indexPath.row];
+        
+        self.stateTableView.hidden=YES;
+        
+        [self.searchBar becomeFirstResponder];
+        
+        
+    }
     
-     APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
-
-    donorDetailVC.leadsModel=leadsModel;
-    donorDetailVC.title=self.donorType;
-    donorDetailVC.donorType=donorKind;
-    
-    self.myImageView.hidden=YES;
     
     
-    
-    [self.navigationController pushViewController:donorDetailVC animated:YES];
     
     
    
@@ -814,7 +901,14 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 65.0;
+    if (tableView==self.donorTableView) {
+        return 65.0;
+    }else{
+        
+        return 25.0;
+    }
+    
+    
     
 }
 
@@ -823,10 +917,18 @@ static NSString *const FrontCell=@"FrontCell";
     self.navigationController.navigationBarHidden=NO;
     self.searchToolbar.hidden=YES;
     self.addLeadsButtonOut.hidden=NO;
+    self.stateTableView.hidden=YES;
     
     [self PitchLeadsButton:self];
     
     [self.searchBar resignFirstResponder];
+    
+    [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        
+        self.quickSearchUIView.frame=CGRectMake(0, quickSearchY, self.quickSearchUIView.frame.size.width, self.quickSearchUIView.frame.size.height);
+        
+        
+    } completion:nil];
 }
 
 - (IBAction)addLeadsButton:(id)sender
@@ -852,6 +954,29 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
+- (IBAction)searchByPhone:(id)sender {
+    
+    if (!checked) {
+        [self.searchByPhoneButton setImage:[UIImage imageNamed:@"checkBoxMarked.png"] forState:UIControlStateNormal];
+        checked = YES;
+        phone=@"1";
+    }
+    
+    else if (checked) {
+        [self.searchByPhoneButton setImage:[UIImage imageNamed:@"checkBox.png"] forState:UIControlStateNormal];
+        checked = NO;
+    }
+
+}
+
+- (IBAction)selectState:(id)sender {
+    
+    self.stateTableView.hidden=NO;
+    [self.searchBar resignFirstResponder];
+    
+    
+}
+
 
 -(void)performSearch
 {
@@ -859,11 +984,31 @@ static NSString *const FrontCell=@"FrontCell";
         
         [self.searchBar resignFirstResponder];
         
+     
+        
+        NSDictionary *dict;
+        
+        if (!checked && [self.stateTextField.text length]==0) {
+            dict=@{@"email":self.email ,@"pass":self.password,@"q":self.searchBar.text};
+        }else if (phone !=nil && [self.stateTextField.text length]==0) {
+            
+            dict=@{@"email":self.email ,@"pass":self.password,@"q":self.searchBar.text,@"phone":phone};
+            
+        }else if(!checked && [self.stateTextField.text length]>0){
+            
+             dict=@{@"email":self.email ,@"pass":self.password,@"q":self.searchBar.text,@"phone":@"0",@"state":self.stateTextField.text};
+            
+        }else{
+            
+             dict=@{@"email":self.email ,@"pass":self.password,@"q":self.searchBar.text,@"phone":phone,@"state":self.stateTextField.text};
+            
+        }
         
         
-        NSDictionary *dict=@{@"email":self.email ,@"pass":self.password,@"q":self.searchBar.text};
         
-        // NSLog(@"Parameters %@",dict);
+        
+        
+        NSLog(@"Parameters %@",dict);
         
         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
         
@@ -881,7 +1026,12 @@ static NSString *const FrontCell=@"FrontCell";
                 [SVProgressHUD dismiss];
                 NSLog(@"Resulta JSON MenuVC %@",JSON);
                 
+               
+                isResult=YES;
+                
                 [self parseArray:JSON];
+                
+         
                 
                 self.FrontLineOne.text=@"Donor Results";
                 self.frontLineTwo.hidden=YES;
@@ -897,6 +1047,7 @@ static NSString *const FrontCell=@"FrontCell";
                 [self.donorTableView reloadData];
                 
                 self.searchBar.text=@"";
+                self.stateTextField.text=@"";
                  
                 
               //  [self presentViewController:searchVC animated:YES completion:nil];
@@ -907,6 +1058,7 @@ static NSString *const FrontCell=@"FrontCell";
                 isLoading=NO;
                 isSearch=NO;
                 isView=YES;
+                
                 
                 
                 
@@ -958,13 +1110,19 @@ static NSString *const FrontCell=@"FrontCell";
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
     isSearch=YES;
+    
     [SVProgressHUD show];
     
     self.navigationController.navigationBarHidden=NO;
     self.searchToolbar.hidden=YES;
     [self.searchBar resignFirstResponder];
      self.addLeadsButtonOut.hidden=NO;
-    
+    [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        
+        self.quickSearchUIView.frame=CGRectMake(0, quickSearchY, self.quickSearchUIView.frame.size.width, self.quickSearchUIView.frame.size.height);
+        
+        
+    } completion:nil];
     
     
     [self performSearch];
