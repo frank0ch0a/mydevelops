@@ -12,6 +12,8 @@
 #import "SVProgressHUD.h"
 #import "KeychainItemWrapper.h"
 #import "APMLeadsModel.h"
+#import "APMFrontViewController.h"
+#import "NVSlideMenuController.h"
 
 @interface APMAddLeadsViewController (){
     
@@ -92,7 +94,8 @@
 
 - (IBAction)closeAddLeadVC:(id)sender {
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate dismissController:self];
+
 }
 
 #pragma mark TextField Delegate
@@ -201,7 +204,7 @@
                 if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
                     
                     
-                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads add succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads added succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     
                     [alertView show];
                     
@@ -466,7 +469,9 @@
     
     contacs=[[NSMutableArray alloc]init];
     
-    for (peopleCounter=0; peopleCounter<[arrayOfAllPeople count]; peopleCounter++) {
+    //Send only 30 contacts no all [arrayOfAllPeople count]
+    
+    for (peopleCounter=0; peopleCounter< [arrayOfAllPeople count]; peopleCounter++) {
         
         ABRecordRef thisPerson=(__bridge ABRecordRef)[arrayOfAllPeople objectAtIndex:peopleCounter];
         
@@ -728,17 +733,142 @@
     
     if (tableView==self.contactsTableView) {
         
+        self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+        
+        if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [self.keychain objectForKey:(__bridge id)kSecValueData]!=nil) {
+            
+            self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+            self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
+            
+        }
+        
         APMLeadsModel *donorModel=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
         
         
-        NSLog(@"nombres %@ %@",donorModel.donorName,donorModel.donorLastName);
+        NSString *name=donorModel.donorName;
+        NSString *lastname=donorModel.donorLastName;
+        NSString *phone=donorModel.donorPhoneNumber;
+        NSString *email=donorModel.donorEmail;
         
-        NSLog(@"phone %@ email %@",donorModel.donorPhoneNumber,donorModel.donorEmail);
+        if (name==nil) {
+            name=@"N/A";
+            donorModel.donorName=name;
+            
+        }else{
+            
+            name=donorModel.donorName;
+        }
+        
+        if (lastname==nil) {
+            lastname=@"N/A";
+            donorModel.donorLastName=lastname;
+        }else{
+            
+            lastname=donorModel.donorLastName;
+        }
+        
+        if (phone==nil) {
+            phone=@"N/A";
+            donorModel.donorPhoneNumber=phone;
+        }else{
+            
+            phone=donorModel.donorPhoneNumber;
+            
+        }
+        
+        if (email==nil) {
+            
+            email=@"N/A";
+            donorModel.donorEmail=email;
+        }else{
+            
+            email=donorModel.donorEmail;
+            
+            
+        }
+
+        
+        NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"lastname":lastname,@"phone":phone,@"inboxmail":email};
+        
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+        
+        [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+        [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+        NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                                path:@"/mobile/addmyleads.php"
+                                                          parameters:dict
+                                        ];
+        
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            if (JSON !=nil) {
+                
+                [SVProgressHUD dismiss];
+                
+                if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
+                    
+                    
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads add succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    
+                    [alertView show];
+                    
+                    [self.delegate dismissController:self];
+                    
+                    
+                    NSLog(@"Resulta AddLeads %@",JSON);
+                }
+                
+                
+                
+                
+                
+            }else{
+                
+                
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Data do not send try again, please" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                
+                [alertView show];
+                
+                
+                
+            }
+            
+            
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            NSLog(@"error %@", [error description]);
+            
+        }];
+        
+        operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+        
+        
+        
+        
+        [queue addOperation:operation];
+        
+        
+    }else{
+        
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Any field required can not be empty" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [alertView show];
+        
+        
+        
         
     }
+
+        
+        
+        
+       
+        
+        
     
     
-    NSLog(@"Tocaste button");
+    
+
     
     
     
@@ -859,7 +989,7 @@
                 if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
                     
                     
-                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads add succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads added succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     
                     [alertView show];
                     

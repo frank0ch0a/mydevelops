@@ -165,7 +165,19 @@
         NSDictionary *dict;
         
         if (self.candID !=nil && self.donorID !=nil) {
-             dict=@{@"email":self.emailCallTextField.text ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
+            
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check"] ){
+                NSUserDefaults *email=[NSUserDefaults standardUserDefaults];
+                
+                NSString *emailString=[email objectForKey:@"email"];
+                
+                dict=@{@"email":emailString ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
+                
+            }else{
+                
+                dict=@{@"email":self.emailCallTextField.text ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
+            }
+            
         }
     
    

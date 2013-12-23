@@ -74,5 +74,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *stateTextField;
 
+@property(strong,nonatomic)UIImageView* myImageView;
+
+
 
 @end

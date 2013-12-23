@@ -68,7 +68,9 @@
 
         
         
-    }else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check" ] && emailSend !=nil){
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check" ] && emailSend !=nil){
         
         
         [_checkBoxButton2 setImage:[UIImage imageNamed:@"checkBoxMarked.png"] forState:UIControlStateNormal];

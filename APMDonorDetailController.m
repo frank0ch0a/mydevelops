@@ -672,6 +672,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     [self setTitle:self.title];
     
     
+    
     self.askLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:25];
     self.bestLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
     self.averageLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
@@ -725,7 +726,28 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         APMContributionsModel *contributionsModel=[self.contributionsResults objectAtIndex:indexPath.row];
         
         cell.donorDetailNameLabel.text=contributionsModel.contributorName;
-        cell.donorDetailDateLabel.text=contributionsModel.contributionDate;
+        
+        NSLog(@"datemodel %@",contributionsModel.contributionDate);
+        
+        NSString *dateStr=contributionsModel.contributionDate;
+        NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+        
+        NSDate *date=[dateFormatter dateFromString:dateStr];
+       
+        
+        
+        NSDateFormatter *displayFormatter=[[NSDateFormatter alloc]init];
+        [displayFormatter setDateFormat:@"MM/dd/yyyy"];
+        
+       
+        
+        NSString *displayDate=[displayFormatter stringFromDate:date];
+        
+        
+
+
+        cell.donorDetailDateLabel.text=displayDate;
         cell.donorDetailAmountLabel.text=[NSString stringWithFormat:@"$ %@",contributionsModel.contributionAmount];
         //cell.donorDetailImage.image=[UIImage imageNamed:@"men"];
         
@@ -993,7 +1015,9 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     //Override backBarButton title
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
-                                                                   style:UIBarButtonItemStyleBordered target:nil action:nil];
+                style:UIBarButtonItemStyleBordered
+               target:nil
+               action:nil];
     [[self navigationItem] setBackBarButtonItem:backButton];
 
     

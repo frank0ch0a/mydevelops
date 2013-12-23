@@ -39,7 +39,6 @@
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
 
-@property(strong,nonatomic)UIImageView* myImageView;
 @property(strong,nonatomic)KeychainItemWrapper *keychain;
 //@property(nonatomic,strong)KeychainItemWrapper *passwordItem;
 @property(copy,nonatomic)NSString *email;
@@ -691,6 +690,8 @@ static NSString *const FrontCell=@"FrontCell";
         
         
         [self.navigationController pushViewController:donorDetailVC animated:YES];
+        
+         self.myImageView.hidden=YES;
     
     }else{
         
@@ -946,7 +947,7 @@ static NSString *const FrontCell=@"FrontCell";
     
     
     
-    [self.navigationController presentViewController:addLeads animated:YES completion:nil];
+    [self  presentViewController:addLeads animated:YES completion:nil];
     
     
     
@@ -1165,9 +1166,15 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(void)dismissController:(APMAddLeadsViewController *)delegate{
     
-    [self dismissViewControllerAnimated:YES completion:nil];
     
-    [self viewDidLoad];
+   [self dismissViewControllerAnimated:YES completion:^{
+       
+       [self viewDidLoad];
+       
+   }];
+    
+    
+    
     
     
 }
