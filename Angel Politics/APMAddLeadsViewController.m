@@ -204,7 +204,7 @@
                 if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
                     
                     
-                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads added succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:[NSString stringWithFormat:@"You have successfully added %@ lead(s)."] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     
                     [alertView show];
                     
@@ -808,7 +808,7 @@
                 if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
                     
                     
-                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads add succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"You have successfully added lead." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     
                     [alertView show];
                     
@@ -986,17 +986,21 @@
                 NSLog(@"Result contacts %@",JSON);
                 
                 
+                
+                
                 if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
                     
                     
-                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"Leads added succesfully" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    
+                    
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:[NSString stringWithFormat:@"You have successfully added %@ lead(s). ",[@([array count])stringValue]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     
                     [alertView show];
                     
                     [self.delegate dismissController:self];
                     
                     
-                    NSLog(@"Resulta AddLeads %@",JSON);
+                
                 }
                 
                 

@@ -76,6 +76,7 @@
 
 @property(strong,nonatomic)UIImageView* myImageView;
 
+@property (weak, nonatomic) IBOutlet UIButton *addLeadsBig;
 
 
 @end

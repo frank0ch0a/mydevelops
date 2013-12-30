@@ -529,6 +529,7 @@ static NSString *const FrontCell=@"FrontCell";
         self.searchToolbar.hidden=NO;
         [self.searchBar becomeFirstResponder];
         self.addLeadsButtonOut.hidden=YES;
+        self.addLeadsBig.hidden=YES;
         self.pitchUIView.backgroundColor=[UIColor whiteColor];
         self.donorUIView.backgroundColor=[UIColor whiteColor];
         self.pledgeUIView.backgroundColor=[UIColor whiteColor];
@@ -918,6 +919,7 @@ static NSString *const FrontCell=@"FrontCell";
     self.navigationController.navigationBarHidden=NO;
     self.searchToolbar.hidden=YES;
     self.addLeadsButtonOut.hidden=NO;
+    self.addLeadsBig.hidden=NO;
     self.stateTableView.hidden=YES;
     
     [self PitchLeadsButton:self];
