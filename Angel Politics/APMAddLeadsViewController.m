@@ -15,6 +15,7 @@
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
 
+
 @interface APMAddLeadsViewController (){
     
     CGFloat yAddView;
@@ -58,7 +59,9 @@
     UIImage *imageButton=[[UIImage imageNamed:@"btn_login_up"]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
     
     [self.saveLeadButton setBackgroundImage:imageButton forState:UIControlStateNormal];
-
+    
+    self.selectToolbar.hidden=YES;
+    
     
     
 }
@@ -82,9 +85,15 @@
     
     [self LoadContacts];
     
-    self.selectArray=[[NSMutableArray alloc]init];
     
+    
+    self.contactsTableView.allowsMultipleSelection=YES;
+    
+    self.selectArray=[[NSMutableArray alloc]initWithCapacity:100];
+
+   
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -148,6 +157,96 @@
 }
 
 
+- (IBAction)saveSelectedItem:(id)sender {
+    
+    self.selectToolbar.hidden=YES;
+   // [self.delegate dismissController:self];
+    NSLog(@"Select array %@",self.selectArray);
+    
+
+    
+    NSMutableArray *arrayContacs=[[NSMutableArray alloc]init];
+    
+    
+    NSDictionary *dict;
+    
+    for (NSInteger i=0; i<[self.selectArray count]; i++) {
+        
+        APMLeadsModel *donorModel=[self.selectArray objectAtIndex:i];
+        
+        NSString *name=donorModel.donorName;
+        NSString *lastname=donorModel.donorLastName;
+        NSString *phone=donorModel.donorPhoneNumber;
+        NSString *email=donorModel.donorEmail;
+        NSString *address=donorModel.address;
+        
+        if (name==nil) {
+            name=@"N/A";
+            donorModel.donorName=name;
+            
+        }else{
+            
+            name=donorModel.donorName;
+        }
+        
+        if (lastname==nil) {
+            lastname=@"N/A";
+            donorModel.donorLastName=lastname;
+        }else{
+            
+            lastname=donorModel.donorLastName;
+        }
+        
+        if (phone==nil) {
+            phone=@"N/A";
+            donorModel.donorPhoneNumber=phone;
+        }else{
+            
+            phone=donorModel.donorPhoneNumber;
+            
+        }
+        
+        if (email==nil) {
+            
+            email=@"N/A";
+            donorModel.donorEmail=email;
+        }else{
+            
+            email=donorModel.donorEmail;
+            
+            
+        }
+        
+        if (address==nil) {
+            
+            address=@"N/A";
+            donorModel.address=email;
+        }else{
+            
+            address=donorModel.address;
+            
+            
+        }
+        
+        
+        
+        dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
+               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.address
+               };
+        
+        [arrayContacs addObject:dict];
+        
+    }
+    
+    NSLog(@"arraycontacts %@",arrayContacs);
+    
+    [self sendAllContacts:arrayContacs];
+    
+    
+    
+    
+}
+
 - (IBAction)saveLeads:(id)sender {
     
     [UIView animateWithDuration:0.25 delay:0
@@ -204,7 +303,7 @@
                 if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
                     
                     
-                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:[NSString stringWithFormat:@"You have successfully added %@ lead(s)."] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:[NSString stringWithFormat:@"You have successfully added  a lead."] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     
                     [alertView show];
                     
@@ -378,17 +477,6 @@
     
     for (emailCounter=0; emailCounter<ABMultiValueGetCount(emails) ; emailCounter++) {
         
-        //Get the label of the email (if any)
-        /*
-        NSString *emailLabel=(__bridge_transfer NSString *)ABMultiValueCopyLabelAtIndex(emails, emailCounter);
-        
-        NSString *localizedEmailLabel=(__bridge_transfer NSString *)ABAddressBookCopyLocalizedLabel((__bridge CFStringRef)emailLabel);
-        
-        //And then get the email address itself
-        
-        NSString *email=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, emailCounter);
-        
-        NSLog(@"Label= %@ Localized Label=%@, Email=%@",emailLabel,localizedEmailLabel,email);*/
         
         if (emails !=NULL) {
             
@@ -445,8 +533,37 @@
     
     CFRelease(phones);
     
-
     
+ 
+    
+    
+    ABMultiValueRef address=ABRecordCopyValue(paramPerson,kABPersonAddressProperty);
+    
+    if (address==NULL) {
+        
+    }
+    
+    
+    
+    NSUInteger addressCounter=0;
+    
+    for (addressCounter=0; addressCounter<ABMultiValueGetCount(address) ; addressCounter++) {
+        
+        
+        if (address !=NULL) {
+            
+            donorModel.address=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(address, addressCounter);
+            
+            NSLog(@"address %@",donorModel.address);
+            
+        }
+        
+        
+        
+        
+    }
+    
+    CFRelease(address);
     
     return donorModel;
     
@@ -632,6 +749,38 @@
     
 }
 
+-(void)configureCheckmarkForCell:(UITableViewCell *)cell
+               withChecklistItem:(APMLeadsModel *)item{
+    
+   
+    
+    UILabel *label=(UILabel *)[cell viewWithTag:1000];
+    
+    
+    if (item.checked) {
+        
+        label.text=@"√";
+        
+        
+       [self.selectArray addObject:item];
+        
+       
+        
+        NSLog(@"Se selecciona!");
+       self.selectToolbar.hidden=NO;
+        
+        
+    }else{
+        
+        label.text=@"";
+     
+        NSLog(@"se deselecciona!");
+        
+    }
+    
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -654,6 +803,10 @@
         
         cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",donorModel.donorName,donorModel.donorLastName];
         cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:19.0f];
+
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(230, 10, 20, 20)];
+        label.text=@"";
+        label.tag=1000;
         
         UIImage *image = [UIImage imageNamed:@"btn_plus"];
         
@@ -669,6 +822,13 @@
         
         cell.accessoryView = button;
         
+         [cell addSubview:label];
+        
+        
+        
+        
+        [self configureCheckmarkForCell:cell withChecklistItem:donorModel];
+        
         
        return  cell;
         
@@ -676,6 +836,10 @@
         
          APMLeadsModel *donorModel=[self.filteredName objectAtIndex:indexPath.row];
         
+        
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(200, 0, 40, 40)];
+        label.text=@"";
+        label.tag=1000;
         
         cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",donorModel.donorName,donorModel.donorLastName];
         cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:19.0f];
@@ -694,8 +858,12 @@
         
         cell.accessoryView = button;
         
+        [cell addSubview:label];
         
+       
         
+        [self configureCheckmarkForCell:cell withChecklistItem:donorModel];
+       
         return  cell;
         
     }
@@ -720,11 +888,36 @@
 	}
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+  
+    
+    UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     
     
+
+    APMLeadsModel *item=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+        
+        
+    
+    [item toggleChecked];
+    
+
+    
+    [self configureCheckmarkForCell:cell withChecklistItem:item];
+        
+        
+   // [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+    
+
+    
+    
+    
+
+
 }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
@@ -861,17 +1054,6 @@
 
         
         
-        
-       
-        
-        
-    
-    
-    
-
-    
-    
-    
 }
 
 
@@ -1064,6 +1246,7 @@
         NSString *lastname=donorModel.donorLastName;
         NSString *phone=donorModel.donorPhoneNumber;
         NSString *email=donorModel.donorEmail;
+        NSString *address=donorModel.address;
         
         if (name==nil) {
             name=@"N/A";
@@ -1102,8 +1285,21 @@
             
         }
         
+        if (address==nil) {
+            
+            address=@"N/A";
+            donorModel.address=email;
+        }else{
+            
+            address=donorModel.address;
+            
+            
+        }
+        
+        
+        
         dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
-               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail
+               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.address
                };
         
         [arrayContacs addObject:dict];

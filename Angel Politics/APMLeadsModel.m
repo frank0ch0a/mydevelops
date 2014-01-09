@@ -21,5 +21,16 @@
 @synthesize party;
 @synthesize pledgeID;
 @synthesize section;
+@synthesize zipCode;
+@synthesize address;
+
+-(void)toggleChecked
+{
+
+    self.checked=!self.checked;
+
+    
+    
+}
 
 @end

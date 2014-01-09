@@ -58,9 +58,9 @@
     
     // Do any additional setup after loading the view from its nib.
     
-   self.callStatus=@[@"Pending",@"Busy",@"No Answer",@"Voicemail",@"Wrong Number"];
+   self.callStatus=@[@"",@"Pending",@"Busy",@"No Answer",@"Voicemail",@"Wrong Number"];
     
-    self.pledge=@[@"Volunteer",@"Pledge",@"Events",@"Credit card payments",@"Will not donate now",@"Will not donate ever"];
+    self.pledge=@[@"",@"Volunteer",@"Pledge",@"Events",@"Credit card payments",@"Will not donate now",@"Will not donate ever"];
     
     
     self.amountPledgeTextField.delegate=self;

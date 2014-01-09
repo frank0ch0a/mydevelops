@@ -22,6 +22,10 @@
 @property(nonatomic,copy)NSString *party;
 @property(nonatomic,copy)NSString *pledgeID;
 @property(nonatomic)NSInteger section;
+@property(nonatomic,copy)NSString *zipCode;
+@property(nonatomic,copy)NSString *address;
+@property(nonatomic,assign)BOOL checked;
+-(void)toggleChecked;
 
 
 @end

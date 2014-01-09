@@ -852,7 +852,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     callVC.callLabel.text=[NSString stringWithFormat:@"Calling \n %@ %@",self.detailModel.name,self.detailModel.lastName];
     callVC.ask.text=self.detailModel.ask;
-    callVC.cityAndState.text=[NSString stringWithFormat:@"%@,%@",self.detailModel.city,self.detailModel.state];
+    callVC.cityAndState.text=[NSString stringWithFormat:@"%@, %@",self.detailModel.city,self.detailModel.state];
     callVC.high1Label.text=self.detailModel.highlights1;
     callVC.high2Label.text=self.detailModel.highlights2;
     

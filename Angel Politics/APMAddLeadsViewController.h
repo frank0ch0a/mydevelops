@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *leadsZipTextFiels;
 
 
+- (IBAction)saveSelectedItem:(id)sender;
 
 - (IBAction)saveLeads:(id)sender;
 
@@ -51,5 +52,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar2;
 
 - (IBAction)addAllContacs:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIToolbar *selectToolbar;
 
 @end

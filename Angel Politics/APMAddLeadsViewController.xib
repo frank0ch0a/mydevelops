@@ -18,6 +18,7 @@
                 <outlet property="leadsZipTextFiels" destination="RMT-z4-zgt" id="HAo-9h-lgW"/>
                 <outlet property="saveLeadButton" destination="ctR-tE-EY7" id="PjR-ay-w06"/>
                 <outlet property="searchBar2" destination="Ws9-ky-C60" id="K0f-E7-2ML"/>
+                <outlet property="selectToolbar" destination="MnH-T0-HfQ" id="4jb-iV-dFr"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -31,7 +32,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
-                <tableView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aRp-Ye-0m0">
+                <tableView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aRp-Ye-0m0">
                     <rect key="frame" x="14" y="129" width="292" height="394"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -230,6 +231,17 @@
                         <action selector="closeAddLeadVC:" destination="-1" eventType="touchUpInside" id="8GB-a0-0rq"/>
                     </connections>
                 </button>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="MnH-T0-HfQ">
+                    <rect key="frame" x="0.0" y="504" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem title="Save selected items" id="XX9-h5-Sps">
+                            <connections>
+                                <action selector="saveSelectedItem:" destination="-1" id="5IQ-PJ-0Ch"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
