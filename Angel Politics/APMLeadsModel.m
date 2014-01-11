@@ -22,7 +22,7 @@
 @synthesize pledgeID;
 @synthesize section;
 @synthesize zipCode;
-@synthesize address;
+@synthesize street;
 
 -(void)toggleChecked
 {

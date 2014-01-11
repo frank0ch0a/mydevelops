@@ -15,8 +15,11 @@
 
 #import <UIKit/UIKit.h>
 #import <AddressBook/AddressBook.h>
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
 
-@interface APMAddLeadsViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
+
+@interface APMAddLeadsViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 - (IBAction)closeAddLeadVC:(id)sender;
 
 @property(nonatomic,weak)id<AddLeadsDelegate>delegate;
@@ -38,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *leadsZipTextFiels;
 
 
+
+
 - (IBAction)saveSelectedItem:(id)sender;
 
 - (IBAction)saveLeads:(id)sender;
@@ -54,5 +59,6 @@
 - (IBAction)addAllContacs:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *selectToolbar;
+
 
 @end

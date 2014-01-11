@@ -14,6 +14,7 @@
 #import "APMLeadsModel.h"
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
+#include "APMFaceBookViewController.h"
 
 
 @interface APMAddLeadsViewController (){
@@ -22,6 +23,7 @@
     NSOperationQueue *queue;
     ABAddressBookRef addresBook;
     NSMutableArray *contacs;
+    BOOL isFB;
     
 }
 
@@ -33,6 +35,8 @@
 @property(nonatomic,strong)NSArray *indexTitlesArray;
 @property(nonatomic,strong)NSArray *filteredName;
 @property(nonatomic,strong)NSMutableArray *selectArray;
+@property (nonatomic, strong) NSArray *friendsList;
+@property (nonatomic, strong) ACAccountStore *accountStore;
 
 
 
@@ -63,13 +67,13 @@
     self.selectToolbar.hidden=YES;
     
     
-    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
     
     yAddView=self.addLeadsUIView.frame.origin.y;
     
@@ -83,16 +87,45 @@
     
     self.collation=[UILocalizedIndexedCollation currentCollation];
     
-    [self LoadContacts];
+ 
+        [self LoadContacts];
+    
+    
+    
     
     
     
     self.contactsTableView.allowsMultipleSelection=YES;
     
     self.selectArray=[[NSMutableArray alloc]initWithCapacity:100];
+    
+    [self setupAccountStore];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onAccountStoreChanged:)
+                                                 name:ACAccountStoreDidChangeNotification
+                                               object:nil];
+    
+    
 
-   
+    
+    
 }
+
+
+
+
+- (void)onAccountStoreChanged:(NSNotification *)notification {
+    if ([self presentedViewController]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self setupAccountStore];
+        }];
+    }
+}
+
+- (void)setupAccountStore {
+    self.accountStore = [[ACAccountStore alloc] init];
+}
+
 
 
 - (void)didReceiveMemoryWarning
@@ -178,7 +211,8 @@
         NSString *lastname=donorModel.donorLastName;
         NSString *phone=donorModel.donorPhoneNumber;
         NSString *email=donorModel.donorEmail;
-        NSString *address=donorModel.address;
+        NSString *address=donorModel.street;
+        NSString *zip=donorModel.zipCode;
         
         if (name==nil) {
             name=@"N/A";
@@ -220,18 +254,27 @@
         if (address==nil) {
             
             address=@"N/A";
-            donorModel.address=email;
+            donorModel.street=address;
         }else{
             
-            address=donorModel.address;
+            address=donorModel.street;
             
+            
+        }
+        
+        if (zip==nil) {
+            zip=@"N/A";
+            donorModel.zipCode=zip;
+        }else{
+            
+            zip=donorModel.zipCode;
             
         }
         
         
         
         dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
-               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.address
+               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
                };
         
         [arrayContacs addObject:dict];
@@ -422,6 +465,7 @@
     
     NSString *name;
     NSString *lastName;
+  
     
     
     if (paramPerson==NULL) {
@@ -461,6 +505,9 @@
         
     }
     
+   
+    
+    
     
     
     
@@ -470,6 +517,10 @@
         NSLog(@"This contact does no have any emails");
         
     }
+    
+    
+    
+    
     
 //Go trough all the emails
     
@@ -539,33 +590,34 @@
     
     ABMultiValueRef address=ABRecordCopyValue(paramPerson,kABPersonAddressProperty);
     
-    if (address==NULL) {
+    if (address!=NULL) {
         
+    
+    
+    for (CFIndex j = 0; j<ABMultiValueGetCount(address);j++){
+        CFDictionaryRef dict = ABMultiValueCopyValueAtIndex(address, j);
+        CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(address, j);
+        CFStringRef labeltype = ABAddressBookCopyLocalizedLabel(typeTmp);
+        NSString *street = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressStreetKey) copy];
+       // NSString *city = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressCityKey) copy];
+      //  NSString *state = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressStateKey) copy];
+        NSString *zip = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressZIPKey) copy];
+     //   NSString *country = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressCountryKey) copy];
+        
+        donorModel.street=street;
+        donorModel.zipCode=zip;
+        
+        
+        CFRelease(dict);
+        CFRelease(labeltype);
+        CFRelease(typeTmp);
     }
-    
-    
-    
-    NSUInteger addressCounter=0;
-    
-    for (addressCounter=0; addressCounter<ABMultiValueGetCount(address) ; addressCounter++) {
-        
-        
-        if (address !=NULL) {
-            
-            donorModel.address=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(address, addressCounter);
-            
-            NSLog(@"address %@",donorModel.address);
-            
-        }
-        
-        
-        
-        
-    }
-    
     CFRelease(address);
     
-    return donorModel;
+    
+    }
+    
+       return donorModel;
     
 }
 
@@ -675,6 +727,15 @@
 }
 - (IBAction)addContact:(id)sender {
     
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Add Contacts"
+                                                      message:@""
+                                                     delegate:self
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"Phone Contacts", @"Facebook",@"Linkedin",nil];
+    [message show];
+
+    
+    /*
     
     [UIView animateWithDuration:0.15
                           delay:0
@@ -687,7 +748,7 @@
                      } completion:nil];
     
 
-    [self.contactsTableView reloadData];
+    [self.contactsTableView reloadData];*/
     
     
     
@@ -703,7 +764,13 @@
     // Return the number of sections.
     
     if (tableView==self.contactsTableView) {
-         return [self.nameList count];
+        if (isFB) {
+            return 1;
+        }else{
+             return [self.nameList count];
+        }
+        
+        
     }else{
         
         return 1;
@@ -719,7 +786,17 @@
     // Just return the count of the productsl like before
     
     if (tableView==self.contactsTableView) {
-        return [[self.nameList objectAtIndex:section] count];
+        
+        if (isFB) {
+            return [self.friendsList count];
+            
+        }else{
+            
+             return [[self.nameList objectAtIndex:section] count];
+        }
+        
+        
+       
     }
         
         // We need the count for the filtered table
@@ -765,9 +842,13 @@
        [self.selectArray addObject:item];
         
        
+        if ([self.selectArray count]>1) {
+            
+            NSLog(@"Se selecciona!");
+            self.selectToolbar.hidden=NO;
+
+        }
         
-        NSLog(@"Se selecciona!");
-       self.selectToolbar.hidden=NO;
         
         
     }else{
@@ -798,6 +879,25 @@
     }
     
     if (tableView==self.contactsTableView) {
+        
+        if (isFB) {
+            
+            APMLeadsModel *donorModel;
+            
+            NSDictionary *dict= self.friendsList[indexPath.row];
+            
+            NSLog(@"Friend: %@", dict);
+
+            
+            donorModel.donorName=dict[@"name"];
+        
+            
+            cell.textLabel.text =donorModel.donorName;
+            
+            return cell;
+
+            
+        }else{
         
          APMLeadsModel *donorModel=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
         
@@ -831,6 +931,8 @@
         
         
        return  cell;
+       
+        }
         
     }else{
         
@@ -942,6 +1044,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         NSString *lastname=donorModel.donorLastName;
         NSString *phone=donorModel.donorPhoneNumber;
         NSString *email=donorModel.donorEmail;
+        NSString *street=donorModel.street;
+        NSString *zip=donorModel.zipCode;
+
         
         if (name==nil) {
             name=@"N/A";
@@ -979,9 +1084,32 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
             
             
         }
+        
+        if (street==nil) {
+            
+            street=@"N/A";
+            donorModel.street=street;
+        }else{
+            
+            street=donorModel.street;
+            
+            
+        }
+        
+        
+        if (zip==nil) {
+            zip=@"N/A";
+            donorModel.zipCode=zip;
+        }else{
+            
+            zip=donorModel.zipCode;
+            
+        }
+        
+
 
         
-        NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"lastname":lastname,@"phone":phone,@"inboxmail":email};
+        NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"lastname":lastname,@"phone":phone,@"inboxmail":email,@"street":street,@"zip":zip};
         
         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
         
@@ -1062,11 +1190,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     
     if (tableView==self.contactsTableView) {
+        
+        if (isFB) {
+            return nil;
+        }else{
+        
         if ([[self.nameList objectAtIndex:section] count] > 0) {
             // If it does, get the section title from the UILocalizedIndexedCollation object
             return [[[UILocalizedIndexedCollation currentCollation] sectionTitles]
                     objectAtIndex:section];
         }
+    }
     }
     
     return nil;
@@ -1246,7 +1380,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         NSString *lastname=donorModel.donorLastName;
         NSString *phone=donorModel.donorPhoneNumber;
         NSString *email=donorModel.donorEmail;
-        NSString *address=donorModel.address;
+        NSString *street=donorModel.street;
+        NSString *zip=donorModel.zipCode;
         
         if (name==nil) {
             name=@"N/A";
@@ -1285,21 +1420,31 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
             
         }
         
-        if (address==nil) {
+        if (street==nil) {
             
-            address=@"N/A";
-            donorModel.address=email;
+            street=@"N/A";
+            donorModel.street=street;
         }else{
             
-            address=donorModel.address;
+            street=donorModel.street;
             
+            
+        }
+        
+        
+        if (zip==nil) {
+            zip=@"N/A";
+            donorModel.zipCode=zip;
+        }else{
+            
+            zip=donorModel.zipCode;
             
         }
         
         
         
         dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
-               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.address
+               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"street":donorModel.street,@"zip":donorModel.zipCode
                };
         
         [arrayContacs addObject:dict];
@@ -1309,6 +1454,74 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"arraycontacts %@",arrayContacs);
     
     [self sendAllContacts:arrayContacs];
+    
+    
+    
+}
+- (IBAction)fbContacts:(id)sender {
+    
+    isFB=YES;
+    
+
+    
+
+    
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         
+                         
+                         self.addLeadsUIView.frame=CGRectMake(-400
+                                                              , self.addLeadsUIView.frame.origin.y, self.addLeadsUIView.frame.size.width, self.addLeadsUIView.frame.size.height);
+                     } completion:nil];
+    
+    
+
+     [self.contactsTableView reloadData];
+
+}
+
+#pragma mark - UIAlertView Delegate
+
+-(void)alertView:(UIAlertView *)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        
+        
+        [UIView animateWithDuration:0.15
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             
+                             
+                             self.addLeadsUIView.frame=CGRectMake(-400
+                                                                  , self.addLeadsUIView.frame.origin.y, self.addLeadsUIView.frame.size.width, self.addLeadsUIView.frame.size.height);
+                         } completion:nil];
+        
+        
+        [self.contactsTableView reloadData];
+        
+    }else if (buttonIndex==1){
+        
+        APMFaceBookViewController *fbvc = [[APMFaceBookViewController alloc] init];
+         fbvc.accountStore = self.accountStore;
+        [self presentViewController:NAVIFY(fbvc)
+                           animated:YES
+                         completion:nil];
+        
+    }else{
+        
+        
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Message" message:@"Coming Soon!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        
+        
+        [alert show];
+        
+        
+    }
+    
     
     
     

@@ -332,7 +332,7 @@ enum {
         APMCandidateModel *candidateModel=[self.menuResults objectAtIndex:indexPath.row];
         
         cell.candidateNameLabel.text=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
-        cell.candidateOficceAndCityLabel.text=[NSString stringWithFormat:@"%@,%@",candidateModel.officeCandidate,candidateModel.city];
+        cell.candidateOficceAndCityLabel.text=[NSString stringWithFormat:@"%@, %@",candidateModel.officeCandidate,candidateModel.city];
         cell.candidateSupportersLabel.text=candidateModel.supportes;
         cell.candidateFundRaisedLabel.text=candidateModel.funraised;
         cell.candidateDayToElectLabel.text=candidateModel.dayToElection;

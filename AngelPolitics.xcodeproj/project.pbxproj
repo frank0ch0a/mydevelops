@@ -30,6 +30,9 @@
 		0133584F1850E49E00AD3C0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0133584E1850E49E00AD3C0C /* FacebookSDK.framework */; };
 		013358511850E5A700AD3C0C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013358501850E5A700AD3C0C /* Social.framework */; };
 		0133585318522D1400AD3C0C /* btnFacebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 0133585218522D1400AD3C0C /* btnFacebook.png */; };
+		013FC0821880D631004A9729 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 013FC0811880D631004A9729 /* facebook.png */; };
+		013FC0861880E346004A9729 /* APMFaceBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013FC0841880E346004A9729 /* APMFaceBookViewController.m */; };
+		013FC0871880E346004A9729 /* APMFaceBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013FC0851880E346004A9729 /* APMFaceBookViewController.xib */; };
 		014690F517F734B5002C0318 /* APMDonorDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014690F317F734B5002C0318 /* APMDonorDetailController.m */; };
 		014690F617F734B5002C0318 /* APMDonorDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F417F734B5002C0318 /* APMDonorDetailController.xib */; };
 		014690F917F73664002C0318 /* APMCandidateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 014690F817F73664002C0318 /* APMCandidateCell.xib */; };
@@ -92,6 +95,9 @@
 		0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3B117EF487D001EA3A6 /* barPattern.png */; };
 		0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0182D3B317EF4E03001EA3A6 /* MenuCell.xib */; };
 		0182D3B717EF4E3F001EA3A6 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182D3B617EF4E3F001EA3A6 /* MenuCell.m */; };
+		01920216187EF56C006B5C7D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01920215187EF56C006B5C7D /* Accounts.framework */; };
+		0192021A187EF8FC006B5C7D /* facebook_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 01920218187EF8FC006B5C7D /* facebook_avatar.png */; };
+		0192021B187EF8FC006B5C7D /* facebook_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01920219187EF8FC006B5C7D /* facebook_avatar@2x.png */; };
 		019B7D63180C441D006202B5 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 019B7D5D180C441D006202B5 /* libTestFlight.a */; };
 		019B7D64180C441D006202B5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 019B7D5E180C441D006202B5 /* README.md */; };
 		019B7D65180C441D006202B5 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 019B7D5F180C441D006202B5 /* release_notes.md */; };
@@ -207,6 +213,10 @@
 		0133585D1855F13900AD3C0C /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		0133585E1855F14E00AD3C0C /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		0133585F1855F16400AD3C0C /* Icon-Spotlight-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Spotlight-40@2x.png"; sourceTree = "<group>"; };
+		013FC0811880D631004A9729 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
+		013FC0831880E346004A9729 /* APMFaceBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMFaceBookViewController.h; sourceTree = "<group>"; };
+		013FC0841880E346004A9729 /* APMFaceBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMFaceBookViewController.m; sourceTree = "<group>"; };
+		013FC0851880E346004A9729 /* APMFaceBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMFaceBookViewController.xib; sourceTree = "<group>"; };
 		014690F217F734B5002C0318 /* APMDonorDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APMDonorDetailController.h; path = ../APMDonorDetailController.h; sourceTree = "<group>"; };
 		014690F317F734B5002C0318 /* APMDonorDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMDonorDetailController.m; path = ../APMDonorDetailController.m; sourceTree = "<group>"; };
 		014690F417F734B5002C0318 /* APMDonorDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APMDonorDetailController.xib; path = ../APMDonorDetailController.xib; sourceTree = "<group>"; };
@@ -283,6 +293,10 @@
 		0182D3B317EF4E03001EA3A6 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		0182D3B517EF4E3F001EA3A6 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		0182D3B617EF4E3F001EA3A6 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
+		01920215187EF56C006B5C7D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		01920217187EF8DF006B5C7D /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
+		01920218187EF8FC006B5C7D /* facebook_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_avatar.png; sourceTree = "<group>"; };
+		01920219187EF8FC006B5C7D /* facebook_avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_avatar@2x.png"; sourceTree = "<group>"; };
 		019B7D5D180C441D006202B5 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		019B7D5E180C441D006202B5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		019B7D5F180C441D006202B5 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
@@ -383,8 +397,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				012BEF8918593CD800F37709 /* AddressBook.framework in Frameworks */,
 				013358511850E5A700AD3C0C /* Social.framework in Frameworks */,
+				01920216187EF56C006B5C7D /* Accounts.framework in Frameworks */,
+				012BEF8918593CD800F37709 /* AddressBook.framework in Frameworks */,
 				01E360E81828420E0091B84D /* MessageUI.framework in Frameworks */,
 				01F95E73181F4392006CCF83 /* CoreFoundation.framework in Frameworks */,
 				01732A6C181DDCD90044EF8E /* SystemConfiguration.framework in Frameworks */,
@@ -453,6 +468,7 @@
 		011D239017EF31E4003A4204 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				01920215187EF56C006B5C7D /* Accounts.framework */,
 				012BEF8818593CD800F37709 /* AddressBook.framework */,
 				013358501850E5A700AD3C0C /* Social.framework */,
 				0133584E1850E49E00AD3C0C /* FacebookSDK.framework */,
@@ -496,6 +512,8 @@
 			children = (
 				016AE73A1844FD660012F2F1 /* hangoutButton.png */,
 				01D4F71218063C650054613C /* Helvetica */,
+				01920218187EF8FC006B5C7D /* facebook_avatar.png */,
+				01920219187EF8FC006B5C7D /* facebook_avatar@2x.png */,
 				01D4F71518063C650054613C /* Helvetica Neue Font */,
 				0182D3B117EF487D001EA3A6 /* barPattern.png */,
 				01F95E85181F6C26006CCF83 /* dial.png */,
@@ -506,6 +524,7 @@
 				015AD8A51847A084008A739F /* fondoBotonBorrar.png */,
 				01255B7A18581D3200072E4F /* droparrow.png */,
 				018103A7182CB80900417680 /* btn_plus@2.png */,
+				013FC0811880D631004A9729 /* facebook.png */,
 				01E557AC18024DFA0081AB21 /* mail.png */,
 				01508B2E1821F5B50043C2A9 /* downArrowBlack.png */,
 				018103AC182CB97A00417680 /* ic_search.png */,
@@ -565,6 +584,7 @@
 		014690F717F734D8002C0318 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				013FC0851880E346004A9729 /* APMFaceBookViewController.xib */,
 				01B56180182B5BA9008E2077 /* APMEditCandProfileViewController.xib */,
 				01B97B481843ED1000E5513A /* APMAddLeadsViewController.xib */,
 				016D3B4E18367D1A006E881F /* APMSearchResultsViewController.xib */,
@@ -693,6 +713,8 @@
 				016D3B4D18367D1A006E881F /* APMSearchResultsViewController.m */,
 				01B97B461843ED1000E5513A /* APMAddLeadsViewController.h */,
 				01B97B471843ED1000E5513A /* APMAddLeadsViewController.m */,
+				013FC0831880E346004A9729 /* APMFaceBookViewController.h */,
+				013FC0841880E346004A9729 /* APMFaceBookViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -731,6 +753,7 @@
 			children = (
 				01BB962217FD01870040DE19 /* APMCandidateModel.h */,
 				01BB962317FD01870040DE19 /* APMCandidateModel.m */,
+				01920217187EF8DF006B5C7D /* Macros.h */,
 				01C98357181C740D0043C8EA /* KeychainItemWrapper.h */,
 				01C98358181C740D0043C8EA /* KeychainItemWrapper.m */,
 				01732A62181DD30C0044EF8E /* APMLeadsModel.h */,
@@ -859,11 +882,13 @@
 				01C98351181C297A0043C8EA /* APMLoginViewController.xib in Resources */,
 				01D4F72218063C650054613C /* HelveticaCdBd.ttf in Resources */,
 				01E557A918024D0B0081AB21 /* phone.png in Resources */,
+				0192021A187EF8FC006B5C7D /* facebook_avatar.png in Resources */,
 				01D4F72318063C650054613C /* HelveticaNeue.ttf in Resources */,
 				01732A83181DDE8E0044EF8E /* disconnect.wav in Resources */,
 				01D4F72918063C650054613C /* HelveticaNeueLight.ttf in Resources */,
 				01732A85181DDE8E0044EF8E /* dtmf_1.wav in Resources */,
 				018103A1182CB63600417680 /* call_phone@2x.png in Resources */,
+				013FC0871880E346004A9729 /* APMFaceBookViewController.xib in Resources */,
 				012BEF91185B690A00F37709 /* states.plist in Resources */,
 				01E557AD18024DFA0081AB21 /* mail.png in Resources */,
 				014690F617F734B5002C0318 /* APMDonorDetailController.xib in Resources */,
@@ -919,6 +944,8 @@
 				018103A9182CB80900417680 /* btn_plus@2.png in Resources */,
 				01F95E81181F65D8006CCF83 /* CloseButton@2x.png in Resources */,
 				0152722E180386CB00D79E1C /* Images.xcassets in Resources */,
+				013FC0821880D631004A9729 /* facebook.png in Resources */,
+				0192021B187EF8FC006B5C7D /* facebook_avatar@2x.png in Resources */,
 				01C77763184866B000D0018E /* bg_navbar@x2.png in Resources */,
 				012BEF8F185AAA6E00F37709 /* call_user_icon@2x.png in Resources */,
 				015AD89F184795A4008A739F /* img_circle_value.png in Resources */,
@@ -963,6 +990,7 @@
 				01F95E79181F5ED4006CCF83 /* APMCallViewController.m in Sources */,
 				01BB961B17FCFF650040DE19 /* AFImageRequestOperation.m in Sources */,
 				01508B321821F7890043C2A9 /* ModalPickerView.m in Sources */,
+				013FC0861880E346004A9729 /* APMFaceBookViewController.m in Sources */,
 				01BB962417FD01870040DE19 /* APMCandidateModel.m in Sources */,
 				014690FC17F73774002C0318 /* APMCandidateCell.m in Sources */,
 				0182D3A917EF37A8001EA3A6 /* NVSlideMenuController.m in Sources */,
