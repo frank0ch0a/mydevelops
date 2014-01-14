@@ -23,10 +23,12 @@
 #import "APMAppDelegate.h"
 #import "TestFlight.h"
 #import "APMFrontViewController.h"
+#import "APMPosibleContributionsModel.h"
 
 @interface APMDonorDetailController (){
     
     BOOL isLoading;
+    BOOL isPossible;
     NSOperationQueue *queue;
     NSString *phoneDial;
     CGFloat ySupport;
@@ -42,7 +44,9 @@
 @property(nonatomic,strong)NSString *pass;
 @property(nonatomic,strong)NSMutableArray *detailsResults;
 @property(nonatomic,strong)NSMutableArray *contributionsResults;
+@property(nonatomic,strong)NSMutableArray *possibleContributions;
 @property(nonatomic,strong)NSString *donorinOut;
+
 
 @end
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
@@ -177,6 +181,73 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
 }
 
+
+-(APMPosibleContributionsModel *)parsePossibleContributions:(NSDictionary *)dictionary{
+    
+    APMPosibleContributionsModel *possibleContributionsModel=[[APMPosibleContributionsModel alloc]init];
+    
+   
+    possibleContributionsModel.contributorName=[dictionary objectForKey:@"a"];
+    
+    possibleContributionsModel.contributionDate=[dictionary objectForKey:@"b"];
+    possibleContributionsModel.contributionAmount=[dictionary objectForKey:@"c"];
+    possibleContributionsModel.image=[dictionary objectForKey:@"d"];
+
+    
+    return possibleContributionsModel;
+    
+    
+}
+-(void)parsePossible:(NSDictionary *)dictionary{
+    
+    
+    
+    NSArray *array=[dictionary objectForKey:@"posible"];
+                    
+                    if (array==nil) {
+                        NSLog(@"Expected 'results' array");
+                        
+                        return;
+                        
+                        }
+    
+    self.possibleContributions=[[NSMutableArray alloc]init];
+    
+   
+    
+    for(NSDictionary *resultDict in array){
+        
+         APMPosibleContributionsModel *possibleContributionsModel;
+        
+        
+        possibleContributionsModel=[self parsePossibleContributions:resultDict];
+        
+        
+        
+        
+        if(possibleContributionsModel !=nil){
+            
+            
+            [self.possibleContributions addObject:possibleContributionsModel];
+            
+            NSLog(@"Possible count %d ",[self.possibleContributions count]);
+            
+        }
+        
+        
+    }
+    
+    
+
+    
+    
+                    
+                    
+    
+    
+}
+
+
 -(APMContributionsModel *)parseContributions:(NSDictionary *)dictionary{
     
     APMContributionsModel *contributionsModel=[[APMContributionsModel alloc]init];
@@ -194,6 +265,8 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 -(void)parseDictionaryContributions:(NSDictionary *)dictionary{
     
    
+    
+    
     NSArray *array=[dictionary objectForKey:@"contribuciones"];
     
     
@@ -221,7 +294,10 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             [self.contributionsResults addObject:contributionsModel];
             
-            //NSLog(@"contributions array %@",self.contributionsResults);
+            NSLog(@"contributions array %@",self.contributionsResults);
+            
+            NSLog(@"contributions count %d",[self.contributionsResults count]);
+        
         }
         
         
@@ -234,11 +310,6 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 
     
     
-    
-    
-    
-    
-
 -(APMDetailModel *)parseDetails:(NSDictionary *)dictionary
 {
     
@@ -562,8 +633,23 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
        
         
             [self parseDictionary:resultDict];
+        
+        if ([resultDict objectForKey:@"contribuciones"]!=nil && [resultDict objectForKey:@"contribuciones"] !=(id)[NSNull null]) {
+             [self parseDictionaryContributions:resultDict];
             
-            [self parseDictionaryContributions:resultDict];
+        }
+        
+        
+        
+        // Check count objects in posible array
+        if ([resultDict objectForKey:@"posible"]!=nil && [[resultDict objectForKey:@"posible"]count]>0) {
+            
+           isPossible=YES;
+            [self parsePossible:resultDict];
+        }
+        
+        
+        
         
     }
     
@@ -624,6 +710,8 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         if (JSON !=nil) {
             
            NSLog(@"Resulta JSON Donor Details %@",JSON);
+            
+            
             
           [self parseData:JSON];
             isLoading=NO;
@@ -691,8 +779,11 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
-    // Return the number of sections.
-    return 1;
+    if (!isPossible) {
+        return 1;
+    }
+    
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -702,7 +793,15 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         return 1;
     }else{
         
+        if (isPossible && section==0) {
+            return self.contributionsResults.count;
+        }else if (isPossible && section==1){
+            
+            return  self.possibleContributions.count;
+        }
+        
         return self.contributionsResults.count;
+        
     }
 }
 
@@ -722,47 +821,194 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             cell=[[DonorDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DonorDetailCellIdentifier];
         }
     
-    
-        APMContributionsModel *contributionsModel=[self.contributionsResults objectAtIndex:indexPath.row];
-        
-        cell.donorDetailNameLabel.text=contributionsModel.contributorName;
-        
-        NSLog(@"datemodel %@",contributionsModel.contributionDate);
-        
-        NSString *dateStr=contributionsModel.contributionDate;
-        NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
-        [dateFormatter setDateFormat:@"MM-dd-yyyy"];
-        
-        NSDate *date=[dateFormatter dateFromString:dateStr];
-       
-        
-        
-        NSDateFormatter *displayFormatter=[[NSDateFormatter alloc]init];
-        [displayFormatter setDateFormat:@"MM/dd/yyyy"];
-        
-       
-        
-        NSString *displayDate=[displayFormatter stringFromDate:date];
-        
-        
+        if (isPossible && indexPath.section==0) {
+            APMContributionsModel *contributionsModel=[self.contributionsResults objectAtIndex:indexPath.row];
+            
+            cell.donorDetailNameLabel.text=contributionsModel.contributorName;
+            
+            NSLog(@"datemodel %@",contributionsModel.contributionDate);
+            
+            NSString *dateStr=contributionsModel.contributionDate;
+            NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+            [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+            
+            NSDate *date=[dateFormatter dateFromString:dateStr];
+            
+            
+            
+            NSDateFormatter *displayFormatter=[[NSDateFormatter alloc]init];
+            [displayFormatter setDateFormat:@"MM/dd/yyyy"];
+            
+            
+            
+            NSString *displayDate=[displayFormatter stringFromDate:date];
+            
+            
+            
+            
+            cell.donorDetailDateLabel.text=displayDate;
+            cell.donorDetailAmountLabel.text=[NSString stringWithFormat:@"$ %@",contributionsModel.contributionAmount];
+            //cell.donorDetailImage.image=[UIImage imageNamed:@"men"];
+            
+            [cell.donorDetailImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",UrlImage,contributionsModel.image]] placeholderImage:[UIImage imageNamed:@"men"]];
+            
+            
+            
+            
+            return cell;
+        }else if (isPossible && indexPath.section==1){
+            
+            APMContributionsModel *contributionsModel=[self.possibleContributions objectAtIndex:indexPath.row];
+            
+            cell.donorDetailNameLabel.text=contributionsModel.contributorName;
+            
+            NSLog(@"datemodel %@",contributionsModel.contributionDate);
+            
+            NSString *dateStr=contributionsModel.contributionDate;
+            NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+            [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+            
+            NSDate *date=[dateFormatter dateFromString:dateStr];
+            
+            
+            
+            NSDateFormatter *displayFormatter=[[NSDateFormatter alloc]init];
+            [displayFormatter setDateFormat:@"MM/dd/yyyy"];
+            
+            
+            
+            NSString *displayDate=[displayFormatter stringFromDate:date];
+            
+            
+            
+            
+            cell.donorDetailDateLabel.text=displayDate;
+            cell.donorDetailAmountLabel.text=[NSString stringWithFormat:@"$ %@",contributionsModel.contributionAmount];
+            //cell.donorDetailImage.image=[UIImage imageNamed:@"men"];
+            
+            [cell.donorDetailImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",UrlImage,contributionsModel.image]] placeholderImage:[UIImage imageNamed:@"men"]];
+            
+            
+            
+            
+            return cell;
 
+            
+        }else{
+            
+            
+            APMContributionsModel *contributionsModel=[self.contributionsResults objectAtIndex:indexPath.row];
+            
+            cell.donorDetailNameLabel.text=contributionsModel.contributorName;
+            
+            NSLog(@"datemodel %@",contributionsModel.contributionDate);
+            
+            NSString *dateStr=contributionsModel.contributionDate;
+            NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+            [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+            
+            NSDate *date=[dateFormatter dateFromString:dateStr];
+            
+            
+            
+            NSDateFormatter *displayFormatter=[[NSDateFormatter alloc]init];
+            [displayFormatter setDateFormat:@"MM/dd/yyyy"];
+            
+            
+            
+            NSString *displayDate=[displayFormatter stringFromDate:date];
+            
+            
+            
+            
+            cell.donorDetailDateLabel.text=displayDate;
+            cell.donorDetailAmountLabel.text=[NSString stringWithFormat:@"$ %@",contributionsModel.contributionAmount];
+            //cell.donorDetailImage.image=[UIImage imageNamed:@"men"];
+            
+            [cell.donorDetailImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",UrlImage,contributionsModel.image]] placeholderImage:[UIImage imageNamed:@"men"]];
+            
+            
+            
+            
+            return cell;
 
-        cell.donorDetailDateLabel.text=displayDate;
-        cell.donorDetailAmountLabel.text=[NSString stringWithFormat:@"$ %@",contributionsModel.contributionAmount];
-        //cell.donorDetailImage.image=[UIImage imageNamed:@"men"];
+            
+            
+        }
+
+        }
         
-        [cell.donorDetailImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",UrlImage,contributionsModel.image]] placeholderImage:[UIImage imageNamed:@"men"]];
-
-      
     
     
-    return cell;
-        
-    }
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    
+    
+    
+    if (isPossible && section ==0 && [self.contributionsResults count]>0 ) {
+        
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 80)];
+        
+        
+        
+        headerView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"call_grey_bar"]];
+        
+        /*
+         UIImage *image = [UIImage imageNamed:@"encabezadoMenu.png"];
+         
+         UIImageView *headerImage = [[UIImageView alloc] initWithImage: image];
+         
+         [headerView addSubview:headerImage];*/
+        
+        UILabel *menuText=[[UILabel alloc]initWithFrame:CGRectMake(15, 6, 240, 30)];
+        menuText.backgroundColor=[UIColor clearColor];
+        menuText.text=@"Last Donations";
+        menuText.font=[UIFont fontWithName:@"Helvetica75" size:17.0];
+        
+        [headerView addSubview:menuText];
+        
+        
+        
+        
+        return headerView;
+
+        
+    }else if (isPossible && section==1 && [self.possibleContributions count]>0){
+        
+        
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 80)];
+        
+        
+        
+        headerView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"call_grey_bar"]];
+        
+        /*
+         UIImage *image = [UIImage imageNamed:@"encabezadoMenu.png"];
+         
+         UIImageView *headerImage = [[UIImageView alloc] initWithImage: image];
+         
+         [headerView addSubview:headerImage];*/
+        
+        UILabel *menuText=[[UILabel alloc]initWithFrame:CGRectMake(15, 6, 240, 30)];
+        menuText.backgroundColor=[UIColor clearColor];
+        menuText.text=@"Possible Contributions";
+        menuText.font=[UIFont fontWithName:@"Helvetica75" size:17.0];
+        
+        [headerView addSubview:menuText];
+        
+        
+        
+        
+        return headerView;
+        
+        
+        
+    }
+    
+    
+    
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 80)];
     
     
@@ -786,10 +1032,11 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
    
     
     
-    return headerView;
-    
+        return headerView;
+   
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
     
     return 40.0;
     
@@ -832,6 +1079,8 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
    
     
    // NSString *codeNumber=[NSString stringWithFormat:@"+1%@",phoneDial];
+    
+    //Get appdelegate class to make a call
     
     APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
     APMPhone* phone = appDelegate.phone;

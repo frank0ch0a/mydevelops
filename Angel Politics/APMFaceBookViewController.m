@@ -52,7 +52,12 @@
 }
 
 - (void)onDone:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate dismissController:self];
+
+    }];
+    
+    
 }
 
 
@@ -72,7 +77,7 @@
     
      [self.fbTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
-    
+    [SVProgressHUD show];
     
     ACAccountType *facebookAccountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
     id options = @{
@@ -87,6 +92,7 @@
                                                     NSLog(@"Granted!");
                                                     ACAccount *fbAccount = [[self.accountStore accountsWithAccountType:facebookAccountType] lastObject];
                                                     [self fetchFacebookFriendsFor:fbAccount];
+                                                    
                                                 } else {
                                                     NSLog(@"Not granted: %@", error);
                                                 }
@@ -99,7 +105,7 @@
 - (void)fetchFacebookFriendsFor:(ACAccount *)facebookAccount {
   //  [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    [SVProgressHUD show];
+    
     SLRequest *friendsListRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook
                                                        requestMethod:SLRequestMethodGET
                                                                  URL:URLIFY(@"https://graph.facebook.com/me/friends")
@@ -182,6 +188,5 @@
 }
 
 
-- (IBAction)addAllFriend:(id)sender {
-}
+
 @end

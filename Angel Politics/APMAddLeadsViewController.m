@@ -14,7 +14,7 @@
 #import "APMLeadsModel.h"
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
-#include "APMFaceBookViewController.h"
+
 
 
 @interface APMAddLeadsViewController (){
@@ -37,7 +37,8 @@
 @property(nonatomic,strong)NSMutableArray *selectArray;
 @property (nonatomic, strong) NSArray *friendsList;
 @property (nonatomic, strong) ACAccountStore *accountStore;
-
+@property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
 
 
 
@@ -56,6 +57,7 @@
     return self;
 }
 
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -65,6 +67,47 @@
     [self.saveLeadButton setBackgroundImage:imageButton forState:UIControlStateNormal];
     
     self.selectToolbar.hidden=YES;
+    
+    self.title=@"Add Leads";
+    
+    
+}
+
+- (UIBarButtonItem *)addContacs {
+    
+    
+    _leftBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Add all" style:UIBarButtonItemStyleBordered
+                                                        target:self
+                                                        action:@selector(addAll:)];
+    
+    
+    [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    return _leftBarButtonItem;
+}
+
+- (void)addAll:(id)sender {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Add Contacts"
+                                                      message:@""
+                                                     delegate:self
+                                            cancelButtonTitle:@"Cancel"
+                                            otherButtonTitles:@"Phone Contacts", @"Facebook",@"Linkedin",nil];
+    [message show];
+}
+
+- (UIBarButtonItem *)Close {
+    _rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                        target:self
+                                                                        action:@selector(onDone:)];
+    
+    [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    return _rightBarButtonItem;
+}
+- (void)onDone:(id)sender {
+    
+    [self.delegate dismissController:self];
+
     
     
 }
@@ -92,10 +135,18 @@
     
     
     
+    self.navigationItem.leftBarButtonItem = [self addContacs];
     
+    
+    
+    self.navigationItem.rightBarButtonItem = [self Close];
     
     
     self.contactsTableView.allowsMultipleSelection=YES;
+    
+    self.searchController.searchResultsTableView.allowsMultipleSelection=YES;
+    
+    
     
     self.selectArray=[[NSMutableArray alloc]initWithCapacity:100];
     
@@ -596,8 +647,8 @@
     
     for (CFIndex j = 0; j<ABMultiValueGetCount(address);j++){
         CFDictionaryRef dict = ABMultiValueCopyValueAtIndex(address, j);
-        CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(address, j);
-        CFStringRef labeltype = ABAddressBookCopyLocalizedLabel(typeTmp);
+      //  CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(address, j);
+     //   CFStringRef labeltype = ABAddressBookCopyLocalizedLabel(typeTmp);
         NSString *street = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressStreetKey) copy];
        // NSString *city = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressCityKey) copy];
       //  NSString *state = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressStateKey) copy];
@@ -609,8 +660,8 @@
         
         
         CFRelease(dict);
-        CFRelease(labeltype);
-        CFRelease(typeTmp);
+     //   CFRelease(labeltype);
+     //   CFRelease(typeTmp);
     }
     CFRelease(address);
     
@@ -730,7 +781,7 @@
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Add Contacts"
                                                       message:@""
                                                      delegate:self
-                                            cancelButtonTitle:nil
+                                            cancelButtonTitle:@"Cancel"
                                             otherButtonTitles:@"Phone Contacts", @"Facebook",@"Linkedin",nil];
     [message show];
 
@@ -846,6 +897,18 @@
             
             NSLog(@"Se selecciona!");
             self.selectToolbar.hidden=NO;
+            
+            [self.searchBar2 resignFirstResponder];
+            
+            if ([self.searchController isActive]) {
+                /*
+                 self.searchController.searchResultsTableView.frame=CGRectMake(self.searchController.searchResultsTableView.frame.origin.x, self.searchController.searchResultsTableView.frame.origin.y, self.searchController.searchResultsTableView.frame.size.width, self.searchController.searchResultsTableView.frame.size.height-40.0);*/
+                
+                //Set toolbar above de searchResults Toolbar
+                [self.view insertSubview:self.selectToolbar aboveSubview:self.searchController.searchResultsTableView];
+            }
+            
+           
 
         }
         
@@ -856,6 +919,15 @@
         label.text=@"";
      
         NSLog(@"se deselecciona!");
+        
+        [self.selectArray removeObject:item];
+        
+        if ([self.selectArray count]<2) {
+            
+            NSLog(@"Se selecciona!");
+            self.selectToolbar.hidden=YES;
+            
+        }
         
     }
     
@@ -979,15 +1051,48 @@
 
 - (void)checkButtonTapped:(id)sender event:(id)event
 {
-	NSSet *touches = [event allTouches];
-	UITouch *touch = [touches anyObject];
-	CGPoint currentTouchPosition = [touch locationInView:self.contactsTableView];
+	
     
-	NSIndexPath *indexPath = [self.contactsTableView indexPathForRowAtPoint: currentTouchPosition];
-	if (indexPath != nil)
-	{
-		[self tableView: self.contactsTableView accessoryButtonTappedForRowWithIndexPath: indexPath];
-	}
+  
+        
+    
+    if ([self.searchController isActive]){
+        
+        
+        NSSet *touches = [event allTouches];
+        UITouch *touch = [touches anyObject];
+        CGPoint currentTouchPosition = [touch locationInView:self.searchController.searchResultsTableView];
+        
+        NSIndexPath *indexPath = [self.searchController.searchResultsTableView indexPathForRowAtPoint: currentTouchPosition];
+        if (indexPath != nil)
+        {
+            [self tableView: self.searchController.searchResultsTableView accessoryButtonTappedForRowWithIndexPath: indexPath];
+
+        
+        }
+        
+    }else{
+        
+        NSSet *touches = [event allTouches];
+        UITouch *touch = [touches anyObject];
+        CGPoint currentTouchPosition = [touch locationInView:self.contactsTableView];
+        
+        NSIndexPath *indexPath = [self.contactsTableView indexPathForRowAtPoint: currentTouchPosition];
+        if (indexPath != nil)
+        {
+            [self tableView: self.contactsTableView accessoryButtonTappedForRowWithIndexPath: indexPath];
+        }
+
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
 }
 
 -(void)tableView:(UITableView *)tableView
@@ -998,20 +1103,38 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     
+    if (tableView==self.contactsTableView) {
+        
+        APMLeadsModel *item=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+        
+        
+        
+        [item toggleChecked];
+        
+        
+        
+        [self configureCheckmarkForCell:cell withChecklistItem:item];
+        
+         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    }else{
+        
+        APMLeadsModel *item=[self.filteredName objectAtIndex:indexPath.row];
+        
+        
+        
+        [item toggleChecked];
+        
+        
+        
+        [self configureCheckmarkForCell:cell withChecklistItem:item];
+        
+           [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+    }
+
     
 
-    APMLeadsModel *item=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
-        
-        
-    
-    [item toggleChecked];
-    
-
-    
-    [self configureCheckmarkForCell:cell withChecklistItem:item];
-        
-        
-   // [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
     
 
@@ -1022,40 +1145,41 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
 }
 
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView
+accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
     
+    self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [self.keychain objectForKey:(__bridge id)kSecValueData]!=nil) {
+        
+        self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+        self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
+        
+    }
+    NSString *name;
+    NSString *lastname;
+    NSString *phone;
+    NSString *email;
+    NSString *street;
+    NSString *zip;
 
-    
     if (tableView==self.contactsTableView) {
         
-        self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    APMLeadsModel *donorModel=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
         
-        if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [self.keychain objectForKey:(__bridge id)kSecValueData]!=nil) {
-            
-            self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
-            self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
-            
-        }
-        
-        APMLeadsModel *donorModel=[[self.nameList objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
-        
-        
-        NSString *name=donorModel.donorName;
-        NSString *lastname=donorModel.donorLastName;
-        NSString *phone=donorModel.donorPhoneNumber;
-        NSString *email=donorModel.donorEmail;
-        NSString *street=donorModel.street;
-        NSString *zip=donorModel.zipCode;
-
+      name=donorModel.donorName;
+      lastname=donorModel.donorLastName;
+      phone=donorModel.donorPhoneNumber;
+      email=donorModel.donorEmail;
+      street=donorModel.street;
+      zip=donorModel.zipCode;
         
         if (name==nil) {
             name=@"N/A";
             donorModel.donorName=name;
             
         }else{
-            
-            name=donorModel.donorName;
-        }
+            name=donorModel.donorName;}
         
         if (lastname==nil) {
             lastname=@"N/A";
@@ -1081,8 +1205,69 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         }else{
             
             email=donorModel.donorEmail;
+            }
+        
+        if (street==nil) {
             
+            street=@"N/A";
+            donorModel.street=street;
+        }else{
             
+            street=donorModel.street;
+        }
+        
+        if (zip==nil) {
+            
+            zip=@"N/A";
+            donorModel.zipCode=zip;
+        }else{
+            
+            zip=donorModel.zipCode;
+        }
+        
+    }else{
+        
+        
+        APMLeadsModel *donorModel=[self.filteredName objectAtIndex:indexPath.row];
+        
+        name=donorModel.donorName;
+        lastname=donorModel.donorLastName;
+        phone=donorModel.donorPhoneNumber;
+        email=donorModel.donorEmail;
+        street=donorModel.street;
+        zip=donorModel.zipCode;
+        
+        if (name==nil) {
+            name=@"N/A";
+            donorModel.donorName=name;
+            
+        }else{
+            name=donorModel.donorName;}
+        
+        if (lastname==nil) {
+            lastname=@"N/A";
+            donorModel.donorLastName=lastname;
+        }else{
+            
+            lastname=donorModel.donorLastName;
+        }
+        
+        if (phone==nil) {
+            phone=@"N/A";
+            donorModel.donorPhoneNumber=phone;
+        }else{
+            
+            phone=donorModel.donorPhoneNumber;
+            
+        }
+        
+        if (email==nil) {
+            
+            email=@"N/A";
+            donorModel.donorEmail=email;
+        }else{
+            
+            email=donorModel.donorEmail;
         }
         
         if (street==nil) {
@@ -1092,24 +1277,25 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         }else{
             
             street=donorModel.street;
-            
-            
         }
-        
+
         
         if (zip==nil) {
+            
             zip=@"N/A";
             donorModel.zipCode=zip;
         }else{
             
             zip=donorModel.zipCode;
-            
         }
         
-
-
         
-        NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"lastname":lastname,@"phone":phone,@"inboxmail":email,@"street":street,@"zip":zip};
+        
+        
+        
+    }
+    
+NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"lastname":lastname,@"phone":phone,@"inboxmail":email,@"address":street,@"zip":zip};
         
         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
         
@@ -1169,18 +1355,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         [queue addOperation:operation];
         
         
-    }else{
-        
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Any field required can not be empty" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        
-        [alertView show];
-        
-        
-        
-        
-    }
 
-        
+
+
         
 }
 
@@ -1444,7 +1621,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         
         
         dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
-               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"street":donorModel.street,@"zip":donorModel.zipCode
+               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
                };
         
         [arrayContacs addObject:dict];
@@ -1487,7 +1664,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 -(void)alertView:(UIAlertView *)alertView
 clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex==0) {
+    if (buttonIndex==1) {
         
         
         [UIView animateWithDuration:0.15
@@ -1503,15 +1680,17 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
         
         [self.contactsTableView reloadData];
         
-    }else if (buttonIndex==1){
+    }else if (buttonIndex==2){
         
         APMFaceBookViewController *fbvc = [[APMFaceBookViewController alloc] init];
          fbvc.accountStore = self.accountStore;
-        [self presentViewController:NAVIFY(fbvc)
-                           animated:YES
-                         completion:nil];
+        fbvc.delegate=self;
         
-    }else{
+        [self presentViewController:NAVIFY(fbvc) animated:YES completion:nil];
+        
+        
+        
+    }else if (buttonIndex==3){
         
         
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Message" message:@"Coming Soon!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -1523,6 +1702,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     }
     
     
+    
+    
+}
+
+-(void)dismissController:(APMFaceBookViewController *)delegate{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     
 }

@@ -98,10 +98,15 @@
 		01920216187EF56C006B5C7D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01920215187EF56C006B5C7D /* Accounts.framework */; };
 		0192021A187EF8FC006B5C7D /* facebook_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 01920218187EF8FC006B5C7D /* facebook_avatar.png */; };
 		0192021B187EF8FC006B5C7D /* facebook_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01920219187EF8FC006B5C7D /* facebook_avatar@2x.png */; };
+		01933F4B18849F070071256D /* APMPosibleContributionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01933F4A18849F070071256D /* APMPosibleContributionsModel.m */; };
 		019B7D63180C441D006202B5 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 019B7D5D180C441D006202B5 /* libTestFlight.a */; };
 		019B7D64180C441D006202B5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 019B7D5E180C441D006202B5 /* README.md */; };
 		019B7D65180C441D006202B5 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 019B7D5F180C441D006202B5 /* release_notes.md */; };
 		019B7D67180C44C3006202B5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 019B7D66180C44C3006202B5 /* libz.dylib */; };
+		01B285A4188332AE00E32D5F /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B285A2188332AE00E32D5F /* Icon-72.png */; };
+		01B285A5188332AE00E32D5F /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B285A3188332AE00E32D5F /* Icon-72@2x.png */; };
+		01B285A8188332C000E32D5F /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B285A6188332C000E32D5F /* Icon-Small-50.png */; };
+		01B285A9188332C000E32D5F /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B285A7188332C000E32D5F /* Icon-Small-50@2x.png */; };
 		01B56174182B2AC4008E2077 /* APMEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B56172182B2AC4008E2077 /* APMEditProfileViewController.m */; };
 		01B56175182B2AC4008E2077 /* APMEditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B56173182B2AC4008E2077 /* APMEditProfileViewController.xib */; };
 		01B56179182B3C5E008E2077 /* APMCallHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B56177182B3C5E008E2077 /* APMCallHelpViewController.m */; };
@@ -297,6 +302,8 @@
 		01920217187EF8DF006B5C7D /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		01920218187EF8FC006B5C7D /* facebook_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_avatar.png; sourceTree = "<group>"; };
 		01920219187EF8FC006B5C7D /* facebook_avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_avatar@2x.png"; sourceTree = "<group>"; };
+		01933F4918849F070071256D /* APMPosibleContributionsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMPosibleContributionsModel.h; sourceTree = "<group>"; };
+		01933F4A18849F070071256D /* APMPosibleContributionsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMPosibleContributionsModel.m; sourceTree = "<group>"; };
 		019B7D5D180C441D006202B5 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		019B7D5E180C441D006202B5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		019B7D5F180C441D006202B5 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
@@ -304,6 +311,10 @@
 		019B7D61180C441D006202B5 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		019B7D62180C441D006202B5 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		019B7D66180C44C3006202B5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		01B285A2188332AE00E32D5F /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		01B285A3188332AE00E32D5F /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
+		01B285A6188332C000E32D5F /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		01B285A7188332C000E32D5F /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		01B56171182B2AC4008E2077 /* APMEditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMEditProfileViewController.h; sourceTree = "<group>"; };
 		01B56172182B2AC4008E2077 /* APMEditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMEditProfileViewController.m; sourceTree = "<group>"; };
 		01B56173182B2AC4008E2077 /* APMEditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APMEditProfileViewController.xib; sourceTree = "<group>"; };
@@ -440,6 +451,10 @@
 				0133585E1855F14E00AD3C0C /* Icon-Small@2x.png */,
 				0133585D1855F13900AD3C0C /* Icon-Small.png */,
 				0133585C1855F10A00AD3C0C /* Icon-Spotlight-40.png */,
+				01B285A2188332AE00E32D5F /* Icon-72.png */,
+				01B285A3188332AE00E32D5F /* Icon-72@2x.png */,
+				01B285A6188332C000E32D5F /* Icon-Small-50.png */,
+				01B285A7188332C000E32D5F /* Icon-Small-50@2x.png */,
 				0133585B1855F0EE00AD3C0C /* Icon-60@2x.png */,
 				0133585A1855F0C500AD3C0C /* Icon-60.png */,
 				013358591855F09700AD3C0C /* Icon@2x.png */,
@@ -766,6 +781,8 @@
 				012A6850182A0E4500CA05CB /* APMContributionsModel.m */,
 				01B5617B182B5215008E2077 /* APMGetPhoneModel.h */,
 				01B5617C182B5215008E2077 /* APMGetPhoneModel.m */,
+				01933F4918849F070071256D /* APMPosibleContributionsModel.h */,
+				01933F4A18849F070071256D /* APMPosibleContributionsModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -903,6 +920,7 @@
 				015AD8A418479F65008A739F /* speaker@2x.png in Resources */,
 				015AD8A318479F65008A739F /* speaker_act@2x.png in Resources */,
 				01732A91181DDE8E0044EF8E /* outgoing.wav in Resources */,
+				01B285A9188332C000E32D5F /* Icon-Small-50@2x.png in Resources */,
 				012A684B1829D91600CA05CB /* DonorDetailCell.xib in Resources */,
 				01508B2D1821DA8D0043C2A9 /* logout.png in Resources */,
 				01732A88181DDE8E0044EF8E /* dtmf_4.wav in Resources */,
@@ -925,6 +943,7 @@
 				0182D3B417EF4E03001EA3A6 /* MenuCell.xib in Resources */,
 				01B5618A182B614A008E2077 /* checkBoxMarked@2x.png in Resources */,
 				01D2930817FE5DF3008F3F5C /* men@2x.png in Resources */,
+				01B285A4188332AE00E32D5F /* Icon-72.png in Resources */,
 				012BEF8B185AA6E600F37709 /* addBook.png in Resources */,
 				01732A8A181DDE8E0044EF8E /* dtmf_6.wav in Resources */,
 				01B97B4A1843ED1000E5513A /* APMAddLeadsViewController.xib in Resources */,
@@ -934,6 +953,7 @@
 				0182D3B217EF487D001EA3A6 /* barPattern.png in Resources */,
 				01732A86181DDE8E0044EF8E /* dtmf_2.wav in Resources */,
 				01732A8C181DDE8E0044EF8E /* dtmf_8.wav in Resources */,
+				01B285A5188332AE00E32D5F /* Icon-72@2x.png in Resources */,
 				01F95E80181F65D8006CCF83 /* CloseButton.png in Resources */,
 				01D4F72418063C650054613C /* HelveticaNeueBold.ttf in Resources */,
 				01D4F72718063C650054613C /* HelveticaNeueCondensedBold.ttf in Resources */,
@@ -963,6 +983,7 @@
 				01B5617A182B3C5E008E2077 /* APMCallHelpViewController.xib in Resources */,
 				01732A60181DAA360044EF8E /* SVProgressHUD.bundle in Resources */,
 				0182D3A517EF35FA001EA3A6 /* APMFrontViewController.xib in Resources */,
+				01B285A8188332C000E32D5F /* Icon-Small-50.png in Resources */,
 				01D4F72618063C650054613C /* HelveticaNeueCondensedBlack.ttf in Resources */,
 				015AD8A0184795A4008A739F /* img_circle_value@2x.png in Resources */,
 				01D4F72818063C650054613C /* HelveticaNeueItalic.ttf in Resources */,
@@ -986,6 +1007,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01BB961F17FCFF650040DE19 /* AFURLConnectionOperation.m in Sources */,
+				01933F4B18849F070071256D /* APMPosibleContributionsModel.m in Sources */,
 				012A684E1829D96000CA05CB /* DonorDetailCell.m in Sources */,
 				01F95E79181F5ED4006CCF83 /* APMCallViewController.m in Sources */,
 				01BB961B17FCFF650040DE19 /* AFImageRequestOperation.m in Sources */,

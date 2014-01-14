@@ -17,9 +17,10 @@
 #import <AddressBook/AddressBook.h>
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
+#import "APMFaceBookViewController.h"
 
 
-@interface APMAddLeadsViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+@interface APMAddLeadsViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,FacebookVCDelegate>
 - (IBAction)closeAddLeadVC:(id)sender;
 
 @property(nonatomic,weak)id<AddLeadsDelegate>delegate;

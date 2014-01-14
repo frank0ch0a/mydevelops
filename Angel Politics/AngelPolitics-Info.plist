@@ -57,10 +57,6 @@
 		<string>HelveticaNeueUltraLightItalic.ttf</string>
 		<string>HelveticaBd___-.ttf</string>
 	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>voip</string>
-	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

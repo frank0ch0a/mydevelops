@@ -949,7 +949,14 @@ static NSString *const FrontCell=@"FrontCell";
     
     
     
-    [self  presentViewController:addLeads animated:YES completion:nil];
+    [self presentViewController:NAVIFY(addLeads)
+                       animated:YES
+                     completion:^{
+                        
+                     }];
+    
+     self.myImageView.hidden=YES;
+    //[self  presentViewController:addLeads animated:YES completion:nil];
     
     
     
@@ -987,6 +994,8 @@ static NSString *const FrontCell=@"FrontCell";
         
         [self.searchBar resignFirstResponder];
         
+        
+        self.addLeadsBig.hidden=NO;
      
         
         NSDictionary *dict;
@@ -1076,6 +1085,9 @@ static NSString *const FrontCell=@"FrontCell";
                 UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:@"No records were found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 
                 [alertView show];
+                
+                [self viewDidLoad];
+                
                 
                 
                 
@@ -1169,9 +1181,13 @@ static NSString *const FrontCell=@"FrontCell";
 -(void)dismissController:(APMAddLeadsViewController *)delegate{
     
     
+    
    [self dismissViewControllerAnimated:YES completion:^{
        
+        self.myImageView.hidden=NO;
        [self viewDidLoad];
+       
+       
        
    }];
     
