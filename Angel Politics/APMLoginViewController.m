@@ -12,6 +12,7 @@
 #import "AFJSONRequestOperation.h"
 #import "SVProgressHUD.h"
 #import "APMAppDelegate.h"
+#import "APMFrontViewController.h"
 
 @interface APMLoginViewController (){
     CGFloat loginy;
@@ -41,7 +42,16 @@
     
     UIImage *imageButton=[[UIImage imageNamed:@"btn_login_up"]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
     
+    UIImage *btnTourimagen=[[UIImage imageNamed:@"bgBtnTour"]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
+   
+    
+    
     [self.loginButtonOutlet setBackgroundImage:imageButton forState:UIControlStateNormal];
+   
+    
+    [self.takeTourBtn setBackgroundImage:btnTourimagen forState:UIControlStateNormal];
+    
+  
     self.loginButtonOutlet.titleLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15.0];
     
     UIImage *imageButton2=[[UIImage imageNamed:@"btnFacebook"]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
@@ -62,7 +72,7 @@
     
    self.keyChain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
-    if ([_keyChain objectForKey:(__bridge id)kSecAttrAccount]) {
+    if ([_keyChain objectForKey:(__bridge id)kSecAttrAccount]!=nil) {
          self.emailTextField.text= [_keyChain objectForKey:(__bridge id)kSecAttrAccount];
     }
     
@@ -75,7 +85,134 @@
     
     self.emailTextField.delegate=self;
     self.passwordTextField.delegate=self;
+    
+    
+    [self scrollerLogin];
+
 }
+
+-(void)scrollerLogin
+{
+    const int NumPages =3;
+    self.scrollView.contentSize = CGSizeMake(NumPages * self.view.frame.size.width, 200);
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.delegate=self;
+    
+    
+    for (int i = 0; i < NumPages; i++) {
+        
+        /*
+         
+         NSString *imageName = [NSString stringWithFormat:@"home-%d.png", i + 1];
+         UIImage *image = [UIImage imageNamed:imageName];
+         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];*/
+        
+        //Create images
+        
+        NSString *nombreimagen=[NSString stringWithFormat:@"bg_login%d", i + 1];
+        UIImage *image = [UIImage imageNamed:nombreimagen];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        
+        //Create labels with messages in scrolling images
+        
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(15, 30, 290, 90)];
+        
+        label.backgroundColor=[UIColor clearColor];
+        [label setTextColor:[UIColor whiteColor]];
+        [label setFont:[UIFont fontWithName:@"Helvetica75" size:12.0]];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        label.numberOfLines=0;
+        
+        if ([nombreimagen isEqualToString:@"bg_login1"]) {
+            
+            NSMutableString *LabelString = [NSMutableString string];
+            [LabelString appendString:@"Import contacts from your address book, find the \n\n"];
+            [LabelString appendString:@"most likely prospective donors, know how much\n\n"];
+            
+            [LabelString appendString:@"to ask them for, when and how often .\n\n"];
+            
+            
+            label.text=LabelString;
+            
+        }else if ([nombreimagen isEqualToString:@"bg_login2"]){
+            
+            
+            NSMutableString *LabelString = [NSMutableString string];
+            [LabelString appendString:@"Learn the best tips to make a \n\n"];
+            [LabelString appendString:@"successful pitch .\n\n"];
+            label.text=LabelString;
+            
+        }else{
+            
+            
+            NSMutableString *LabelString = [NSMutableString string];
+            [LabelString appendString:@"Make a pitch test to receive a professional \n\n"];
+            [LabelString appendString:@"feedback before you go for real .\n\n"];
+            label.text=LabelString;        }
+        
+        
+        
+        /*
+        if ([[UIScreen mainScreen] bounds].size.height == 568) {
+            
+            imageView.frame=CGRectMake(0, 0, 320,548);
+            
+        }else{
+            
+            imageView.frame=CGRectMake(0, 0, 320,450);
+        }*/
+        
+        CGRect frame = imageView.frame;
+        //Hint close images horinzotally distance
+        frame.origin.x = i * self.view.frame.size.width/1.0f;
+        imageView.frame = frame;
+        
+        
+        [imageView addSubview:label];
+        [self.scrollView addSubview:imageView];
+        
+        
+        
+        
+    }
+    
+    self.pageControl.numberOfPages=NumPages;
+    self.pageControl.currentPage=0;
+    
+}
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // Load the pages that are now on screen
+    
+    // Calculating the page index.
+    int page = floor(scrollView.contentOffset.x / [UIScreen mainScreen].bounds.size.width);
+    
+    // Set the page index as the current page to the page control.
+    [self.pageControl setCurrentPage:page];
+    
+}
+- (IBAction)changePage {
+    // Get the index of the page.
+    int pageIndex = [self.pageControl currentPage];
+    
+    // We need to move the scroll to the correct page.
+    // Get the scroll's frame.
+    CGRect newFrame = [self.scrollView frame];
+    
+    // Calculate the x-coordinate of the frame where the scroll should go to.
+    newFrame.origin.x = newFrame.size.width * pageIndex;
+    
+    // Scroll the frame we specified above.
+    [self.scrollView scrollRectToVisible:newFrame animated:YES];
+}
+
+
+    
+    
+    
+    
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -93,7 +230,7 @@
 #pragma mark -UITexfield Delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    
+    /*
     
     if (textField==self.emailTextField || textField==self.passwordTextField) {
         
@@ -101,7 +238,7 @@
                             options:UIViewAnimationOptionCurveEaseOut animations:^{
                                 
                                 
-                                self.loginUIView.frame=CGRectMake(0, -150, self.loginUIView.frame.size.width, self.loginUIView.frame.size.height);
+                                self.loginUIView.frame=CGRectMake(0, -100, self.loginUIView.frame.size.width, self.loginUIView.frame.size.height);
                                 self.emailLine.backgroundColor=[UIColor whiteColor];
                                 self.emailLine.alpha=0.6f;
                                 self.passLine.backgroundColor=[UIColor whiteColor];
@@ -109,7 +246,7 @@
                                 
                                 
                             } completion:nil];
-    }
+    }*/
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -298,4 +435,28 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
+
+-(void)dismissLoginTour:(BOOL)isTour{
+    
+    
+    //raise notification about dismiss
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MODELVIEW TOUR" object:[NSNumber numberWithBool:isTour]];
+    
+    
+    
+    
+}
+- (IBAction)takeTour:(id)sender {
+    
+    [self.delegate dissmissLoginController:self];
+    
+     [self dissmissModelView:@"YES"];
+   
+  
+    
+   
+    
+    
+}
+
 @end

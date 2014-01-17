@@ -112,6 +112,7 @@ enum {
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
+         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsTour"];
         
         [self downloadCandidateData];
         
@@ -324,7 +325,8 @@ enum {
 }
 
 
--(void)configureCandidateCell:(APMCandidateCell *)cell forIndexPath:(NSIndexPath *)indexPath
+-(void)configureCandidateCell:(APMCandidateCell *)cell
+                 forIndexPath:(NSIndexPath *)indexPath
 {
     
     if (indexPath.row==MenuCandidate) {
@@ -352,7 +354,7 @@ enum {
                 
             }else{
                 
-                cell.colorBgPartyUIView.backgroundColor=[UIColor greenColor];
+                cell.colorBgPartyUIView.backgroundColor=[UIColor darkGrayColor];
             }
             
             
@@ -471,7 +473,7 @@ enum {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HasPassLogin"];
     
     
-   // [_keychain resetKeychainItem];
+   [_keychain resetKeychainItem];
     
     [FBSession.activeSession closeAndClearTokenInformation];
     
@@ -593,6 +595,15 @@ enum {
     
 }
 
+-(void)setTourParameters{
+    
+    NSDictionary *dict=@{@"a": @"Guest",@"b":@"User",@"c":@"",@"d":@"",@"e":@"",@"f":@"0",@"g":@"0",@"h":@"0",@"i":@""};
+    
+    [self parseData:dict];
+    
+    
+}
+
 #pragma mark LoginDelegate
 -(void)dissmissLoginController:(APMLoginViewController *)controller
 {
@@ -617,9 +628,26 @@ enum {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasUser"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsTour"];
+        
         
         
         [self downloadCandidateData];
+        
+    }else{
+        
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsTour"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"] )
+        {
+            
+            [self setTourParameters];
+            
+        }
+        
+        
         
     }
     

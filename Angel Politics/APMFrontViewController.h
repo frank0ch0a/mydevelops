@@ -77,6 +77,11 @@
 @property(strong,nonatomic)UIImageView* myImageView;
 
 @property (weak, nonatomic) IBOutlet UIButton *addLeadsBig;
+@property (weak, nonatomic) IBOutlet UIView *bigButtonUIView;
 
+@property(nonatomic)BOOL isTour;
+
+@property (weak, nonatomic) IBOutlet UIButton *bigButton;
+@property (weak, nonatomic) IBOutlet UIView *waveBigBtnView;
 
 @end

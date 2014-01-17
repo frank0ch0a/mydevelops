@@ -53,11 +53,17 @@
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
 static NSString *const FrontCell=@"FrontCell";
 
-@implementation APMFrontViewController{
+
+
+@implementation APMFrontViewController
+{
     
       NSOperationQueue *queue;
     
 }
+
+@synthesize isTour=_isTour;
+
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     
@@ -103,15 +109,64 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
+-(void)TourBegin:(NSNotification *)notic{
+    
+    if ([notic.object boolValue]) {
+        
+        self.isTour=[notic.object boolValue];
+        
+        NSLog(@" IsTour %hhd",self.isTour);
+        
+        [self viewDidLoad];
+        
+        if (self.isTour) {
+            NSLog(@"Is tourrrr");
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+}
+
+- (void) addPopAnimationToLayer:(CALayer *)aLayer
+                     withBounce:(CGFloat)bounce
+                           damp:(CGFloat)damp{
+    // TESTED WITH BOUNCE = 0.2, DAMP = 0.055
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    animation.duration = 50;
+    
+    int steps = 100;
+    NSMutableArray *values = [NSMutableArray arrayWithCapacity:steps];
+    double value = 0;
+    float e = 0.89;
+    for (int t=0; t<300; t++) {
+        //value = pow(e, -damp*t) * sin(bounce*t) + 1;
+        value=e*cos(bounce*t)+e*sin(bounce*t);
+        
+        [values addObject:[NSNumber numberWithFloat:value]];
+    }
+    animation.values = values;
+    [aLayer addAnimation:animation forKey:@"appear"];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     
+    self.bigButtonUIView.hidden=YES;
+    self.donorTableView.hidden=NO;
+    
+    
+    
     quickSearchY=self.quickSearchUIView.frame.origin.y;
    
-    
- 
     
     self.pitchUIView.backgroundColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0];
     
@@ -123,10 +178,12 @@ static NSString *const FrontCell=@"FrontCell";
    
     self.searchBar.delegate=self;
     
-    // get register to fetch notification
+    // get register to fetch notification to dissmis login
     [[NSNotificationCenter defaultCenter] addObserver:self  
                                              selector:@selector(yourNotificationHandler:)
                                                  name:@"MODELVIEW DISMISS" object:nil];
+    
+    
 
     
     
@@ -136,9 +193,17 @@ static NSString *const FrontCell=@"FrontCell";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] &&
         [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil&& [_keychain objectForKey:(__bridge id)kSecValueData]!=nil)*/
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] )
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"] )
     {
-          NSLog(@"Front!");
+          NSLog(@"Estamos de Tour!");
+        
+       self.donorTableView.hidden=YES;
+       self.bigButtonUIView.hidden=NO;
+        
+        [self addPopAnimationToLayer:self.waveBigBtnView.layer withBounce:0.099 damp:1];
+
+        
+        
         
        // APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
         
@@ -227,13 +292,15 @@ static NSString *const FrontCell=@"FrontCell";
   
     
     
-    
 }
 
 -(void)yourNotificationHandler:(NSNotification *)notic{
     
     
     if ([notic.object isEqualToString:@"YES"]) {
+        
+       //  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsTour"];
+        
         [self viewDidLoad];
     }
     
@@ -251,7 +318,35 @@ static NSString *const FrontCell=@"FrontCell";
 {
     [super viewWillAppear:animated];
     
+    
+    // get register to fetch notification to dissmis login Tour
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(TourBegin:)
+                                                 name:@"MODELVIEW TOUR" object:nil];
+    
+    
+    
+    
     self.stateTableView.hidden=YES;
+    
+   
+    
+    [self.bigButton setBackgroundImage:[UIImage imageNamed:@"bigBtnBG"] forState:UIControlStateNormal];
+    
+    //Make a circle button
+    CGPoint saveCenter2 = self.bigButton.center;
+    CGRect newFrame2 = CGRectMake(self.bigButton.frame.origin.x, self.bigButton.frame.origin.y, 200, 200);
+    self.bigButton.frame = newFrame2;
+    self.bigButton.layer.cornerRadius = 200 / 2.0;
+    self.bigButton.center = saveCenter2;
+    
+    //Make a circle view
+    CGPoint saveCenter = self.waveBigBtnView.center;
+    CGRect newFrame = CGRectMake(self.waveBigBtnView.frame.origin.x, self.waveBigBtnView.frame.origin.y, 200, 200);
+    self.waveBigBtnView.frame = newFrame;
+    self.waveBigBtnView.layer.cornerRadius = 200 / 2.0;
+    self.waveBigBtnView.center = saveCenter;
+
    
     
    
@@ -1196,6 +1291,7 @@ static NSString *const FrontCell=@"FrontCell";
     
     
 }
+
 
 -(void)dealloc{
     

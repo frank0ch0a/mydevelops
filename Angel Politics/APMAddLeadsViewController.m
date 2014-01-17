@@ -429,12 +429,14 @@
             
         }];
         
-        operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
         
         
         
         
         [queue addOperation:operation];
+        
+        operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+        
         
         
     }else{

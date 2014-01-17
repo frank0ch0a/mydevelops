@@ -12,8 +12,12 @@
                 <outlet property="emailTextField" destination="eld-Od-Lyc" id="xGm-Ul-2e5"/>
                 <outlet property="loginButtonOutlet" destination="YR1-NK-Tqf" id="6Qq-UL-BrZ"/>
                 <outlet property="loginUIView" destination="W3f-nX-iVS" id="3YS-br-ELa"/>
+                <outlet property="pageControl" destination="VPE-xx-14d" id="o9y-Gq-LDR"/>
                 <outlet property="passLine" destination="Dhd-Bz-d3I" id="Moh-Tm-ILf"/>
                 <outlet property="passwordTextField" destination="scf-mr-FAL" id="r7h-Lp-pkD"/>
+                <outlet property="scrollUIView" destination="WBq-3W-J3g" id="1IG-na-OPC"/>
+                <outlet property="scrollView" destination="nXy-5t-lPW" id="fIR-du-FYJ"/>
+                <outlet property="takeTourBtn" destination="z2z-Rj-poJ" id="YWM-K5-7cX"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -31,25 +35,25 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nav_logo" id="Rwy-ZR-9UF">
-                            <rect key="frame" x="87" y="86" width="145" height="26"/>
+                            <rect key="frame" x="87" y="38" width="145" height="26"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" id="eld-Od-Lyc">
-                            <rect key="frame" x="28" y="206" width="263" height="28"/>
+                            <rect key="frame" x="28" y="113" width="263" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" id="scf-mr-FAL">
-                            <rect key="frame" x="28" y="270" width="263" height="24"/>
+                            <rect key="frame" x="28" y="177" width="263" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YR1-NK-Tqf">
-                            <rect key="frame" x="44" y="339" width="232" height="41"/>
+                            <rect key="frame" x="44" y="246" width="232" height="41"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="LOGIN">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -60,12 +64,12 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" id="ZwP-5C-dPt">
-                            <rect key="frame" x="28" y="240" width="263" height="1"/>
+                            <rect key="frame" x="28" y="147" width="263" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.096090826224435544" green="0.42051977040816324" blue="0.063398814662067413" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <view contentMode="scaleToFill" id="Dhd-Bz-d3I">
-                            <rect key="frame" x="28" y="301" width="263" height="1"/>
+                            <rect key="frame" x="28" y="208" width="263" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.096090826219999995" green="0.42051977039999999" blue="0.063398814659999997" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
@@ -80,9 +84,52 @@
                                 <action selector="btnFacebookPress:" destination="-1" eventType="touchUpInside" id="IRQ-cD-4QU"/>
                             </connections>
                         </button>
+                        <view contentMode="scaleToFill" id="WBq-3W-J3g">
+                            <rect key="frame" x="0.0" y="342" width="320" height="206"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="nXy-5t-lPW">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="206"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </scrollView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
+                <view alpha="0.59999999999999964" contentMode="scaleToFill" id="c37-uv-8ty">
+                    <rect key="frame" x="0.0" y="342" width="320" height="38"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try our free tour today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wfG-5T-r4Y">
+                            <rect key="frame" x="50" y="9" width="221" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" alpha="0.74999999999999978" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="z2z-Rj-poJ">
+                    <rect key="frame" x="44" y="487" width="232" height="39"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Take free Tour">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="takeTour:" destination="-1" eventType="touchUpInside" id="Yxb-jn-FLp"/>
+                    </connections>
+                </button>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="VPE-xx-14d">
+                    <rect key="frame" x="135" y="447" width="51" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="changePage" destination="-1" eventType="valueChanged" id="XnF-de-hZF"/>
+                    </connections>
+                </pageControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
