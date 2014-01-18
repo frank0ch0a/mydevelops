@@ -45,4 +45,8 @@
 - (IBAction)takeTour:(id)sender;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
+@property (weak, nonatomic) IBOutlet UIView *tryTourUIView;
+
+
+
 @end

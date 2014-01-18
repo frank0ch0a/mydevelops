@@ -334,7 +334,14 @@ enum {
         APMCandidateModel *candidateModel=[self.menuResults objectAtIndex:indexPath.row];
         
         cell.candidateNameLabel.text=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
-        cell.candidateOficceAndCityLabel.text=[NSString stringWithFormat:@"%@, %@",candidateModel.officeCandidate,candidateModel.city];
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"] ){
+            
+             cell.candidateOficceAndCityLabel.text=@"";
+        }else{
+            cell.candidateOficceAndCityLabel.text=[NSString stringWithFormat:@"%@, %@",candidateModel.officeCandidate,candidateModel.city];
+        }
+        
         cell.candidateSupportersLabel.text=candidateModel.supportes;
         cell.candidateFundRaisedLabel.text=candidateModel.funraised;
         cell.candidateDayToElectLabel.text=candidateModel.dayToElection;
@@ -597,7 +604,7 @@ enum {
 
 -(void)setTourParameters{
     
-    NSDictionary *dict=@{@"a": @"Guest",@"b":@"User",@"c":@"",@"d":@"",@"e":@"",@"f":@"0",@"g":@"0",@"h":@"0",@"i":@""};
+    NSDictionary *dict=@{@"a":@"Guest",@"b":@"User",@"c":@"",@"d":@"",@"e":@"",@"f":@"0",@"g":@"0",@"h":@"0",@"i":@""};
     
     [self parseData:dict];
     

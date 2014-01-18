@@ -34,6 +34,28 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    
+    if ([[UIScreen mainScreen] bounds].size.height == 480) {
+        
+        self.scrollUIView.frame=CGRectMake(0, 254, 320, 206);
+        self.tryTourUIView.frame=CGRectMake(0, 254, 320, 38);
+        self.takeTourBtn.frame=CGRectMake(44, 400, 232, 39);
+        self.pageControl.frame=CGRectMake(self.pageControl.frame.origin.x, 357, self.pageControl.frame.size.width, self.pageControl.frame.size.height);
+        self.emailTextField.frame=CGRectMake(self.emailTextField.frame.origin.x
+                                             , 100, self.emailTextField.frame.size.width, self.emailTextField.frame.size.height);
+        self.emailLine.frame=CGRectMake(self.emailLine.frame.origin.x
+                                        , 127, self.emailLine.frame.size.width, self.emailLine.frame.size.height);
+        self.passwordTextField.frame=CGRectMake(self.passwordTextField.frame.origin.x
+                                          , 160, self.passwordTextField.frame.size.width, self.passwordTextField.frame.size.height);
+        self.passLine.frame=CGRectMake(self.passLine.frame.origin.x
+                                                , 188, self.passLine.frame.size.width, self.passLine.frame.size.height);
+        self.loginButtonOutlet.frame=CGRectMake(self.loginButtonOutlet.frame.origin.x
+                                                , 208, self.loginButtonOutlet.frame.size.width,self.loginButtonOutlet.frame.size.height);
+        
+        
+        
+    }
+    
     UIColor *color = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1.0];
     self.emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: color}];
     
@@ -230,15 +252,17 @@
 #pragma mark -UITexfield Delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    /*
+   
     
     if (textField==self.emailTextField || textField==self.passwordTextField) {
         
         [UIView animateWithDuration:0.25 delay:0
                             options:UIViewAnimationOptionCurveEaseOut animations:^{
                                 
-                                
-                                self.loginUIView.frame=CGRectMake(0, -100, self.loginUIView.frame.size.width, self.loginUIView.frame.size.height);
+                                self.scrollUIView.hidden=YES;
+                                self.tryTourUIView.hidden=YES;
+                                /*
+                                self.loginUIView.frame=CGRectMake(0, -100, self.loginUIView.frame.size.width, self.loginUIView.frame.size.height);*/
                                 self.emailLine.backgroundColor=[UIColor whiteColor];
                                 self.emailLine.alpha=0.6f;
                                 self.passLine.backgroundColor=[UIColor whiteColor];
@@ -246,7 +270,9 @@
                                 
                                 
                             } completion:nil];
-    }*/
+    }
+        
+    
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -255,10 +281,11 @@
     [UIView animateWithDuration:0.25 delay:0
                         options:UIViewAnimationOptionCurveEaseOut animations:^{
                             
+                            /*
+                            self.loginUIView.frame=CGRectMake(0,loginy , self.loginUIView.frame.size.width, self.loginUIView.frame.size.height);*/
                             
-                            self.loginUIView.frame=CGRectMake(0,loginy , self.loginUIView.frame.size.width, self.loginUIView.frame.size.height);
-                            
-                            
+                            self.scrollUIView.hidden=NO;
+                            self.tryTourUIView.hidden=NO;
                             
                         } completion:nil];
     
@@ -290,7 +317,8 @@
                             
                             self.loginUIView.frame=CGRectMake(0,loginy , self.loginUIView.frame.size.width, self.loginUIView.frame.size.height);
                             
-                            
+                            self.scrollUIView.hidden=NO;
+                            self.tryTourUIView.hidden=NO;
                             
                         } completion:nil];
     

@@ -11,6 +11,7 @@
 #import "APMFrontCellProtocol.h"
 #import "APMLoginViewController.h"
 #import "APMAddLeadsViewController.h"
+#import <AddressBook/AddressBook.h>
 
 @class APMFrontViewController;
 @class APMCandidateModel;
@@ -83,5 +84,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *bigButton;
 @property (weak, nonatomic) IBOutlet UIView *waveBigBtnView;
+@property (weak, nonatomic) IBOutlet UILabel *bigBtnLabel;
 
 @end

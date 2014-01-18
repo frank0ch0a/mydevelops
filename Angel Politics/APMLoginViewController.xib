@@ -18,6 +18,7 @@
                 <outlet property="scrollUIView" destination="WBq-3W-J3g" id="1IG-na-OPC"/>
                 <outlet property="scrollView" destination="nXy-5t-lPW" id="fIR-du-FYJ"/>
                 <outlet property="takeTourBtn" destination="z2z-Rj-poJ" id="YWM-K5-7cX"/>
+                <outlet property="tryTourUIView" destination="c37-uv-8ty" id="TuJ-yX-hRE"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -46,7 +47,7 @@
                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" id="scf-mr-FAL">
-                            <rect key="frame" x="28" y="177" width="263" height="24"/>
+                            <rect key="frame" x="28" y="173" width="263" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
