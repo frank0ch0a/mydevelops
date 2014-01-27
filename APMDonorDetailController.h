@@ -14,7 +14,7 @@
 
 
 
-@interface APMDonorDetailController : UIViewController<UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,CallHelpDelegate>
+@interface APMDonorDetailController : UIViewController<UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,CallHelpDelegate,UIScrollViewDelegate>
 
 @property(nonatomic,strong)APMLeadsModel *leadsModel;
 @property(nonatomic,strong)APMDetailModel *detailModel;
@@ -39,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameSupport;
 
 @property (nonatomic)NSInteger donorType;
+@property(nonatomic)BOOL isTour;
 
 @property (nonatomic,copy)NSString *title;
 @property (nonatomic)BOOL isADonor;
@@ -52,10 +53,22 @@
 - (IBAction)callOutcome:(id)sender;
 
 - (IBAction)emailButton:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *btn_plus;
+
 
 - (IBAction)addLeadAction:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIView *avgUIView;
 
+@property (weak, nonatomic) IBOutlet UIView *bestUIView;
+
+@property (weak, nonatomic) IBOutlet UIView *askUIView;
+@property (weak, nonatomic) IBOutlet UILabel *askForLabel;
+@property (weak, nonatomic) IBOutlet UIView *highlightsUIView;
+
+@property (weak, nonatomic) IBOutlet UIView *donorMainUIView;
+@property (weak, nonatomic) IBOutlet UIView *callMailUView;
+@property (weak, nonatomic) IBOutlet UIView *highLightsBarUIView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *bgCallImageView;
 
 @end

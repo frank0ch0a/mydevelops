@@ -232,7 +232,7 @@ static NSString *const FrontCell=@"FrontCell";
             
             donorModel.donorEmail=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, emailCounter);
             
-            NSLog(@"email %@",donorModel.donorEmail);
+           
             
         }
         
@@ -317,6 +317,25 @@ static NSString *const FrontCell=@"FrontCell";
     }
     
     return donorModel;
+    
+}
+
+-(void)addtourHintImage
+{
+    
+    
+    UIImageView *tourImageView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"tour_fundraise_iphone"]];
+    
+   // tourImageView.frame=self.view.bounds;
+    
+   
+    
+   
+    tourImageView.alpha=0.8f;
+    
+    [self.view addSubview:tourImageView];
+    
+    
     
 }
 
@@ -415,18 +434,62 @@ static NSString *const FrontCell=@"FrontCell";
                 
                 NSLog(@"Result contacts %@",JSON);
                 
-                
-                [self parseArray:JSON];
-                
-                self.FrontLineOne.text=@"Donor Results";
-                self.frontLineTwo.hidden=YES;
-                donorKind=0;
-                
-                [self.donorTableView reloadData];
-                
+                isResult=YES;
                 isLoading=NO;
                 isSearch=NO;
                 isView=YES;
+                
+                
+                [self parseArray:JSON];
+                
+                
+                
+                APMLeadsModel *leadsModel;
+                if ([self.leadsResults count]>0) {
+                    
+                    self.bigButton.hidden=YES;
+                    self.donorTableView.hidden=NO;
+                    [self.donorTableView reloadData];
+                    self.bigButtonUIView.hidden=YES;
+                    
+                    self.frontNumber.hidden=YES;
+                    
+                    self.FrontLineOne.frame=CGRectMake(80, self.FrontLineOne.frame.origin.y, self.FrontLineOne.frame.size.width, self.FrontLineOne.frame.size.height);
+                    self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+                    self.frontLineTwo.font=[UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0];
+                    
+                    self.FrontLineOne.text=[NSString stringWithFormat:@"You have %d contacts",[JSON count]];
+                    leadsModel=[self.leadsResults objectAtIndex:0];
+                    
+                    self.frontLineTwo.frame=CGRectMake(40, self.frontLineTwo.frame.origin.y, self.frontLineTwo.frame.size.width+25, self.frontLineTwo.frame.size.height);
+                    
+                    self.frontLineTwo.hidden=NO;
+                    
+                    
+                    self.frontLineTwo.text=[NSString stringWithFormat:@"Reheat your pitch with %@ %@",leadsModel.donorName,leadsModel.donorLastName];
+                    donorKind=0;
+                    
+                    //  [self addtourHintImage];
+                    
+                    [self.donorTableView reloadData];
+                    
+                }else{
+                    
+                    
+                    
+                     self.frontNumber.hidden=YES;
+                    
+                    
+                    
+                }
+                
+               
+                
+            
+                
+                
+                
+              
                 /*
                 if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
                     
@@ -492,11 +555,9 @@ static NSString *const FrontCell=@"FrontCell";
 }
 
 -(void)prepareAllTourContactsToSend
+
 {
-    
     NSMutableArray *arrayContacs=[[NSMutableArray alloc]init];
-    
-    
     NSDictionary *dict;
     
     for (NSInteger i=0; i<[self.tourContacs count]; i++) {
@@ -505,7 +566,7 @@ static NSString *const FrontCell=@"FrontCell";
         
         NSString *name=donorModel.donorName;
         NSString *lastname=donorModel.donorLastName;
-        NSString *phoneContact=donorModel.donorPhoneNumber;
+        NSString *phoneT=donorModel.donorPhoneNumber;
         NSString *email=donorModel.donorEmail;
         NSString *street=donorModel.street;
         NSString *zip=donorModel.zipCode;
@@ -527,12 +588,12 @@ static NSString *const FrontCell=@"FrontCell";
             lastname=donorModel.donorLastName;
         }
         
-        if (phoneContact==nil) {
-            phoneContact=@"N/A";
+        if (phoneT==nil) {
+            phoneT=@"N/A";
             donorModel.donorPhoneNumber=phone;
         }else{
             
-            phoneContact=donorModel.donorPhoneNumber;
+            phoneT=donorModel.donorPhoneNumber;
             
         }
         
@@ -569,18 +630,58 @@ static NSString *const FrontCell=@"FrontCell";
         }
         
         
+        if (donorModel.donorName !=nil && donorModel.donorLastName !=nil && donorModel.donorPhoneNumber !=nil && donorModel.donorEmail !=nil &&donorModel.street !=nil && donorModel.zipCode !=nil) {
+            dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
+                   @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
+                   };
+            
+        }
         
-        dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
-               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
-               };
+        if (dict !=nil) {
+            [arrayContacs addObject:dict];
+        }
         
-        [arrayContacs addObject:dict];
+        
         
     }
     
     NSLog(@"arraycontacts %@",arrayContacs);
     
     [self sendAllContacts:arrayContacs];
+    
+    /*
+    NSMutableArray *arrayContacs=[[NSMutableArray alloc]init];
+    
+    
+    NSDictionary *dict;
+    
+    for (NSInteger i=0; i<[self.tourContacs count]; i++) {
+        
+        APMLeadsModel *donorModel=[self.tourContacs objectAtIndex:i];
+        
+        
+        
+        
+        
+        if (donorModel.donorName!=nil && donorModel.donorLastName !=nil && donorModel.donorEmail !=nil && donorModel.donorPhoneNumber && donorModel.street !=nil && donorModel.zipCode !=nil) {
+            
+            dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
+                   @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
+                   };
+        }
+        
+        if (dict !=nil) {
+            
+              [arrayContacs addObject:dict];
+        }
+        
+      
+        
+    }
+    
+    NSLog(@"arraycontacts %@",arrayContacs);
+    
+    [self sendAllContacts:arrayContacs];*/
     
     
     
@@ -603,10 +704,12 @@ static NSString *const FrontCell=@"FrontCell";
     NSUInteger peopleCounter=0;
     
     self.tourContacs=[[NSMutableArray alloc]init];
+
+    //Send only 100 contacts no all [arrayOfAllPeople count]
     
-    //Send only 30 contacts no all [arrayOfAllPeople count]
     
-    for (peopleCounter=0; peopleCounter< [arrayOfAllPeople count]; peopleCounter++) {
+    
+    for (peopleCounter=0; peopleCounter < [arrayOfAllPeople count] ; peopleCounter++) {
         
         ABRecordRef thisPerson=(__bridge ABRecordRef)[arrayOfAllPeople objectAtIndex:peopleCounter];
         
@@ -647,14 +750,14 @@ static NSString *const FrontCell=@"FrontCell";
     }
     
     
+    NSLog(@" contacts %@",self.tourContacs);
     
      [self prepareAllTourContactsToSend];
     //[self configureSections];
     
     
     
-    
-    NSLog(@" contacts %@",self.tourContacs);
+   
     
 }
 
@@ -775,6 +878,14 @@ static NSString *const FrontCell=@"FrontCell";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"] ){
         self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
         
+        self.FrontLineOne.frame=CGRectMake(10, self.FrontLineOne.frame.origin.y
+                                           , 290, self.FrontLineOne.frame.size.height);
+        
+        
+        self.FrontLineOne.text=@"You don't have contacts to show yet";
+        self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+        self.frontLineTwo.hidden=YES;
+        
     }else{
         
         self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:19.0];
@@ -870,16 +981,16 @@ static NSString *const FrontCell=@"FrontCell";
        self.donorTableView.hidden=YES;
        self.bigButtonUIView.hidden=NO;
         
+        self.bgFundImageView.image=[UIImage imageNamed:@"bg_fundraise"];
+     
+        
         [self addPopAnimationToLayer:self.waveBigBtnView.layer withBounce:0.099 damp:1];
+        
+        
       
         
-        self.FrontLineOne.frame=CGRectMake(10, self.FrontLineOne.frame.origin.y
-                                           , 290, self.FrontLineOne.frame.size.height);
+       
         
-        
-        self.FrontLineOne.text=@"You don't have contacts to show yet";
-        self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:10.0];
-        self.frontLineTwo.hidden=YES;
 
         
         
@@ -1072,6 +1183,7 @@ static NSString *const FrontCell=@"FrontCell";
         
         
         
+        
     }
     
     return leadsModel;
@@ -1097,7 +1209,7 @@ static NSString *const FrontCell=@"FrontCell";
         
         leadsModel=[self parseData:resultDict];
         
-        if(leadsModel !=nil){
+        if(leadsModel !=nil && ![leadsModel.party isEqualToString:@""] &&  ![leadsModel.donorName isEqualToString:@""]){
             
             [self.leadsResults addObject:leadsModel];
             
@@ -1192,7 +1304,7 @@ static NSString *const FrontCell=@"FrontCell";
                                         target:self.slideMenuController
                                         action:@selector(toggleMenuAnimated:)];
         
-        [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
         /*
         
 		_leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward
@@ -1214,7 +1326,7 @@ static NSString *const FrontCell=@"FrontCell";
                                                              action:@selector(mainSearch:)];
         
         
-        [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     
     }
@@ -1228,7 +1340,7 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(void)mainSearch:(id)sender {
     
-    if (!isSearch) {
+    if (!isSearch && !isTour) {
         self.navigationController.navigationBarHidden=YES;
         self.searchToolbar.hidden=NO;
         [self.searchBar becomeFirstResponder];
@@ -1293,6 +1405,7 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -1318,6 +1431,8 @@ static NSString *const FrontCell=@"FrontCell";
             cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
             cell.amountLabel.text=[NSString stringWithFormat:@"%@",leadsModel.ask];
             
+            
+            
             if (leadsModel.donorCity != (id)[NSNull null]&&leadsModel.donorState != (id)[NSNull null] ) {
                 cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];
             }else{
@@ -1332,7 +1447,15 @@ static NSString *const FrontCell=@"FrontCell";
                 cell.amountLabel.text=@"";
                 
             }*/
-            
+          
+            if (isTour && indexPath.row==0) {
+                
+                cell.topView.backgroundColor=[UIColor darkGrayColor];
+                cell.cityLabel.textColor=[UIColor whiteColor];
+                cell.donorLabel.textColor=[UIColor whiteColor];
+                cell.amountLabel.textColor=[UIColor whiteColor];
+            }
+
             
             
             return cell;
@@ -1362,6 +1485,10 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
+
+
+
+
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if ([self.leadsResults count]==0 || isLoading) {
@@ -1380,21 +1507,46 @@ static NSString *const FrontCell=@"FrontCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView==self.donorTableView) {
+        
+        
+        
         APMDonorDetailController *donorDetailVC=[[APMDonorDetailController alloc]init];
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
+        
         APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
         
+        if (!isTour) {
+            
+        
+        
+        
         donorDetailVC.leadsModel=leadsModel;
-        donorDetailVC.title=self.donorType;
         donorDetailVC.donorType=donorKind;
+        donorDetailVC.title=self.donorType;
+        
+        
         
         self.myImageView.hidden=YES;
+            
+             [self.navigationController pushViewController:donorDetailVC animated:YES];
+            
+        }else if (isTour && indexPath.row==0){
+            
+            donorDetailVC.isTour=isTour;
+            donorDetailVC.title=@"Contact Information";
+            donorDetailVC.leadsModel=leadsModel;
+            donorDetailVC.donorType=donorKind;
+             self.myImageView.hidden=YES;
+            
+             [self.navigationController pushViewController:donorDetailVC animated:YES];
+            
+        }
         
         
         
-        [self.navigationController pushViewController:donorDetailVC animated:YES];
+       
         
          self.myImageView.hidden=YES;
     
@@ -1408,14 +1560,6 @@ static NSString *const FrontCell=@"FrontCell";
         
         
     }
-    
-    
-    
-    
-    
-   
-
-    
     
     
 }
@@ -1450,6 +1594,9 @@ static NSString *const FrontCell=@"FrontCell";
 
 - (IBAction)pledgeButton:(id)sender {
     
+    if (!isTour) {
+        
+        
      isLoading=YES;
     
     NSLog(@"pledge press");
@@ -1489,14 +1636,18 @@ static NSString *const FrontCell=@"FrontCell";
     
 
     
-    
-    
+
+    }
     
    
 
 }
 
-- (IBAction)donorMatchButton:(id)sender {
+- (IBAction)donorMatchButton:(id)sender
+{
+    if (!isTour) {
+        
+    
     
     isLoading=YES;
     NSLog(@"DonorMatch Press");
@@ -1537,13 +1688,17 @@ static NSString *const FrontCell=@"FrontCell";
     
    
     
-    
+    }
 
     
     
 }
 
 - (IBAction)PitchLeadsButton:(id)sender {
+    
+    if (!isTour) {
+        
+    
     
     isLoading=YES;
     
@@ -1582,7 +1737,7 @@ static NSString *const FrontCell=@"FrontCell";
     }
     
    
-    
+    }
 
 
 }
@@ -1642,6 +1797,9 @@ static NSString *const FrontCell=@"FrontCell";
 
 
 {
+    if (!isTour) {
+        
+    
     
     NSLog(@"tocaste addLead");
     
@@ -1664,7 +1822,7 @@ static NSString *const FrontCell=@"FrontCell";
     
     
     
-    
+    }
     
 }
 

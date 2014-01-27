@@ -21,9 +21,16 @@
 @property(nonatomic,copy)NSString *statusNet;
 @property(nonatomic,copy)NSString *party;
 @property(nonatomic,copy)NSString *pledgeID;
+@property(nonatomic,copy)NSString *donorImg;
+@property(nonatomic,copy)NSString *donorLkdHead;
+@property(nonatomic,copy)NSString *country;
 @property(nonatomic)NSInteger section;
 @property(nonatomic,copy)NSString *zipCode;
 @property(nonatomic,copy)NSString *street;
+@property(nonatomic,copy)NSString *race;
+@property(nonatomic,copy)NSString *age;
+@property(nonatomic,copy)NSString *religion;
+
 @property(nonatomic,assign)BOOL checked;
 -(void)toggleChecked;
 

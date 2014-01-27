@@ -160,7 +160,7 @@ NSString *const FBSessionStateChangedNotification =
 -(void)customizeAppearance
 {
     
-    UIImage *barImage=[UIImage imageNamed:@"bg_navbar"];
+    UIImage *barImage=[UIImage imageNamed:@"bg_tCall_Btn"];
     
    // [[UISearchBar appearance]setBackgroundImage:barImage];
     

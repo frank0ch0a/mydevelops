@@ -24,6 +24,7 @@
 #import "TestFlight.h"
 #import "APMFrontViewController.h"
 #import "APMPosibleContributionsModel.h"
+#import "APMTourTipsViewController.h"
 
 @interface APMDonorDetailController (){
     
@@ -46,6 +47,8 @@
 @property(nonatomic,strong)NSMutableArray *contributionsResults;
 @property(nonatomic,strong)NSMutableArray *possibleContributions;
 @property(nonatomic,strong)NSString *donorinOut;
+@property (nonatomic,strong)UIView *tableHeaderView;
+@property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
 
 
 @end
@@ -54,6 +57,10 @@ static NSString *const DonorDetailCellIdentifier=@"DonorDetailCell";
 static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-pictures/candidates/";
 
 @implementation APMDonorDetailController
+{
+    
+    double  headerImageYOffset;
+}
 @synthesize isADonor;
 @synthesize donorType=_donorType;
 
@@ -79,6 +86,36 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     ySupport=self.supportAmount.frame.origin.y;
   
     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+    
+    UIView *blackBorderView;
+ 
+        
+        // Create an empty table header view with small bottom border view
+        self.tableHeaderView = [[UIView alloc] initWithFrame: CGRectMake(6.0, 470.0, 309, 159.0)];
+        _tableHeaderView.backgroundColor=[UIColor clearColor];
+        
+        blackBorderView = [[UIView alloc] initWithFrame: CGRectMake(0.0, 179.0, self.view.frame.size.width, 1.0)];
+        blackBorderView.backgroundColor = [UIColor colorWithRed: 0.0 green: 0.0 blue: 0.0 alpha: 0.8];
+        [_tableHeaderView addSubview: blackBorderView];
+        
+    self.candTableView.tableHeaderView = _tableHeaderView;
+    
+    self.candTableView.backgroundColor=[UIColor clearColor];
+    
+    // Create the underlying imageview and offset it
+        headerImageYOffset = 290.0;
+        //_headerImage = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"fondo1.png"]];
+        CGRect headerImageFrame = self.highlightsUIView.frame;
+        headerImageFrame.origin.y = headerImageYOffset;
+        self.highlightsUIView.frame = headerImageFrame;
+    
+        [self.view insertSubview: self.highlightsUIView belowSubview: self.candTableView];
+        
+        
+    
+    
+   
+    
     /*
     
     self.lastDonations=@[@"Michele Stuart",@"Charles Stanton",@"Megan Surrell"];
@@ -104,6 +141,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             if (self.donorType==1) {
                   self.donorinOut=@"/mobile/donoroutdetails_leads.php";
+                
             }else if (self.donorType==3){
                 
                 self.donorinOut=@"/mobile/donoroutdetails_pledge.php";
@@ -112,6 +150,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             [self loadData];
              NSLog(@"Es OUT!");
+            
             
             
             
@@ -132,6 +171,16 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
      
     }
     
+    if (_isTour) {
+        
+        
+        self.donorinOut=@"/mobile/donordetails_tour.php";
+        
+        [self loadData];
+       
+        
+        NSLog(@"donorinout %@",self.donorinOut);
+    }
     
     [self.candTableView registerNib:[self DonorDetailCellNib] forCellReuseIdentifier:DonorDetailCellIdentifier];
     
@@ -143,6 +192,8 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     self.candTableView.rowHeight=50.f;
     
+    NSLog(@"isTour %hhd",self.isTour);
+    
     isLoading=YES;
     
     switch (self.donorType) {
@@ -150,8 +201,17 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         case 0:
             self.emailOutlet.enabled=NO;
             self.callButton.enabled=NO;
+            if (!_isTour) {
+                 self.navigationItem.rightBarButtonItem=[self btnAddLead];
+            }
+           
             
-            NSLog(@"Hay Busqueda");
+            if (_isTour) {
+                self.callButton.enabled=YES;
+                 self.bgCallImageView.image=[UIImage imageNamed:@"bg_fundraise"];
+            }
+            
+            NSLog(@"Hay Busqueda o Tour");
             
             break;
             
@@ -171,8 +231,43 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             break;
     }
     
+    
+    if (_isTour) {
+        /*
+        UIImageView *tourImageView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"tour_call_iphone"]];
+        tourImageView.alpha=2.0f;
+        
+        [self.view addSubview:tourImageView];*/
+    }
+    
 }
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    
+    CGFloat scrollOffset=scrollView.contentOffset.y;
+    CGRect headerImageFrame=self.highlightsUIView.frame;
+    
+    if (scrollOffset < 0) {
+        //Adjust image Proportionally
+        
+        headerImageFrame.origin.y=headerImageYOffset-((scrollOffset / 3));
+        
+    }else{
+        
+        //We're scrolling up, return  to normal behavior
+        
+        headerImageFrame.origin.y=headerImageYOffset-scrollOffset;
+        
+        
+        
+    }
+    
+    self.highlightsUIView.frame=headerImageFrame;
+    
+    
+}
 
 -(UINib *)DonorDetailCellNib
 {
@@ -542,6 +637,30 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
 }
 
+
+- (UIBarButtonItem *)btnAddLead {
+    
+    
+    _rightBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Add Lead" style:UIBarButtonItemStyleBordered
+                                                        target:self
+                                                        action:@selector(addLeadAction:)];
+    
+    
+    [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    return _rightBarButtonItem;
+}
+/*
+- (void)addAll:(id)sender {
+    
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Message" message:@"Coming Soon!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    
+    
+    [alert show];
+    
+}*/
+
+
 -(void)parseDictionary:(NSDictionary *)dictionary{
     
     
@@ -592,8 +711,10 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             if (self.donorType==0) {
                 
-                self.btn_plus.hidden=NO;
-                self.supportAmount.text=@"Add Lead";
+              
+                
+               
+                
                 self.supportAmount.frame=CGRectMake(self.supportAmount.frame.origin.x, 48, self.supportAmount.frame.size.width, self.supportAmount.frame.size.height);
                 self.supportAmount.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0];
                 self.nameSupport.hidden=YES;
@@ -667,12 +788,18 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     if (self.donorType == 3) {
         
-         dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id,@"call":self.leadsModel.pledgeID,@"inout":self.leadsModel.statusNet};
+        dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id,@"call":self.leadsModel.pledgeID,@"inout":self.leadsModel.statusNet};
+        
         
     }else{
         
-        dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id};
-         NSLog(@" dict matches %@",dict);
+      
+        if (!_isTour) {
+            dict=@{@"email":self.email ,@"pass":self.pass,@"dn":self.leadsModel.donor_id};
+            NSLog(@" dict matches %@",dict);
+        }
+       
+        
     }
         
     }else{
@@ -691,7 +818,10 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             NSLog(@" dict details %@",dict);
         
         
-    }
+        }else if (_isTour){
+             dict=@{@"dn":self.leadsModel.donor_id};
+            
+        }
 }
     
     //NSLog(@"Donor Parameters %@",dict);
@@ -755,15 +885,51 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
     [super viewWillAppear:animated];
     
-   self.btn_plus.hidden=YES;
+
     
     [self setTitle:self.title];
     
-    
+    self.highlightsUIView.layer.cornerRadius=5.0f;
     
     self.askLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:25];
     self.bestLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
     self.averageLabel.font=[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
+    
+   
+    
+    //Create the three circle views
+    
+    CGPoint saveCenter = self.avgUIView.center;
+    CGRect newFrame = CGRectMake(self.avgUIView.frame.origin.x, self.avgUIView.frame.origin.y, 73, 73);
+    self.avgUIView.frame = newFrame;
+    self.avgUIView.layer.cornerRadius = 73 / 2.0;
+    self.avgUIView.layer.borderColor=[UIColor whiteColor].CGColor;
+    self.avgUIView.layer.borderWidth=1.5f;
+    self.avgUIView.center = saveCenter;
+    
+    
+    CGPoint saveCenter2 = self.bestUIView.center;
+    CGRect newFrame2 = CGRectMake(self.bestUIView.frame.origin.x, self.bestUIView.frame.origin.y, 73, 73);
+    self.bestUIView.frame = newFrame2;
+    self.bestUIView.layer.cornerRadius = 73 / 2.0;
+    self.bestUIView.layer.borderColor=[UIColor whiteColor].CGColor;
+    self.bestUIView.layer.borderWidth=1.5f;
+    self.bestUIView.center = saveCenter2;
+    
+    
+    CGPoint saveCenter3 = self.askUIView.center;
+    CGRect newFrame3 = CGRectMake(self.askUIView.frame.origin.x, self.askUIView.frame.origin.y, 107, 107);
+    self.askUIView.frame = newFrame3;
+    self.askUIView.layer.cornerRadius = 107 / 2.0;
+    self.askUIView.layer.borderColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0].CGColor;
+    self.askUIView.layer.borderWidth=1.5f;
+    self.askUIView.center = saveCenter3;
+        
+    
+    
+    //[self.askLabel setTextColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0 ]];
+    [self.askForLabel setTextColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0 ]];
+    
     
     
 }
@@ -942,7 +1108,8 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     
 }
 
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (UIView *) tableView:(UITableView *)tableView
+viewForHeaderInSection:(NSInteger)section
 {
     
     
@@ -1056,6 +1223,21 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
 - (IBAction)callOutcome:(id)sender {
     
     
+    if (_isTour) {
+        
+        APMTourTipsViewController *tourVC=[[APMTourTipsViewController alloc]init];
+        
+        
+        [self.view addSubview:tourVC.view];
+        [self addChildViewController:tourVC];
+        
+        [tourVC didMoveToParentViewController:self];
+        
+        
+        
+    }else {
+    
+    
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Check"] ){
         
@@ -1123,6 +1305,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
     [self addChildViewController:apmCallVC];
     [apmCallVC didMoveToParentViewController:self];*/
 
+    }
 }
 
 - (IBAction)emailButton:(id)sender {
@@ -1178,7 +1361,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
             
             isLoading=NO;
             
-            
+           [SVProgressHUD dismiss];
             
             
             
@@ -1188,6 +1371,7 @@ static NSString *const UrlImage=@"https://www.angelpolitics.com/uploads/profile-
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"error %@", [error description]);
+        [SVProgressHUD dismiss];
         
     }];
     

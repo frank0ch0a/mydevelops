@@ -10,6 +10,8 @@
                 <outlet property="FrontLineOne" destination="17Y-zN-aTr" id="FNq-kI-Caf"/>
                 <outlet property="addLeadsBig" destination="Mhx-dC-l5S" id="jl6-Rh-nS7"/>
                 <outlet property="addLeadsButtonOut" destination="0ki-IM-YJh" id="93d-51-u8y"/>
+                <outlet property="bgFundImageView" destination="idh-0q-EeC" id="alS-n6-eNt"/>
+                <outlet property="bgFundUIView" destination="lfc-qk-yVt" id="lOt-zM-pov"/>
                 <outlet property="bigBtnLabel" destination="6HD-rT-HnT" id="Crx-aI-XPm"/>
                 <outlet property="bigButton" destination="9HH-uE-jzg" id="UQn-6e-N6n"/>
                 <outlet property="bigButtonUIView" destination="OEE-kK-eA1" id="IP2-48-ajG"/>
@@ -52,25 +54,29 @@
                     <color key="backgroundColor" red="0.89738121810000004" green="0.89738121810000004" blue="0.89738121810000004" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" id="lfc-qk-yVt">
-                    <rect key="frame" x="0.0" y="31" width="320" height="152"/>
+                    <rect key="frame" x="0.0" y="29" width="320" height="118"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="idh-0q-EeC">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="118"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aYc-iZ-ss4">
-                            <rect key="frame" x="-1" y="48" width="94" height="50"/>
+                            <rect key="frame" x="-1" y="34" width="94" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="48"/>
                             <color key="textColor" red="0.18612365310000001" green="0.78679049739999996" blue="0.1171079218" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leads available" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="17Y-zN-aTr">
-                            <rect key="frame" x="88" y="56" width="187" height="21"/>
+                            <rect key="frame" x="88" y="42" width="187" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let’s get some contributions!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9ce-nP-cKO">
-                            <rect key="frame" x="89" y="77" width="231" height="21"/>
+                            <rect key="frame" x="89" y="63" width="231" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                             <color key="textColor" red="0.83137254901960778" green="0.83137254901960778" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
@@ -79,8 +85,45 @@
                     </subviews>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <view contentMode="scaleToFill" id="OEE-kK-eA1">
+                    <rect key="frame" x="0.0" y="210" width="320" height="341"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES"/>
+                    <subviews>
+                        <view clipsSubviews="YES" alpha="0.39999999999999963" contentMode="scaleToFill" id="X2s-tT-k2l">
+                            <rect key="frame" x="115" y="103" width="100" height="100"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="9HH-uE-jzg">
+                            <rect key="frame" x="65" y="53" width="200" height="200"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                            <state key="normal" title="Import Contacts">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from your Address Book" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6HD-rT-HnT">
+                            <rect key="frame" x="91" y="167" width="160" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pwS-Gs-FZP">
+                    <rect key="frame" x="0.0" y="190" width="320" height="363"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="IDe-J4-drQ"/>
+                        <outlet property="delegate" destination="-1" id="ZwV-Td-OEh"/>
+                    </connections>
+                </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XSg-K0-OTm">
-                    <rect key="frame" x="105" y="182" width="108" height="44"/>
+                    <rect key="frame" x="105" y="146" width="108" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                     <state key="normal" title="New Matches">
@@ -95,7 +138,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BX2-xn-AQG">
-                    <rect key="frame" x="213" y="182" width="107" height="44"/>
+                    <rect key="frame" x="213" y="146" width="107" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                     <state key="normal" title="Owes Me">
@@ -109,45 +152,8 @@
                         <action selector="pledgeButton:" destination="-1" eventType="touchUpInside" id="Db6-qh-JYS"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" id="OEE-kK-eA1">
-                    <rect key="frame" x="0.0" y="228" width="320" height="320"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <view clipsSubviews="YES" alpha="0.39999999999999963" contentMode="scaleToFill" id="X2s-tT-k2l">
-                            <rect key="frame" x="115" y="82" width="100" height="100"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
-                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="9HH-uE-jzg">
-                            <rect key="frame" x="65" y="32" width="200" height="200"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                            <state key="normal" title="Import Contacts">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from your Address Book" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6HD-rT-HnT">
-                            <rect key="frame" x="91" y="146" width="160" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pwS-Gs-FZP">
-                    <rect key="frame" x="0.0" y="228" width="320" height="320"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="IDe-J4-drQ"/>
-                        <outlet property="delegate" destination="-1" id="ZwV-Td-OEh"/>
-                    </connections>
-                </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9MS-Zu-7EO">
-                    <rect key="frame" x="0.0" y="182" width="106" height="44"/>
+                    <rect key="frame" x="0.0" y="146" width="106" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                     <state key="normal" title="My Leads">
@@ -162,17 +168,17 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" id="lQC-bu-tUC">
-                    <rect key="frame" x="2" y="221" width="103" height="4"/>
+                    <rect key="frame" x="2" y="185" width="103" height="4"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="gbE-pT-pYl">
-                    <rect key="frame" x="106" y="221" width="106" height="4"/>
+                    <rect key="frame" x="106" y="185" width="106" height="4"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="cTN-cq-7To">
-                    <rect key="frame" x="214" y="221" width="105" height="4"/>
+                    <rect key="frame" x="214" y="185" width="105" height="4"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>

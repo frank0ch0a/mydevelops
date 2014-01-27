@@ -18,10 +18,17 @@
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
 #import "APMFaceBookViewController.h"
+#import "JSONKit.h"
+#import "OAConsumer.h"
+#import "OAMutableURLRequest.h"
+#import "OADataFetcher.h"
+#import "OATokenManager.h"
+#import "APMOAuthViewController.h"
+
 
 
 @interface APMAddLeadsViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,FacebookVCDelegate>
-- (IBAction)closeAddLeadVC:(id)sender;
+
 
 @property(nonatomic,weak)id<AddLeadsDelegate>delegate;
 @property (weak, nonatomic) IBOutlet UIButton *saveLeadButton;
@@ -50,16 +57,20 @@
 
 @property (weak, nonatomic) IBOutlet UIView *addLeadsUIView;
 
-- (IBAction)addContact:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
 @property (strong,nonatomic) UISearchDisplayController *searchController;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar2;
 
-- (IBAction)addAllContacs:(id)sender;
+
 
 @property (weak, nonatomic) IBOutlet UIToolbar *selectToolbar;
+
+@property (nonatomic, strong) APMOAuthViewController *oAuthLoginView;
+
+- (void)profileApiCall;
+- (void)networkApiCall;
 
 
 @end

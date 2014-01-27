@@ -103,6 +103,16 @@
     
     [super awakeFromNib];
     
+    
+    //Circle View
+    CGPoint saveCenter = self.circleView.center;
+    CGRect newFrame = CGRectMake(self.circleView.frame.origin.x, self.circleView.frame.origin.y, 50, 50);
+    self.circleView.frame = newFrame;
+    self.circleView.layer.cornerRadius = 50 / 2.0;
+    self.circleView.layer.borderColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0].CGColor;
+    self.circleView.layer.borderWidth=1.5f;
+    self.circleView.center = saveCenter;
+    
     self.swipeView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_menu_row_up"]];
     self.donorLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f];
     self.cityLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:11.0f];

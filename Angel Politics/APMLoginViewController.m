@@ -97,9 +97,21 @@
     if ([_keyChain objectForKey:(__bridge id)kSecAttrAccount]!=nil) {
          self.emailTextField.text= [_keyChain objectForKey:(__bridge id)kSecAttrAccount];
     }
+    /*
     
-   
-
+    // Remember user
+    if ([_keyChain objectForKey:(__bridge id)kSecAttrAccount]) {
+        self.emailTextField.text= [_keyChain objectForKey:(__bridge id)kSecAttrAccount];
+    }*/
+    
+    //Remeber user provisional
+    
+    NSUserDefaults *usrLog=[NSUserDefaults standardUserDefaults];
+    
+    NSString *usrLogin=[usrLog objectForKey:@"usrLogin"];
+    
+    self.emailTextField.text=usrLogin;
+    
     
     
     /*    [self.passwordTextField setText:[self.keyChain objectForKey:(__bridge id)kSecValueData]];

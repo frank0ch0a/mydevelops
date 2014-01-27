@@ -27,7 +27,7 @@
                                                          action:@selector(addAll:)];
     
     
-   [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+   [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     return _leftBarButtonItem;
 }
@@ -46,7 +46,7 @@
                                                          target:self
                                                          action:@selector(onDone:)];
     
-     [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+     [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     return _rightBarButtonItem;
 }
@@ -94,6 +94,7 @@
                                                     [self fetchFacebookFriendsFor:fbAccount];
                                                     
                                                 } else {
+                                                    [SVProgressHUD dismiss];
                                                     NSLog(@"Not granted: %@", error);
                                                 }
                                                 

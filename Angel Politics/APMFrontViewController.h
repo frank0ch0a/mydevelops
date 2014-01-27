@@ -86,4 +86,8 @@
 @property (weak, nonatomic) IBOutlet UIView *waveBigBtnView;
 @property (weak, nonatomic) IBOutlet UILabel *bigBtnLabel;
 
+
+@property (weak, nonatomic) IBOutlet UIView *bgFundUIView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *bgFundImageView;
 @end

@@ -368,11 +368,13 @@ enum {
             
         }
         
+        // Save candidate name
+        /*
         NSString *signCandidate=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
         
         NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
         [registro setObject:signCandidate forKey:@"nombreCandidato"];
-        [registro synchronize];
+        [registro synchronize];*/
         
         
     }
@@ -479,14 +481,18 @@ enum {
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HasPassLogin"];
     
+    NSString *usrLogin=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+    
+    NSUserDefaults *usrLog=[NSUserDefaults standardUserDefaults];
+    [usrLog setObject:usrLogin forKey:@"usrLogin"];
+    [usrLog synchronize];
+    
     
    [_keychain resetKeychainItem];
     
     [FBSession.activeSession closeAndClearTokenInformation];
     
-    NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
-    [registro removeObjectForKey:@"nombreCandidato"];
-    [registro synchronize];
+    
     
     
     loginVC.delegate=self;

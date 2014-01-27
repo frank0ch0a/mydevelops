@@ -171,11 +171,11 @@
                 
                 NSString *emailString=[email objectForKey:@"email"];
                 
-                dict=@{@"email":emailString ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
+                dict=@{@"email":emailString ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text,@"ps":self.psCallTextField};
                 
             }else{
                 
-                dict=@{@"email":self.emailCallTextField.text ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text};
+                dict=@{@"email":self.emailCallTextField.text ,@"candid":self.candID,@"donorid":self.donorID,@"pledge":self.callAmountTextField.text,@"ps":self.psCallTextField};
             }
             
         }
