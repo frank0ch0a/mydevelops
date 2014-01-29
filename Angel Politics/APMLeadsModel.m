@@ -23,6 +23,12 @@
 @synthesize section;
 @synthesize zipCode;
 @synthesize street;
+@synthesize  donorImg;
+@synthesize  donorLkdHead;
+@synthesize country;
+@synthesize age;
+@synthesize race;
+@synthesize religion;
 
 -(void)toggleChecked
 {

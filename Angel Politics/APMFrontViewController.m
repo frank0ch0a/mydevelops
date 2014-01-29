@@ -29,10 +29,15 @@
     BOOL isResult;
     BOOL isSelect;
     BOOL isView;
+    BOOL isTour;
     NSInteger donorKind;
     CGFloat quickSearchY;
     BOOL checked;
     NSString *phone;
+    ABAddressBookRef addresBook;
+    UIView* statusBar;
+    CGFloat ySearch;
+    
 }
 
 // Lazy buttons
@@ -48,16 +53,23 @@
 @property(nonatomic,strong)NSString *donorType;
 @property(nonatomic,strong)NSMutableArray *searchResults;
 @property(nonatomic,strong)NSArray *states;
+@property(nonatomic,strong)NSMutableArray *tourContacs;
 
 @end
 static NSString *const LoadingCellIdentifier=@"LoadingCell";
 static NSString *const FrontCell=@"FrontCell";
 
-@implementation APMFrontViewController{
+
+
+@implementation APMFrontViewController
+{
     
       NSOperationQueue *queue;
     
 }
+
+@synthesize isTour=_isTour;
+
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     
@@ -86,6 +98,8 @@ static NSString *const FrontCell=@"FrontCell";
     
     [super viewDidAppear:animated];
     
+    
+    
     UIImage* myImage = [UIImage imageNamed:@"nav_logo"];
     self.myImageView = [[UIImageView alloc] initWithImage:myImage];
     self.myImageView.frame=CGRectMake(80, 8, 145, 26);
@@ -103,15 +117,851 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
+-(void)TourBegin:(NSNotification *)notic{
+    
+    if ([notic.object boolValue]) {
+        
+        self.isTour=[notic.object boolValue];
+        
+        NSLog(@" IsTour %hhd",self.isTour);
+        
+        [self viewDidLoad];
+        
+        if (self.isTour) {
+            NSLog(@"Is tourrrr");
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+}
+
+- (void) addPopAnimationToLayer:(CALayer *)aLayer
+                     withBounce:(CGFloat)bounce
+                           damp:(CGFloat)damp{
+    // TESTED WITH BOUNCE = 0.2, DAMP = 0.055
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    animation.duration = 70;
+    
+    int steps = 100;
+    NSMutableArray *values = [NSMutableArray arrayWithCapacity:steps];
+    double value = 0;
+    float e = 0.89;
+    for (int t=0; t<500; t++) {
+        //value = pow(e, -damp*t) * sin(bounce*t) + 1;
+        value=e*cos(bounce*t)+e*sin(bounce*t);
+        
+        [values addObject:[NSNumber numberWithFloat:value]];
+    }
+    animation.values = values;
+    [aLayer addAnimation:animation forKey:@"appear"];
+}
+
+-(APMLeadsModel *)logPersonEmails:(ABRecordRef)paramPerson
+{
+    APMLeadsModel *donorModel=[[APMLeadsModel alloc]init];
+    
+    NSString *name;
+    NSString *lastName;
+    
+    
+    
+    if (paramPerson==NULL) {
+        NSLog(@"The given person is NULL");
+        
+    }
+    
+    name=(__bridge_transfer NSString *)ABRecordCopyValue(paramPerson, kABPersonFirstNameProperty);
+    
+    if (name ==NULL)
+    {
+        name=@"";
+        donorModel.donorName=name;
+        
+    }else{
+        
+        name=(__bridge_transfer NSString *)ABRecordCopyValue(paramPerson, kABPersonFirstNameProperty);
+        
+        donorModel.donorName=name;
+        
+    }
+    
+    lastName=(__bridge_transfer NSString *)ABRecordCopyValue(paramPerson, kABPersonLastNameProperty);
+    
+    if (lastName ==NULL) {
+        
+        lastName=@"";
+        donorModel.donorLastName=lastName;
+        
+        
+    }else{
+        
+        lastName=(__bridge_transfer NSString *)ABRecordCopyValue(paramPerson, kABPersonLastNameProperty);
+        
+        donorModel.donorLastName=lastName;
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    ABMultiValueRef emails=ABRecordCopyValue(paramPerson,kABPersonEmailProperty);
+    
+    if (emails==NULL) {
+        NSLog(@"This contact does no have any emails");
+        
+    }
+    
+    
+    
+    
+    
+    //Go trough all the emails
+    
+    NSUInteger emailCounter=0;
+    
+    for (emailCounter=0; emailCounter<ABMultiValueGetCount(emails) ; emailCounter++) {
+        
+        
+        if (emails !=NULL) {
+            
+            donorModel.donorEmail=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, emailCounter);
+            
+           
+            
+        }
+        
+        
+        
+        
+    }
+    
+    CFRelease(emails);
+    
+    
+    ABMultiValueRef phones=ABRecordCopyValue(paramPerson,kABPersonPhoneProperty);
+    
+    if (phones==NULL) {
+        
+    }
+    
+    
+    //Go trough all the phone
+    
+    NSUInteger phoneCounter=0;
+    
+    for (phoneCounter=0; phoneCounter<ABMultiValueGetCount(phones) ; phoneCounter++)
+        
+    {
+        
+        //Get the label of the email (if any)
+        /*
+         NSString *emailLabel=(__bridge_transfer NSString *)ABMultiValueCopyLabelAtIndex(emails, emailCounter);
+         
+         NSString *localizedEmailLabel=(__bridge_transfer NSString *)ABAddressBookCopyLocalizedLabel((__bridge CFStringRef)emailLabel);
+         
+         //And then get the email address itself
+         
+         NSString *email=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, emailCounter);
+         
+         NSLog(@"Label= %@ Localized Label=%@, Email=%@",emailLabel,localizedEmailLabel,email);*/
+        
+        if (phones !=NULL) {
+            
+            donorModel.donorPhoneNumber=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phones, phoneCounter);
+            
+        }
+        
+        
+        
+    }
+    
+    CFRelease(phones);
+    
+    
+    
+    
+    
+    ABMultiValueRef address=ABRecordCopyValue(paramPerson,kABPersonAddressProperty);
+    
+    if (address!=NULL) {
+        
+        
+        
+        for (CFIndex j = 0; j<ABMultiValueGetCount(address);j++){
+            CFDictionaryRef dict = ABMultiValueCopyValueAtIndex(address, j);
+            //  CFStringRef typeTmp = ABMultiValueCopyLabelAtIndex(address, j);
+            //   CFStringRef labeltype = ABAddressBookCopyLocalizedLabel(typeTmp);
+            NSString *street = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressStreetKey) copy];
+            // NSString *city = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressCityKey) copy];
+            //  NSString *state = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressStateKey) copy];
+            NSString *zip = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressZIPKey) copy];
+            //   NSString *country = [(NSString *)CFDictionaryGetValue(dict, kABPersonAddressCountryKey) copy];
+            
+            donorModel.street=street;
+            donorModel.zipCode=zip;
+            
+            
+            CFRelease(dict);
+            //   CFRelease(labeltype);
+            //   CFRelease(typeTmp);
+        }
+        CFRelease(address);
+        
+        
+    }
+    
+    return donorModel;
+    
+}
+
+-(void)addtourHintImage
+{
+    
+    
+    UIImageView *tourImageView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"tour_fundraise_iphone"]];
+    
+   // tourImageView.frame=self.view.bounds;
+    
+   
+    
+   
+    tourImageView.alpha=0.8f;
+    
+    [self.view addSubview:tourImageView];
+    
+    
+    
+}
+
+-(void)sendAllContacts:(NSMutableArray *)array
+{
+    
+    /*
+     self.keychain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
+     
+     
+     
+     if ([_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil && [self.keychain objectForKey:(__bridge id)kSecValueData]!=nil) {
+     
+     self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
+     self.pass=[self.keychain objectForKey:(__bridge id)kSecValueData];
+     
+     }
+     
+     */
+    
+    /*
+     NSError *error;
+     
+     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array
+     options:0
+     error:&error];
+     
+     if (!jsonData) {
+     NSLog(@"JSON error: %@", error);
+     } else {
+     
+     NSString *JSONString = [[NSString alloc] initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
+     NSLog(@"JSON OUTPUT: %@",JSONString);
+     
+     //URL
+     
+     NSURL *url=[NSURL URLWithString:@"https://www.angelpolitics.com/mobile/ios_contact.php"];
+     
+     NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
+     
+     [request setHTTPMethod:@"POST"];
+     [request setValue:@"people" forHTTPHeaderField:@"JSON"];
+     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+     [request setValue:@"application/json"  forHTTPHeaderField:@"Content-Type"];
+     
+     [request addValue:[NSString stringWithFormat:@"%d",[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+     [request setHTTPBody:jsonData];
+     
+     
+     //NSURLResponse *response=nil;
+     //  NSError *error=nil;
+     
+     //NSData *resultData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+     
+     
+     
+     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+     if (error==nil){
+     NSDictionary *dictJson=[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&connectionError];
+     
+     NSLog(@"Dictionary Json %@",dictJson);
+     
+     
+     
+     }
+     
+     }];
+     
+     
+     
+     
+     }*/
+    
+    
+    if ([NSJSONSerialization isValidJSONObject:array]) {
+        
+        
+        NSDictionary *dict=@{@"people":array};
+        NSLog(@"dict %@",dict);
+        
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+        
+        [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+        [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+        NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                                path:@"/mobile/ios_contact_tour.php"
+                                                          parameters:dict
+                                        ];
+        
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            
+            if (JSON !=nil) {
+                
+                [SVProgressHUD dismiss];
+                
+                NSLog(@"Result contacts %@",JSON);
+                
+                isResult=YES;
+                isLoading=NO;
+                isSearch=NO;
+                isView=YES;
+                
+                
+                [self parseArray:JSON];
+                
+                
+                
+                APMLeadsModel *leadsModel;
+                if ([self.leadsResults count]>0) {
+                    
+                    self.bigButton.hidden=YES;
+                    self.donorTableView.hidden=NO;
+                    [self.donorTableView reloadData];
+                    self.bigButtonUIView.hidden=YES;
+                    
+                    self.frontNumber.hidden=YES;
+                    
+                    self.FrontLineOne.frame=CGRectMake(80, self.FrontLineOne.frame.origin.y, self.FrontLineOne.frame.size.width, self.FrontLineOne.frame.size.height);
+                    self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+                    self.frontLineTwo.font=[UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0];
+                    
+                    self.FrontLineOne.text=[NSString stringWithFormat:@"You have %d contacts",[JSON count]];
+                    leadsModel=[self.leadsResults objectAtIndex:0];
+                    
+                    self.frontLineTwo.frame=CGRectMake(40, self.frontLineTwo.frame.origin.y, self.frontLineTwo.frame.size.width+25, self.frontLineTwo.frame.size.height);
+                    
+                    self.frontLineTwo.hidden=NO;
+                    
+                    
+                    self.frontLineTwo.text=[NSString stringWithFormat:@"Reheat your pitch with %@ %@",leadsModel.donorName,leadsModel.donorLastName];
+                    donorKind=0;
+                    
+                    //  [self addtourHintImage];
+                    
+                    [self.donorTableView reloadData];
+                    
+                }else{
+                    
+                    
+                    
+                     self.frontNumber.hidden=YES;
+                    
+                    
+                    
+                }
+                
+               
+                
+            
+                
+                
+                
+              
+                /*
+                if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
+                    
+                    
+                    
+                    
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:[NSString stringWithFormat:@"You have successfully added %@ lead(s). ",[@([array count])stringValue]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    
+                    [alertView show];
+                    
+                    [self loadData];
+                    
+                   // [self.delegate dismissController:self];
+                    
+                    
+                    
+                }*/
+                
+                
+                
+                
+                
+            }else{
+                
+                
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Data do not send try again, please" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                
+                [alertView show];
+                
+                
+                
+            }
+            
+            
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            NSLog(@"error %@", [error description]);
+            
+        }];
+        
+        operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+        
+        
+        
+        
+        [queue addOperation:operation];
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+-(void)prepareAllTourContactsToSend
+
+{
+    NSMutableArray *arrayContacs=[[NSMutableArray alloc]init];
+    NSDictionary *dict;
+    
+    for (NSInteger i=0; i<[self.tourContacs count]; i++) {
+        
+        APMLeadsModel *donorModel=[self.tourContacs objectAtIndex:i];
+        
+        NSString *name=donorModel.donorName;
+        NSString *lastname=donorModel.donorLastName;
+        NSString *phoneT=donorModel.donorPhoneNumber;
+        NSString *email=donorModel.donorEmail;
+        NSString *street=donorModel.street;
+        NSString *zip=donorModel.zipCode;
+        
+        if (name==nil) {
+            name=@"N/A";
+            donorModel.donorName=name;
+            
+        }else{
+            
+            name=donorModel.donorName;
+        }
+        
+        if (lastname==nil) {
+            lastname=@"N/A";
+            donorModel.donorLastName=lastname;
+        }else{
+            
+            lastname=donorModel.donorLastName;
+        }
+        
+        if (phoneT==nil) {
+            phoneT=@"N/A";
+            donorModel.donorPhoneNumber=phone;
+        }else{
+            
+            phoneT=donorModel.donorPhoneNumber;
+            
+        }
+        
+        if (email==nil) {
+            
+            email=@"N/A";
+            donorModel.donorEmail=email;
+        }else{
+            
+            email=donorModel.donorEmail;
+            
+            
+        }
+        
+        if (street==nil) {
+            
+            street=@"N/A";
+            donorModel.street=street;
+        }else{
+            
+            street=donorModel.street;
+            
+            
+        }
+        
+        
+        if (zip==nil) {
+            zip=@"N/A";
+            donorModel.zipCode=zip;
+        }else{
+            
+            zip=donorModel.zipCode;
+            
+        }
+        
+        
+        if (donorModel.donorName !=nil && donorModel.donorLastName !=nil && donorModel.donorPhoneNumber !=nil && donorModel.donorEmail !=nil &&donorModel.street !=nil && donorModel.zipCode !=nil) {
+            dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
+                   @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
+                   };
+            
+        }
+        
+        if (dict !=nil) {
+            [arrayContacs addObject:dict];
+        }
+        
+        
+        
+    }
+    
+    NSLog(@"arraycontacts %@",arrayContacs);
+    
+    [self sendAllContacts:arrayContacs];
+    
+    /*
+    NSMutableArray *arrayContacs=[[NSMutableArray alloc]init];
+    
+    
+    NSDictionary *dict;
+    
+    for (NSInteger i=0; i<[self.tourContacs count]; i++) {
+        
+        APMLeadsModel *donorModel=[self.tourContacs objectAtIndex:i];
+        
+        
+        
+        
+        
+        if (donorModel.donorName!=nil && donorModel.donorLastName !=nil && donorModel.donorEmail !=nil && donorModel.donorPhoneNumber && donorModel.street !=nil && donorModel.zipCode !=nil) {
+            
+            dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
+                   @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
+                   };
+        }
+        
+        if (dict !=nil) {
+            
+              [arrayContacs addObject:dict];
+        }
+        
+      
+        
+    }
+    
+    NSLog(@"arraycontacts %@",arrayContacs);
+    
+    [self sendAllContacts:arrayContacs];*/
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+-(void)readFromAddressBook:(ABAddressBookRef)paramAddressBook{
+
+    
+    
+    NSArray *arrayOfAllPeople=(__bridge_transfer NSArray *)
+    ABAddressBookCopyArrayOfAllPeople(paramAddressBook);
+    
+    
+    
+    NSUInteger peopleCounter=0;
+    
+    self.tourContacs=[[NSMutableArray alloc]init];
+
+    //Send only 100 contacts no all [arrayOfAllPeople count]
+    
+    
+    
+    for (peopleCounter=0; peopleCounter < [arrayOfAllPeople count] ; peopleCounter++) {
+        
+        ABRecordRef thisPerson=(__bridge ABRecordRef)[arrayOfAllPeople objectAtIndex:peopleCounter];
+        
+        APMLeadsModel *donorModel;
+        
+        
+        donorModel=[self logPersonEmails:thisPerson];
+        
+        /*
+         NSString *firstName=(__bridge_transfer NSString *)ABRecordCopyValue(thisPerson, kABPersonFirstNameProperty);
+         
+         NSString *lastName=(__bridge_transfer NSString *)ABRecordCopyValue(thisPerson, kABPersonLastNameProperty);
+         
+         NSString *phoneNumber=(__bridge_transfer NSString *)ABRecordCopyValue(thisPerson, kABPersonPhoneProperty);
+         
+         
+         NSString *email=(__bridge_transfer NSString *)ABRecordCopyValue(thisPerson, kABPersonEmailProperty);
+         
+         NSLog(@"First Name=%@",firstName);
+         NSLog(@"Last Name=%@",lastName);
+         NSLog(@"Phone=%@",phoneNumber);
+         [self logPersonEmails:thisPerson];*/
+        
+        if (donorModel !=nil) {
+            
+            
+            [self.tourContacs addObject:donorModel];
+            
+           
+            
+            
+            
+            
+            
+        }
+        
+        
+    }
+    
+    
+    NSLog(@" contacts %@",self.tourContacs);
+    
+     [self prepareAllTourContactsToSend];
+    //[self configureSections];
+    
+    
+    
+   
+    
+}
+
+-(void)addAllTourContacts{
+    CFErrorRef error=NULL;
+    addresBook=ABAddressBookCreateWithOptions(NULL, &error);
+    
+    ABAddressBookRequestAccessWithCompletion(addresBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+            NSLog(@"Access granted");
+            
+            [self readFromAddressBook:addresBook];
+            
+            // [self.contactsTableView reloadData];
+            
+        }else{
+            
+            NSLog(@"Acces was not granted");
+            
+        }
+        
+        if (addresBook !=NULL) {
+            CFRelease(addresBook);
+        }
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        [[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
+        
+    }
+    
+    
+    // get register to fetch notification to dissmis login Tour
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(TourBegin:)
+                                                 name:@"MODELVIEW TOUR" object:nil];
+    
+    
+    
+    
+    self.stateTableView.hidden=YES;
+    
+    
+    
+    [self.bigButton setBackgroundImage:[UIImage imageNamed:@"bigBtnBG"] forState:UIControlStateNormal];
+    
+    if ([[UIScreen mainScreen] bounds].size.height == 480 && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"]) {
+        
+        self.bigButton.frame=CGRectMake(self.bigButton.frame.origin.x, -6, self.bigButton.frame.size.width, self.bigButton.frame.size.height);
+        
+         self.waveBigBtnView.frame=CGRectMake(self.waveBigBtnView.frame.origin.x, 44, self.waveBigBtnView.frame.size.width, self.waveBigBtnView.frame.size.height);
+        self.bigButton.titleLabel.font=[UIFont systemFontOfSize:19];
+        
+        self.bigBtnLabel.frame=CGRectMake(self.bigBtnLabel.frame.origin.x+10, 102, self.bigBtnLabel.frame.size.width*0.9, self.bigBtnLabel.frame.size.height);
+        
+        self.bigBtnLabel.font=[UIFont fontWithName:@"Helvetica Neue" size:12];
+        
+        
+        //Make a circle button
+        CGPoint saveCenter2 = self.bigButton.center;
+        CGRect newFrame2 = CGRectMake(self.bigButton.frame.origin.x, self.bigButton.frame.origin.y, 200*0.80, 200*0.80);
+        self.bigButton.frame = newFrame2;
+        self.bigButton.layer.cornerRadius = 200*0.80 / 2.0;
+        self.bigButton.center = saveCenter2;
+        
+        //Make a circle view
+        CGPoint saveCenter = self.waveBigBtnView.center;
+        CGRect newFrame = CGRectMake(self.waveBigBtnView.frame.origin.x, self.waveBigBtnView.frame.origin.y, 200*0.80, 200*0.80);
+        self.waveBigBtnView.frame = newFrame;
+        self.waveBigBtnView.layer.cornerRadius = 200*0.80 / 2.0;
+        self.waveBigBtnView.center = saveCenter;
+
+        
+        
+    }else{
+    
+    //Make a circle button
+    CGPoint saveCenter2 = self.bigButton.center;
+    CGRect newFrame2 = CGRectMake(self.bigButton.frame.origin.x, self.bigButton.frame.origin.y, 200, 200);
+    self.bigButton.frame = newFrame2;
+    self.bigButton.layer.cornerRadius = 200 / 2.0;
+    self.bigButton.center = saveCenter2;
+    
+    //Make a circle view
+    CGPoint saveCenter = self.waveBigBtnView.center;
+    CGRect newFrame = CGRectMake(self.waveBigBtnView.frame.origin.x, self.waveBigBtnView.frame.origin.y, 200, 200);
+    self.waveBigBtnView.frame = newFrame;
+    self.waveBigBtnView.layer.cornerRadius = 200 / 2.0;
+    self.waveBigBtnView.center = saveCenter;
+    
+    }
+   
+    
+    
+    
+    [self.navigationItem setRightBarButtonItem:[self rightBarButtonItem]];
+    
+    self.donorButton.layer.borderWidth=1.0f;
+    self.donorButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
+    
+    self.pledgeButton.layer.borderWidth=1.0f;
+    self.pledgeButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
+    
+    self.otherButton.layer.borderWidth=1.0f;
+    self.otherButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"] ){
+        self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+        
+        self.FrontLineOne.frame=CGRectMake(10, self.FrontLineOne.frame.origin.y
+                                           , 290, self.FrontLineOne.frame.size.height);
+        
+        
+        self.FrontLineOne.text=@"You don't have contacts to show yet";
+        self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+        self.frontLineTwo.hidden=YES;
+        
+    }else{
+        
+        self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:19.0];
+    }
+    
+    
+    
+    self.frontLineTwo.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:12.5];
+    
+    
+    
+    /*
+     self.donorUIView.hidden=YES;
+     self.pledgeUIView.hidden=YES;*/
+    
+    self.donorButton.titleLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
+    
+    self.pledgeButton.titleLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
+    
+    self.otherButton.titleLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
+    
+    
+    
+    
+    
+    self.fundraiseLabel.font=[UIFont fontWithName:@"Helvetica75" size:22];
+    
+    self.searchToolbar.hidden=YES;
+    
+    
+    
+    
+    
+    
+}
+
+-(void)addTourContacts:(UIButton *)sender{
+    
+   [TestFlight passCheckpoint:@"Add Tour Contacts"];
+    
+    [self addAllTourContacts];
+    
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     
+
+    
+  
+    
+    
+    self.bigButtonUIView.hidden=YES;
+    self.donorTableView.hidden=NO;
+    
+    [self.bigButton addTarget:self
+                       action:@selector(addTourContacts:)
+             forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
     quickSearchY=self.quickSearchUIView.frame.origin.y;
    
-    
- 
     
     self.pitchUIView.backgroundColor=[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0];
     
@@ -123,10 +973,12 @@ static NSString *const FrontCell=@"FrontCell";
    
     self.searchBar.delegate=self;
     
-    // get register to fetch notification
+    // get register to fetch notification to dissmis login
     [[NSNotificationCenter defaultCenter] addObserver:self  
                                              selector:@selector(yourNotificationHandler:)
                                                  name:@"MODELVIEW DISMISS" object:nil];
+    
+    
 
     
     
@@ -136,9 +988,27 @@ static NSString *const FrontCell=@"FrontCell";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] &&
         [_keychain objectForKey:(__bridge id)kSecAttrAccount]!=nil&& [_keychain objectForKey:(__bridge id)kSecValueData]!=nil)*/
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasPassLogin"] )
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"] )
     {
-          NSLog(@"Front!");
+          NSLog(@"Estamos de Tour!");
+        
+        isTour=YES;
+       self.donorTableView.hidden=YES;
+       self.bigButtonUIView.hidden=NO;
+        
+        self.bgFundImageView.image=[UIImage imageNamed:@"bg_fundraise"];
+     
+        
+        [self addPopAnimationToLayer:self.waveBigBtnView.layer withBounce:0.099 damp:1];
+        
+        
+      
+        
+       
+        
+
+        
+        
         
        // APMLoginViewController *loginVC=[[APMLoginViewController alloc]init];
         
@@ -148,13 +1018,15 @@ static NSString *const FrontCell=@"FrontCell";
         
     }else{
         
+        isTour=NO;
+        
         /*
         // This is the first launch ever
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasPassLogin"];
         [[NSUserDefaults standardUserDefaults] synchronize];*/
         
       
-        NSLog(@" No entro");
+        NSLog(@" No Es Tour");
         
         
         
@@ -227,13 +1099,15 @@ static NSString *const FrontCell=@"FrontCell";
   
     
     
-    
 }
 
 -(void)yourNotificationHandler:(NSNotification *)notic{
     
     
     if ([notic.object isEqualToString:@"YES"]) {
+        
+       //  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsTour"];
+        
         [self viewDidLoad];
     }
     
@@ -247,54 +1121,7 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    self.stateTableView.hidden=YES;
-   
-    
-   
-    [self.navigationItem setRightBarButtonItem:[self rightBarButtonItem]];
-    
-    self.donorButton.layer.borderWidth=1.0f;
-    self.donorButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
-    
-    self.pledgeButton.layer.borderWidth=1.0f;
-    self.pledgeButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
-    
-    self.otherButton.layer.borderWidth=1.0f;
-    self.otherButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
-    
-    self.FrontLineOne.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:19.0];
-    self.frontLineTwo.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:12.5];
-    
-   
-    
-    /*
-    self.donorUIView.hidden=YES;
-    self.pledgeUIView.hidden=YES;*/
-    
-    self.donorButton.titleLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
-    
-    self.pledgeButton.titleLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
-    
-    self.otherButton.titleLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
 
-    
-    
-    
-    
-    self.fundraiseLabel.font=[UIFont fontWithName:@"Helvetica75" size:22];
-    
-    self.searchToolbar.hidden=YES;
-  
-  
-    
-   
-    
-    
-}
 
 -(void)showNetworkError
 {
@@ -371,6 +1198,7 @@ static NSString *const FrontCell=@"FrontCell";
         
         
         
+        
     }
     
     return leadsModel;
@@ -396,7 +1224,7 @@ static NSString *const FrontCell=@"FrontCell";
         
         leadsModel=[self parseData:resultDict];
         
-        if(leadsModel !=nil){
+        if(leadsModel !=nil && ![leadsModel.party isEqualToString:@""] &&  ![leadsModel.donorName isEqualToString:@""]){
             
             [self.leadsResults addObject:leadsModel];
             
@@ -411,6 +1239,9 @@ static NSString *const FrontCell=@"FrontCell";
 }
 
 -(void)loadData{
+    
+    
+    
     
    
     NSDictionary *dict=@{@"email":self.email ,@"pass":self.password};
@@ -483,18 +1314,34 @@ static NSString *const FrontCell=@"FrontCell";
 {
 	if (!_leftBarButtonItem)
 	{
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
+            
+           
+            
+        
         _leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self listImage]
                                          style:UIBarButtonItemStyleBordered
                                         target:self.slideMenuController
                                         action:@selector(toggleMenuAnimated:)];
         
-        [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
         /*
         
 		_leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward
 																		   target:self.slideMenuController
 																		   action:@selector(toggleMenuAnimated:)];*/
-	}
+        }else{
+            
+            _leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self listImage]
+                                                                  style:UIBarButtonItemStyleBordered
+                                                                 target:self.slideMenuController
+                                                                 action:@selector(toggleMenuAnimated:)];
+            
+            
+             [[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
+        }
+}
 	return _leftBarButtonItem;
 }
 
@@ -504,18 +1351,34 @@ static NSString *const FrontCell=@"FrontCell";
     
 	if (!_rightBarButtonItem)
 	{
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
+            
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self searchImage]
                                                               style:UIBarButtonItemStyleBordered
                                                              target:self
                                                              action:@selector(mainSearch:)];
         
         
-        [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     
+    
+    
+    }else{
+        
+        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self searchImage]
+                                                               style:UIBarButtonItemStyleBordered
+                                                              target:self
+                                                              action:@selector(mainSearch:)];
+        
+         [[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
+        
+        
+        
+        
     }
     
-    
+}
     return _rightBarButtonItem;
     
     
@@ -524,8 +1387,33 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(void)mainSearch:(id)sender {
     
-    if (!isSearch) {
+    if (!isSearch && !isTour) {
         self.navigationController.navigationBarHidden=YES;
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            
+            
+            // Move the view down 20 pixels
+            CGRect bounds = self.view.bounds;
+            ySearch= bounds.origin.y -= 20.0;
+            [self.view setBounds:bounds];
+            
+           
+            
+            // Create a solid color background for the status bar
+            CGRect statusFrame = CGRectMake(0.0,ySearch, bounds.size.width, 20);
+            statusBar = [[UIView alloc] initWithFrame:statusFrame];
+            statusBar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_tCall_Btn"]];
+            [self.view addSubview:statusBar];
+            
+            
+            
+}
+        
+     
+        
+        
+        
         self.searchToolbar.hidden=NO;
         [self.searchBar becomeFirstResponder];
         self.addLeadsButtonOut.hidden=YES;
@@ -549,6 +1437,8 @@ static NSString *const FrontCell=@"FrontCell";
     
     
 }
+
+
 
 - (void)updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:(BOOL)animated
 {
@@ -589,6 +1479,7 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -614,6 +1505,8 @@ static NSString *const FrontCell=@"FrontCell";
             cell.donorLabel.text=[NSString stringWithFormat:@"%@ %@",leadsModel.donorName,leadsModel.donorLastName];
             cell.amountLabel.text=[NSString stringWithFormat:@"%@",leadsModel.ask];
             
+            
+            
             if (leadsModel.donorCity != (id)[NSNull null]&&leadsModel.donorState != (id)[NSNull null] ) {
                 cell.cityLabel.text=[NSString stringWithFormat:@"%@, %@",leadsModel.donorCity,leadsModel.donorState];
             }else{
@@ -628,7 +1521,15 @@ static NSString *const FrontCell=@"FrontCell";
                 cell.amountLabel.text=@"";
                 
             }*/
-            
+          
+            if (isTour && indexPath.row==0) {
+                
+                cell.topView.backgroundColor=[UIColor darkGrayColor];
+                cell.cityLabel.textColor=[UIColor whiteColor];
+                cell.donorLabel.textColor=[UIColor whiteColor];
+                cell.amountLabel.textColor=[UIColor whiteColor];
+            }
+
             
             
             return cell;
@@ -658,6 +1559,10 @@ static NSString *const FrontCell=@"FrontCell";
     
 }
 
+
+
+
+
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if ([self.leadsResults count]==0 || isLoading) {
@@ -676,21 +1581,46 @@ static NSString *const FrontCell=@"FrontCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView==self.donorTableView) {
+        
+        
+        
         APMDonorDetailController *donorDetailVC=[[APMDonorDetailController alloc]init];
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
+        
         APMLeadsModel *leadsModel=[self.leadsResults objectAtIndex:indexPath.row];
         
+        if (!isTour) {
+            
+        
+        
+        
         donorDetailVC.leadsModel=leadsModel;
-        donorDetailVC.title=self.donorType;
         donorDetailVC.donorType=donorKind;
+        donorDetailVC.title=self.donorType;
+        
+        
         
         self.myImageView.hidden=YES;
+            
+             [self.navigationController pushViewController:donorDetailVC animated:YES];
+            
+        }else if (isTour && indexPath.row==0){
+            
+            donorDetailVC.isTour=isTour;
+            donorDetailVC.title=@"Contact Information";
+            donorDetailVC.leadsModel=leadsModel;
+            donorDetailVC.donorType=donorKind;
+             self.myImageView.hidden=YES;
+            
+             [self.navigationController pushViewController:donorDetailVC animated:YES];
+            
+        }
         
         
         
-        [self.navigationController pushViewController:donorDetailVC animated:YES];
+       
         
          self.myImageView.hidden=YES;
     
@@ -704,14 +1634,6 @@ static NSString *const FrontCell=@"FrontCell";
         
         
     }
-    
-    
-    
-    
-    
-   
-
-    
     
     
 }
@@ -746,6 +1668,9 @@ static NSString *const FrontCell=@"FrontCell";
 
 - (IBAction)pledgeButton:(id)sender {
     
+    if (!isTour) {
+        
+        
      isLoading=YES;
     
     NSLog(@"pledge press");
@@ -785,14 +1710,18 @@ static NSString *const FrontCell=@"FrontCell";
     
 
     
-    
-    
+
+    }
     
    
 
 }
 
-- (IBAction)donorMatchButton:(id)sender {
+- (IBAction)donorMatchButton:(id)sender
+{
+    if (!isTour) {
+        
+    
     
     isLoading=YES;
     NSLog(@"DonorMatch Press");
@@ -833,13 +1762,17 @@ static NSString *const FrontCell=@"FrontCell";
     
    
     
-    
+    }
 
     
     
 }
 
 - (IBAction)PitchLeadsButton:(id)sender {
+    
+    if (!isTour) {
+        
+    
     
     isLoading=YES;
     
@@ -878,7 +1811,7 @@ static NSString *const FrontCell=@"FrontCell";
     }
     
    
-    
+    }
 
 
 }
@@ -917,6 +1850,24 @@ static NSString *const FrontCell=@"FrontCell";
 - (IBAction)closeSearchButton:(id)sender {
     
     self.navigationController.navigationBarHidden=NO;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        
+        // Move the view down 20 pixels
+        CGRect bounds = self.view.bounds;
+
+        ySearch= bounds.origin.y=0.0;
+        [self.view setBounds:bounds];
+        
+        [statusBar removeFromSuperview];
+        
+        
+        
+    }
+  
+
+
     self.searchToolbar.hidden=YES;
     self.addLeadsButtonOut.hidden=NO;
     self.addLeadsBig.hidden=NO;
@@ -938,6 +1889,9 @@ static NSString *const FrontCell=@"FrontCell";
 
 
 {
+    if (!isTour) {
+        
+    
     
     NSLog(@"tocaste addLead");
     
@@ -960,7 +1914,7 @@ static NSString *const FrontCell=@"FrontCell";
     
     
     
-    
+    }
     
 }
 
@@ -1129,6 +2083,21 @@ static NSString *const FrontCell=@"FrontCell";
     [SVProgressHUD show];
     
     self.navigationController.navigationBarHidden=NO;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        
+        // Move the view down 20 pixels
+        CGRect bounds = self.view.bounds;
+        
+        ySearch= bounds.origin.y=0.0;
+        [self.view setBounds:bounds];
+        
+        [statusBar removeFromSuperview];
+        
+        
+        
+    }
     self.searchToolbar.hidden=YES;
     [self.searchBar resignFirstResponder];
      self.addLeadsButtonOut.hidden=NO;
@@ -1196,6 +2165,7 @@ static NSString *const FrontCell=@"FrontCell";
     
     
 }
+
 
 -(void)dealloc{
     

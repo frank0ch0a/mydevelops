@@ -138,13 +138,35 @@
 }
 
 - (UIView *)backdropView {
-    UIView *backdropView = [[UIView alloc] initWithFrame:self.bounds];
-    backdropView.backgroundColor = [UIColor colorWithWhite:0 alpha:BSMODALPICKER_BACKDROP_OPACITY];
-    backdropView.alpha = 0;
     
-    UIGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onBackdropTap:)];
-    [backdropView addGestureRecognizer:tapRecognizer];
-    return backdropView;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+    
+        UIView *backdropView = [[UIView alloc] initWithFrame:self.bounds];
+        backdropView.backgroundColor = [UIColor colorWithWhite:1 alpha:BSMODALPICKER_BACKDROP_OPACITY];
+        backdropView.alpha = 0;
+        
+        UIGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onBackdropTap:)];
+        [backdropView addGestureRecognizer:tapRecognizer];
+        return backdropView;
+    
+    
+    }else{
+        
+        
+        UIView *backdropView = [[UIView alloc] initWithFrame:self.bounds];
+        backdropView.backgroundColor = [UIColor colorWithWhite:0 alpha:BSMODALPICKER_BACKDROP_OPACITY];
+        backdropView.alpha = 0;
+        
+        UIGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onBackdropTap:)];
+        [backdropView addGestureRecognizer:tapRecognizer];
+        return backdropView;
+        
+        
+        
+    }
+
+    
+    
 }
 
 - (void)presentInView:(UIView *)view withBlock:(ModalPickerViewCallback)callback {

@@ -75,6 +75,17 @@ enum {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        //add this 2 lines:
+        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+            self.edgesForExtendedLayout = UIRectEdgeNone;
+
+        
+        [self.tableView setContentInset:UIEdgeInsetsMake(20,
+                                                         self.tableView.contentInset.left,
+                                                         self.tableView.contentInset.bottom,
+                                                         self.tableView.contentInset.right)];
+    }
     
     
     
@@ -112,6 +123,7 @@ enum {
         self.email=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
         self.password=[self.keychain objectForKey:(__bridge id)kSecValueData];
         
+         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsTour"];
         
         [self downloadCandidateData];
         
@@ -324,7 +336,8 @@ enum {
 }
 
 
--(void)configureCandidateCell:(APMCandidateCell *)cell forIndexPath:(NSIndexPath *)indexPath
+-(void)configureCandidateCell:(APMCandidateCell *)cell
+                 forIndexPath:(NSIndexPath *)indexPath
 {
     
     if (indexPath.row==MenuCandidate) {
@@ -332,7 +345,14 @@ enum {
         APMCandidateModel *candidateModel=[self.menuResults objectAtIndex:indexPath.row];
         
         cell.candidateNameLabel.text=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
-        cell.candidateOficceAndCityLabel.text=[NSString stringWithFormat:@"%@, %@",candidateModel.officeCandidate,candidateModel.city];
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"] ){
+            
+             cell.candidateOficceAndCityLabel.text=@"";
+        }else{
+            cell.candidateOficceAndCityLabel.text=[NSString stringWithFormat:@"%@, %@",candidateModel.officeCandidate,candidateModel.city];
+        }
+        
         cell.candidateSupportersLabel.text=candidateModel.supportes;
         cell.candidateFundRaisedLabel.text=candidateModel.funraised;
         cell.candidateDayToElectLabel.text=candidateModel.dayToElection;
@@ -352,18 +372,20 @@ enum {
                 
             }else{
                 
-                cell.colorBgPartyUIView.backgroundColor=[UIColor greenColor];
+                cell.colorBgPartyUIView.backgroundColor=[UIColor darkGrayColor];
             }
             
             
             
         }
         
+        // Save candidate name
+        /*
         NSString *signCandidate=[NSString stringWithFormat:@"%@ %@",candidateModel.candidateName,candidateModel.candidateLastName];
         
         NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
         [registro setObject:signCandidate forKey:@"nombreCandidato"];
-        [registro synchronize];
+        [registro synchronize];*/
         
         
     }
@@ -396,6 +418,8 @@ enum {
         [self configureCell:cell forIndexPath:indexPath];
         
         cell.arrowView.hidden=YES;
+        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
         
         
@@ -470,14 +494,18 @@ enum {
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HasPassLogin"];
     
+    NSString *usrLogin=[_keychain objectForKey:(__bridge id)kSecAttrAccount];
     
-   // [_keychain resetKeychainItem];
+    NSUserDefaults *usrLog=[NSUserDefaults standardUserDefaults];
+    [usrLog setObject:usrLogin forKey:@"usrLogin"];
+    [usrLog synchronize];
+    
+    
+   [_keychain resetKeychainItem];
     
     [FBSession.activeSession closeAndClearTokenInformation];
     
-    NSUserDefaults *registro=[NSUserDefaults standardUserDefaults];
-    [registro removeObjectForKey:@"nombreCandidato"];
-    [registro synchronize];
+    
     
     
     loginVC.delegate=self;
@@ -576,6 +604,15 @@ enum {
             
             [self showFundRaiseController];
             break;
+            
+        case MenuDummy1:
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+           
+            break;
+        case MenuDummy2:
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            break;
+            
     }
     
 }
@@ -590,6 +627,15 @@ enum {
     }
     
     return 45.0f;
+    
+}
+
+-(void)setTourParameters{
+    
+    NSDictionary *dict=@{@"a":@"Guest",@"b":@"User",@"c":@"",@"d":@"",@"e":@"",@"f":@"0",@"g":@"0",@"h":@"0",@"i":@""};
+    
+    [self parseData:dict];
+    
     
 }
 
@@ -617,9 +663,26 @@ enum {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasUser"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsTour"];
+        
         
         
         [self downloadCandidateData];
+        
+    }else{
+        
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsTour"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsTour"] )
+        {
+            
+            [self setTourParameters];
+            
+        }
+        
+        
         
     }
     

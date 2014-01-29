@@ -95,7 +95,11 @@ NSString *const FBSessionStateChangedNotification =
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
    
-    
+#ifdef __IPHONE_7_0
+    if ([self.viewController respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.viewController.edgesForExtendedLayout &= ~UIRectEdgeTop;
+    }
+#endif
 
     
     self.phone = [[APMPhone alloc] init];
@@ -160,7 +164,7 @@ NSString *const FBSessionStateChangedNotification =
 -(void)customizeAppearance
 {
     
-    UIImage *barImage=[UIImage imageNamed:@"bg_navbar"];
+    UIImage *barImage=[UIImage imageNamed:@"bg_tCall_Btn"];
     
    // [[UISearchBar appearance]setBackgroundImage:barImage];
     
@@ -169,8 +173,11 @@ NSString *const FBSessionStateChangedNotification =
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0]];*/
     
     
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
     [[UIBarButtonItem appearance]setBackButtonBackgroundImage:barImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
+    }
   
     
     [[UISearchBar appearance]setBackgroundImage:barImage];
@@ -191,6 +198,18 @@ NSString *const FBSessionStateChangedNotification =
     
     
     [[UISegmentedControl appearance]setTintColor:tintColor];*/
+    
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        //Change color to bar Buttons
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
+        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+        
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    }
     
     
     

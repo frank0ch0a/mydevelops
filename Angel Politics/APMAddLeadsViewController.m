@@ -14,6 +14,7 @@
 #import "APMLeadsModel.h"
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
+#import "TestFlight.h"
 
 
 
@@ -39,12 +40,15 @@
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
+@property (strong,nonatomic)NSMutableArray *linkedinArray;
+
 
 
 
 @end
 
 @implementation APMAddLeadsViewController
+@synthesize oAuthLoginView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -76,12 +80,12 @@
 - (UIBarButtonItem *)addContacs {
     
     
-    _leftBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Add all" style:UIBarButtonItemStyleBordered
+    _leftBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Add From" style:UIBarButtonItemStyleBordered
                                                         target:self
                                                         action:@selector(addAll:)];
     
     
-    [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [_leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     return _leftBarButtonItem;
 }
@@ -100,7 +104,7 @@
                                                                         target:self
                                                                         action:@selector(onDone:)];
     
-    [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"barPattern"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     return _rightBarButtonItem;
 }
@@ -429,12 +433,14 @@
             
         }];
         
-        operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
         
         
         
         
         [queue addOperation:operation];
+        
+        operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+        
         
         
     }else{
@@ -584,7 +590,7 @@
             
             donorModel.donorEmail=(__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, emailCounter);
             
-            NSLog(@"email %@",donorModel.donorEmail);
+         //   NSLog(@"email %@",donorModel.donorEmail);
             
         }
         
@@ -691,7 +697,16 @@
     
     //Send only 30 contacts no all [arrayOfAllPeople count]
     
-    for (peopleCounter=0; peopleCounter< [arrayOfAllPeople count]; peopleCounter++) {
+     NSUInteger arrayCount;
+    
+    if ([arrayOfAllPeople count]<100) {
+        arrayCount=[arrayOfAllPeople count];
+    }else{
+        
+        arrayCount=100;
+    }
+    
+    for (peopleCounter=0; peopleCounter< arrayCount ; peopleCounter++) {
         
         ABRecordRef thisPerson=(__bridge ABRecordRef)[arrayOfAllPeople objectAtIndex:peopleCounter];
         
@@ -738,7 +753,7 @@
     
     
     
-     NSLog(@" contacts %@",contacs);
+     //NSLog(@" contacts %@",contacs);
     
 }
 
@@ -1460,6 +1475,10 @@ NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"l
         NSDictionary *dict=@{@"people":array};
         NSLog(@"dict %@",dict);
         
+        
+       
+        
+      
         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
         
         [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
@@ -1468,8 +1487,11 @@ NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"l
                                                                 path:@"/mobile/ios_contact.php"
                                                           parameters:dict
                                         ];
+       
+        
         
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
             
             
             if (JSON !=nil) {
@@ -1544,6 +1566,370 @@ NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"l
 
 - (IBAction)addAllContacs:(id)sender {
     
+   
+    
+    
+}
+- (IBAction)fbContacts:(id)sender {
+    
+    isFB=YES;
+    
+
+    
+
+    
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         
+                         
+                         self.addLeadsUIView.frame=CGRectMake(-400
+                                                              , self.addLeadsUIView.frame.origin.y, self.addLeadsUIView.frame.size.width, self.addLeadsUIView.frame.size.height);
+                     } completion:nil];
+    
+    
+
+     [self.contactsTableView reloadData];
+
+}
+
+
+
+
+
+
+
+- (void)networkApiCallResult:(OAServiceTicket *)ticket didFinish:(NSData *)data
+{
+    NSString *responseBody = [[NSString alloc] initWithData:data
+                                                   encoding:NSUTF8StringEncoding];
+    
+    NSDictionary *person = [[[[[responseBody objectFromJSONString]
+                               objectForKey:@"values"]
+                              objectAtIndex:0]
+                             objectForKey:@"updateContent"]
+                            objectForKey:@"person"];
+    
+  
+    
+    if ( [person objectForKey:@"currentStatus"] )
+    {
+        NSLog(@"Person %@",person);
+    
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)networkApiCallResult:(OAServiceTicket *)ticket didFail:(NSData *)error
+{
+    NSLog(@"%@",[error description]);
+}
+
+- (void)networkApiCall
+{
+    NSURL *url = [NSURL URLWithString:@"http://api.linkedin.com/v1/people/~/network/updates?scope=self&count=1&type=STAT"];
+    OAMutableURLRequest *request =
+    [[OAMutableURLRequest alloc] initWithURL:url
+                                    consumer:oAuthLoginView.consumer
+                                       token:oAuthLoginView.accessToken
+                                    callback:nil
+                           signatureProvider:nil];
+    
+    [request setValue:@"json" forHTTPHeaderField:@"x-li-format"];
+    
+    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+    [fetcher fetchDataWithRequest:request
+                         delegate:self
+                didFinishSelector:@selector(networkApiCallResult:didFinish:)
+                  didFailSelector:@selector(networkApiCallResult:didFail:)];
+    
+    
+}
+- (void)profileApiCallResult:(OAServiceTicket *)ticket didFail:(NSData *)error
+{
+    NSLog(@"%@",[error description]);
+}
+
+-(void)sendAllContactsOfLinkedin:(NSArray *)array{
+    
+    
+    if ([NSJSONSerialization isValidJSONObject:array]) {
+        
+        NSDictionary *dict=@{@"people":array};
+        
+        
+        //NSDictionary *dict=@{@"people":array};
+        NSLog(@"dict %@",dict);
+        
+        
+        
+        
+         
+         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://www.angelpolitics.com"]];
+         
+         [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
+         [httpClient setParameterEncoding:AFFormURLParameterEncoding];
+         NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+         path:@"/mobile/linkedin.php"
+         parameters:dict
+         ];
+         
+         
+         
+         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+         
+         
+         
+         if (JSON !=nil) {
+         
+         [SVProgressHUD dismiss];
+         
+         NSLog(@"Result contacts %@",JSON);
+         
+         
+         
+         
+         if ([[JSON objectForKey:@"a"]isEqualToString:@"Ok"]) {
+         
+         
+         
+         
+         UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Notification" message:[NSString stringWithFormat:@"You have successfully added %@ contacts ",[@([array count])stringValue]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+         
+         [alertView show];
+         
+         [self.delegate dismissController:self];
+         
+         
+         
+         }
+         
+         
+         
+         
+         
+         }else{
+         
+         
+         UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Data do not send try again, please" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+         
+         [alertView show];
+         
+         
+         
+         }
+         
+         
+         
+         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+         NSLog(@"error %@", [error description]);
+         
+         }];
+         
+         operation.acceptableContentTypes=[NSSet setWithObjects:@"application/json",@"text/json",@"text/html", nil];
+         
+         
+         
+         
+         [queue addOperation:operation];
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+}
+-(void)prepareToSendAllLinkeindContacs:(NSArray *)array
+
+{
+    
+    // **** Ojo hacer for para llenar otro dict como el de contactos y sacar de alli el modelo;
+    
+    NSDictionary *dict;
+    
+    NSMutableArray *arrayTempLinlk=[[NSMutableArray alloc]init];
+    
+    
+    
+    for (NSUInteger i=0; i<[array count]; i++) {
+        
+        APMLeadsModel *leadsModel=[array objectAtIndex:i];
+        
+        
+     
+        
+        dict=@{@"name": leadsModel.donorName,@"lastName":leadsModel.donorLastName,@"country":leadsModel.country,@"city":leadsModel.donorCity,@"imagen":leadsModel.donorImg,@"headline":leadsModel.donorLkdHead};
+        
+        if (dict !=nil) {
+            
+            [arrayTempLinlk addObject:dict];
+            
+        }
+    }
+    
+    NSLog(@"array linkedin %@",arrayTempLinlk);
+  
+   [self sendAllContactsOfLinkedin:arrayTempLinlk];
+   
+    
+    
+    
+}
+
+-(APMLeadsModel *)parseDataLinkedin:(NSDictionary *)dictionary
+{
+    
+    APMLeadsModel *leadsModel=[[APMLeadsModel alloc]init];
+    
+    
+    leadsModel.donorName=[dictionary objectForKey:@"firstName"];
+    leadsModel.donorLastName=[dictionary objectForKey:@"lastName"];
+    leadsModel.donorLkdHead=[dictionary objectForKey:@"headline"];
+    leadsModel.donorCity=[dictionary valueForKeyPath:@"location.name"];
+    leadsModel.country=[dictionary valueForKeyPath: @"location.country.code"];
+    leadsModel.donorImg=[dictionary objectForKey:@"pictureUrl"];
+    
+                          
+    return leadsModel;
+    
+}
+
+-(void)parseData:(NSArray *)array{
+    
+    if (array == nil) {
+        
+        return;
+    }
+    
+    self.linkedinArray=[[NSMutableArray alloc]init];
+    
+    
+    
+    for (NSDictionary *resultDict in array) {
+        
+        
+        
+        APMLeadsModel *leadsModel;
+        
+        
+        leadsModel=[self parseDataLinkedin:resultDict];
+        
+        if (leadsModel.donorName==nil) {
+            
+            leadsModel.donorName=@"N/A";
+            
+        }else if (leadsModel.donorLastName==nil){
+            
+            leadsModel.donorLastName=@"N/A";
+        }else if (leadsModel.donorLkdHead==nil){
+            
+            leadsModel.donorLkdHead=@"N/A";
+        }else if (leadsModel.donorCity== nil){
+            
+            leadsModel.donorCity=@"N/A";
+        }else if (leadsModel.country==nil){
+            
+            leadsModel.country=@"N/A";
+            
+        }else if (leadsModel.donorImg == nil){
+            
+            leadsModel.donorImg=@"N/A";
+        }
+       
+        
+        
+        
+        
+            
+            [self.linkedinArray addObject:leadsModel];
+            
+            
+        
+        
+        
+    }
+    
+
+    
+    [self prepareToSendAllLinkeindContacs:self.linkedinArray];
+    
+    
+}
+
+- (void)profileApiCallResult:(OAServiceTicket *)ticket didFinish:(NSData *)data
+{
+    NSString *responseBody = [[NSString alloc] initWithData:data
+                                                   encoding:NSUTF8StringEncoding];
+    
+    NSDictionary *profile = [responseBody objectFromJSONString];
+    
+    
+  //  NSLog(@"Profile %@",profile);
+    
+    if ( profile )
+        
+    {
+        [self parseData:profile[@"values"]];
+        
+        /*
+        
+        [self sendAllContacts:profile[@"values"]];
+        
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"Linkedin" message:[NSString stringWithFormat:@"You have a %@ contacts in LinkedIn",profile[@"_total"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        
+        [alertView show];*/
+        
+    }
+    
+    // The next thing we want to do is call the network updates
+    [self networkApiCall];
+    
+}
+
+
+- (void)profileApiCall
+{
+    NSURL *url = [NSURL URLWithString:@"http://api.linkedin.com/v1/people/~/connections:(picture-url,location,headline,first-name,last-name,id)"];
+    OAMutableURLRequest *request =
+    [[OAMutableURLRequest alloc] initWithURL:url
+                                    consumer:oAuthLoginView.consumer
+                                       token:oAuthLoginView.accessToken
+                                    callback:nil
+                           signatureProvider:nil];
+    
+    [request setValue:@"json" forHTTPHeaderField:@"x-li-format"];
+    
+    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+    [fetcher fetchDataWithRequest:request
+                         delegate:self
+                didFinishSelector:@selector(profileApiCallResult:didFinish:)
+                  didFailSelector:@selector(profileApiCallResult:didFail:)];
+    
+    
+}
+
+
+-(void) loginViewDidFinish:(NSNotification*)notification
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    // We're going to do these calls serially just for easy code reading.
+    // They can be done asynchronously
+    // Get the profile, then the network updates
+    [self profileApiCall];
+	
+}
+
+
+- (void)addAllPhone:(id)sender {
+    
     NSMutableArray *arrayContacs=[[NSMutableArray alloc]init];
     
     
@@ -1563,7 +1949,7 @@ NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"l
         if (name==nil) {
             name=@"N/A";
             donorModel.donorName=name;
-       
+            
         }else{
             
             name=donorModel.donorName;
@@ -1619,12 +2005,18 @@ NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"l
         }
         
         
+        if (donorModel.donorName !=nil && donorModel.donorLastName !=nil && donorModel.donorPhoneNumber !=nil && donorModel.donorEmail !=nil &&donorModel.street !=nil && donorModel.zipCode !=nil) {
+            dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
+                   @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
+                   };
+
+        }
         
-        dict=@{@"name": donorModel.donorName,@"lastname":donorModel.donorLastName,
-               @"phone": donorModel.donorPhoneNumber,@"email":donorModel.donorEmail,@"address":donorModel.street,@"zip":donorModel.zipCode
-               };
+        if (dict !=nil) {
+            [arrayContacs addObject:dict];
+        }
         
-        [arrayContacs addObject:dict];
+        
         
     }
     
@@ -1635,29 +2027,6 @@ NSDictionary *dict=@{@"email":self.email,@"pass":self.pass,@"firstname":name,@"l
     
     
 }
-- (IBAction)fbContacts:(id)sender {
-    
-    isFB=YES;
-    
-
-    
-
-    
-    [UIView animateWithDuration:0.15
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         
-                         
-                         self.addLeadsUIView.frame=CGRectMake(-400
-                                                              , self.addLeadsUIView.frame.origin.y, self.addLeadsUIView.frame.size.width, self.addLeadsUIView.frame.size.height);
-                     } completion:nil];
-    
-    
-
-     [self.contactsTableView reloadData];
-
-}
 
 #pragma mark - UIAlertView Delegate
 
@@ -1666,11 +2035,20 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
         
-        
+                 [TestFlight passCheckpoint:@"Add phone Contacts"];
         [UIView animateWithDuration:0.15
                               delay:0
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
+                             
+                             if ([_leftBarButtonItem.title isEqualToString:@"Add From"]) {
+                       
+                                 
+                                 [_leftBarButtonItem setTitle:@"Add All"];
+                                 
+                                 [_leftBarButtonItem setAction:@selector(addAllPhone:)];
+                                 
+                             }
                              
                              
                              self.addLeadsUIView.frame=CGRectMake(-400
@@ -1692,11 +2070,27 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
         
     }else if (buttonIndex==3){
         
+        isFB=NO;
         
+         [TestFlight passCheckpoint:@"Add Linkedin Contacts"];
+        
+        oAuthLoginView = [[APMOAuthViewController alloc] init];
+     
+        
+        // register to be told when the login is finished
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loginViewDidFinish:)
+                                                     name:@"loginViewDidFinish"
+                                                   object:oAuthLoginView];
+        
+        [self presentViewController:oAuthLoginView animated:YES completion:nil];
+
+        
+        /*
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Message" message:@"Coming Soon!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         
         
-        [alert show];
+        [alert show];*/
         
         
     }

@@ -11,6 +11,7 @@
 
 -(void)dissmissLoginController:(APMLoginViewController *)controller;
 
+
 @end
 
 
@@ -19,7 +20,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "KeychainItemWrapper.h"
 
-@interface APMLoginViewController : UIViewController<UITextFieldDelegate>
+@interface APMLoginViewController : UIViewController<UITextFieldDelegate,UIScrollViewDelegate>
 
 @property(nonatomic,weak)id<LoginDelegate>delegate;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -37,6 +38,15 @@
 
 - (IBAction)btnFacebookPress:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnFacebook;
+@property (weak, nonatomic) IBOutlet UIView *scrollUIView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
+@property (weak, nonatomic) IBOutlet UIButton *takeTourBtn;
+- (IBAction)takeTour:(id)sender;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+
+@property (weak, nonatomic) IBOutlet UIView *tryTourUIView;
+
 
 
 @end

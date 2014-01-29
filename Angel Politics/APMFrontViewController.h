@@ -11,6 +11,7 @@
 #import "APMFrontCellProtocol.h"
 #import "APMLoginViewController.h"
 #import "APMAddLeadsViewController.h"
+#import <AddressBook/AddressBook.h>
 
 @class APMFrontViewController;
 @class APMCandidateModel;
@@ -77,6 +78,16 @@
 @property(strong,nonatomic)UIImageView* myImageView;
 
 @property (weak, nonatomic) IBOutlet UIButton *addLeadsBig;
+@property (weak, nonatomic) IBOutlet UIView *bigButtonUIView;
+
+@property(nonatomic)BOOL isTour;
+
+@property (weak, nonatomic) IBOutlet UIButton *bigButton;
+@property (weak, nonatomic) IBOutlet UIView *waveBigBtnView;
+@property (weak, nonatomic) IBOutlet UILabel *bigBtnLabel;
 
 
+@property (weak, nonatomic) IBOutlet UIView *bgFundUIView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *bgFundImageView;
 @end
