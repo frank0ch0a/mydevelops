@@ -35,6 +35,8 @@
     BOOL checked;
     NSString *phone;
     ABAddressBookRef addresBook;
+    UIView* statusBar;
+    CGFloat ySearch;
     
 }
 
@@ -95,6 +97,8 @@ static NSString *const FrontCell=@"FrontCell";
 -(void)viewDidAppear:(BOOL)animated{
     
     [super viewDidAppear:animated];
+    
+    
     
     UIImage* myImage = [UIImage imageNamed:@"nav_logo"];
     self.myImageView = [[UIImageView alloc] initWithImage:myImage];
@@ -799,6 +803,12 @@ static NSString *const FrontCell=@"FrontCell";
 {
     [super viewWillAppear:animated];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        [[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
+        
+    }
+    
     
     // get register to fetch notification to dissmis login Tour
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -924,7 +934,7 @@ static NSString *const FrontCell=@"FrontCell";
 
 -(void)addTourContacts:(UIButton *)sender{
     
-    NSLog(@"Add all Contacts");
+   [TestFlight passCheckpoint:@"Add Tour Contacts"];
     
     [self addAllTourContacts];
     
@@ -934,6 +944,11 @@ static NSString *const FrontCell=@"FrontCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+
+    
+  
     
     
     self.bigButtonUIView.hidden=YES;
@@ -1299,6 +1314,12 @@ static NSString *const FrontCell=@"FrontCell";
 {
 	if (!_leftBarButtonItem)
 	{
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
+            
+           
+            
+        
         _leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self listImage]
                                          style:UIBarButtonItemStyleBordered
                                         target:self.slideMenuController
@@ -1310,7 +1331,17 @@ static NSString *const FrontCell=@"FrontCell";
 		_leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward
 																		   target:self.slideMenuController
 																		   action:@selector(toggleMenuAnimated:)];*/
-	}
+        }else{
+            
+            _leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self listImage]
+                                                                  style:UIBarButtonItemStyleBordered
+                                                                 target:self.slideMenuController
+                                                                 action:@selector(toggleMenuAnimated:)];
+            
+            
+             [[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
+        }
+}
 	return _leftBarButtonItem;
 }
 
@@ -1320,6 +1351,8 @@ static NSString *const FrontCell=@"FrontCell";
     
 	if (!_rightBarButtonItem)
 	{
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
+            
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self searchImage]
                                                               style:UIBarButtonItemStyleBordered
                                                              target:self
@@ -1329,9 +1362,23 @@ static NSString *const FrontCell=@"FrontCell";
         [_rightBarButtonItem setBackgroundImage:[UIImage imageNamed:@"bg_tCall_Btn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     
+    
+    
+    }else{
+        
+        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[self searchImage]
+                                                               style:UIBarButtonItemStyleBordered
+                                                              target:self
+                                                              action:@selector(mainSearch:)];
+        
+         [[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
+        
+        
+        
+        
     }
     
-    
+}
     return _rightBarButtonItem;
     
     
@@ -1342,6 +1389,31 @@ static NSString *const FrontCell=@"FrontCell";
     
     if (!isSearch && !isTour) {
         self.navigationController.navigationBarHidden=YES;
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            
+            
+            // Move the view down 20 pixels
+            CGRect bounds = self.view.bounds;
+            ySearch= bounds.origin.y -= 20.0;
+            [self.view setBounds:bounds];
+            
+           
+            
+            // Create a solid color background for the status bar
+            CGRect statusFrame = CGRectMake(0.0,ySearch, bounds.size.width, 20);
+            statusBar = [[UIView alloc] initWithFrame:statusFrame];
+            statusBar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_tCall_Btn"]];
+            [self.view addSubview:statusBar];
+            
+            
+            
+}
+        
+     
+        
+        
+        
         self.searchToolbar.hidden=NO;
         [self.searchBar becomeFirstResponder];
         self.addLeadsButtonOut.hidden=YES;
@@ -1365,6 +1437,8 @@ static NSString *const FrontCell=@"FrontCell";
     
     
 }
+
+
 
 - (void)updateBarButtonsAccordingToSlideMenuControllerDirectionAnimated:(BOOL)animated
 {
@@ -1776,6 +1850,24 @@ static NSString *const FrontCell=@"FrontCell";
 - (IBAction)closeSearchButton:(id)sender {
     
     self.navigationController.navigationBarHidden=NO;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        
+        // Move the view down 20 pixels
+        CGRect bounds = self.view.bounds;
+
+        ySearch= bounds.origin.y=0.0;
+        [self.view setBounds:bounds];
+        
+        [statusBar removeFromSuperview];
+        
+        
+        
+    }
+  
+
+
     self.searchToolbar.hidden=YES;
     self.addLeadsButtonOut.hidden=NO;
     self.addLeadsBig.hidden=NO;
@@ -1991,6 +2083,21 @@ static NSString *const FrontCell=@"FrontCell";
     [SVProgressHUD show];
     
     self.navigationController.navigationBarHidden=NO;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        
+        // Move the view down 20 pixels
+        CGRect bounds = self.view.bounds;
+        
+        ySearch= bounds.origin.y=0.0;
+        [self.view setBounds:bounds];
+        
+        [statusBar removeFromSuperview];
+        
+        
+        
+    }
     self.searchToolbar.hidden=YES;
     [self.searchBar resignFirstResponder];
      self.addLeadsButtonOut.hidden=NO;

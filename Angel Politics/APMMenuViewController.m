@@ -75,6 +75,17 @@ enum {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        //add this 2 lines:
+        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+            self.edgesForExtendedLayout = UIRectEdgeNone;
+
+        
+        [self.tableView setContentInset:UIEdgeInsetsMake(20,
+                                                         self.tableView.contentInset.left,
+                                                         self.tableView.contentInset.bottom,
+                                                         self.tableView.contentInset.right)];
+    }
     
     
     
@@ -408,6 +419,8 @@ enum {
         
         cell.arrowView.hidden=YES;
         
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
         
         
         /*
@@ -591,6 +604,15 @@ enum {
             
             [self showFundRaiseController];
             break;
+            
+        case MenuDummy1:
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+           
+            break;
+        case MenuDummy2:
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            break;
+            
     }
     
 }

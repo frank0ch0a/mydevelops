@@ -33,6 +33,25 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        
+        // Move the view down 20 pixels
+        CGRect bounds = self.view.bounds;
+         bounds.origin.y -= 20.0;
+        [self.view setBounds:bounds];
+        
+        
+        
+        // Create a solid color background for the status bar
+        CGRect statusFrame = CGRectMake(0,bounds.origin.y, bounds.size.width, 20);
+       UIView *statusBar = [[UIView alloc] initWithFrame:statusFrame];
+        statusBar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_login"]];
+        [self.view addSubview:statusBar];
+        
+        
+        
+    }
     
     
     if ([[UIScreen mainScreen] bounds].size.height == 480) {
@@ -90,7 +109,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Optimizing iOS 7
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        
+        // Move the view down 20 pixels
+        CGRect bounds = self.view.bounds;
+        bounds.origin.y -= 20.0;
+        [self.view setBounds:bounds];
+        
+        
+        /*
+        // Create a solid color background for the status bar
+        CGRect statusFrame = CGRectMake(0.0,ySearch, bounds.size.width, 20);
+        statusBar = [[UIView alloc] initWithFrame:statusFrame];
+        statusBar.backgroundColor = [UIColor colorWithRed:0.2 green:0.6 blue:0 alpha:1.0];
+        [self.view addSubview:statusBar];*/
+        
+        
+        
+    }
     // Create instance keyChain
+    
     
    self.keyChain=[[KeychainItemWrapper alloc]initWithIdentifier:@"APUser" accessGroup:nil];
     
@@ -488,13 +529,16 @@
 }
 - (IBAction)takeTour:(id)sender {
     
+    
+    if ([_keyChain objectForKey:(__bridge id)kSecAttrAccount]==nil ||[self.keyChain objectForKey:(__bridge id)kSecValueData]==nil ) {
+    
     [self.delegate dissmissLoginController:self];
     
      [self dissmissModelView:@"YES"];
    
   
     
-   
+    }
     
     
 }

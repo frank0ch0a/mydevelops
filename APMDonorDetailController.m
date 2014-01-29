@@ -1452,6 +1452,25 @@ viewForHeaderInSection:(NSInteger)section
                target:nil
                action:nil];
     [[self navigationItem] setBackBarButtonItem:backButton];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                    style:UIBarButtonItemStylePlain
+                   target:nil
+                   action:nil];
+        
+        [[self navigationItem] setBackBarButtonItem:backButton];
+        
+       
+       // [backButton setImage:[UIImage imageNamed:@"ic_back"]];
+     
+       [[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
+        
+        
+
+    }
+
 
     
     callOut.detailModel=self.detailModel;

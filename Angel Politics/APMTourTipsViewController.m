@@ -10,6 +10,7 @@
 #import "APMAppDelegate.h"
 #import "APMPhone.h"
 #import "APMFrontViewController.h"
+#import "TestFlight.h"
 
 
 @interface APMTourTipsViewController ()
@@ -156,6 +157,8 @@
 - (IBAction)testCall:(id)sender {
     
     NSString *phoneDial=@"9143253307";
+    
+             [TestFlight passCheckpoint:@"Call tour"];
     
     APMAppDelegate* appDelegate = (APMAppDelegate *)[UIApplication sharedApplication].delegate;
     APMPhone* phone = appDelegate.phone;

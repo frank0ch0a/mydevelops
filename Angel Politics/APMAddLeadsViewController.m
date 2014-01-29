@@ -14,6 +14,7 @@
 #import "APMLeadsModel.h"
 #import "APMFrontViewController.h"
 #import "NVSlideMenuController.h"
+#import "TestFlight.h"
 
 
 
@@ -79,7 +80,7 @@
 - (UIBarButtonItem *)addContacs {
     
     
-    _leftBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered
+    _leftBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Add From" style:UIBarButtonItemStyleBordered
                                                         target:self
                                                         action:@selector(addAll:)];
     
@@ -2034,13 +2035,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
         
-        
+                 [TestFlight passCheckpoint:@"Add phone Contacts"];
         [UIView animateWithDuration:0.15
                               delay:0
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
                              
-                             if ([_leftBarButtonItem.title isEqualToString:@"Add"]) {
+                             if ([_leftBarButtonItem.title isEqualToString:@"Add From"]) {
                        
                                  
                                  [_leftBarButtonItem setTitle:@"Add All"];
@@ -2070,6 +2071,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     }else if (buttonIndex==3){
         
         isFB=NO;
+        
+         [TestFlight passCheckpoint:@"Add Linkedin Contacts"];
         
         oAuthLoginView = [[APMOAuthViewController alloc] init];
      
